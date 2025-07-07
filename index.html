@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HJBCodeForge - Forging Digital Excellence</title>
+    <meta name="description" content="HJBCodeForge is a full-service software development studio turning bold ideas into reliable, scalable digital solutions.">
+    <link rel="icon" type="image/png" href="images/phonixIcon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Force services section to be visible */
+        #services, 
+        section#services,
+        .services {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            min-height: 100vh !important;
+            padding: 80px 0 !important;
+            position: relative !important;
+            z-index: 999 !important;
+            background-color: #f8f9fa !important;
+            width: 100% !important;
+            clear: both !important;
+        }
+        
+        /* Force services grid to be visible */
+        .services .container,
+        .services .section-header,
+        .services .services-grid,
+        .services .service-card {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .services-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+            gap: 2rem !important;
+            margin-top: 3rem !important;
+        }
+        
+        .service-card {
+            background: white !important;
+            padding: 2rem !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+            border: 1px solid #ddd !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/HJBCodeForge logo v2.1.png" alt="HJBCodeForge" class="logo">
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#services" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link cta-button">Get Started</a>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Forging Digital <span class="highlight">Excellence</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Transforming bold ideas into reliable, scalable digital solutions. 
+                    Partner with HJBCodeForge to build the future of your business.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Start Your Project</a>
+                    <a href="#services" class="btn btn-secondary">Our Services</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-animation">
+                    <div class="code-line"></div>
+                    <div class="code-line"></div>
+                    <div class="code-line"></div>
+                    <div class="code-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll to explore</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About HJBCodeForge</h2>
+                <p>Empowering organizations with cutting-edge software craftsmanship</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>Our mission is to empower organizations of every size with cutting-edge software craftsmanship and collaborative partnerships, transforming complex challenges into streamlined, digital-first experiences.</p>
+                    
+                    <div class="values-grid">
+                        <div class="value-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Innovation</h4>
+                            <p>We embrace new technologies and creative thinking to deliver forward-looking solutions.</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-award"></i>
+                            <h4>Quality</h4>
+                            <p>We uphold rigorous standards in code, testing, and user experience.</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-eye"></i>
+                            <h4>Transparency</h4>
+                            <p>We foster open communication and clear documentation.</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-handshake"></i>
+                            <h4>Collaboration</h4>
+                            <p>We work hand-in-hand with stakeholders to align technical execution with business goals.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="100">0</span>
+                        <span class="stat-label">Projects Completed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="50">0</span>
+                        <span class="stat-label">Happy Clients</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="5">0</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Comprehensive solutions for your digital transformation</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Custom Software Development</h3>
+                    <p>End-to-end application design, coding, testing, and deployment tailored to your requirements.</p>
+                    <ul>
+                        <li>Full-stack development</li>
+                        <li>Agile methodology</li>
+                        <li>Quality assurance</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Web & Mobile Solutions</h3>
+                    <p>Responsive websites, progressive web apps, and native iOS/Android applications that engage and convert.</p>
+                    <ul>
+                        <li>Responsive design</li>
+                        <li>Cross-platform development</li>
+                        <li>Performance optimization</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Architecture & DevOps</h3>
+                    <p>Scalable infrastructure, CI/CD pipelines, container orchestration, and performance monitoring.</p>
+                    <ul>
+                        <li>AWS/Azure/GCP</li>
+                        <li>Docker & Kubernetes</li>
+                        <li>Automated deployment</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI/ML Integration</h3>
+                    <p>Data analysis, predictive modeling, and intelligent automation to drive smarter decision-making.</p>
+                    <ul>
+                        <li>Machine learning models</li>
+                        <li>Data analytics</li>
+                        <li>AI-powered features</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>API Design & Integration</h3>
+                    <p>Secure, well-documented RESTful and GraphQL APIs that connect your ecosystem seamlessly.</p>
+                    <ul>
+                        <li>RESTful APIs</li>
+                        <li>GraphQL</li>
+                        <li>Third-party integrations</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>Technical Consulting & Training</h3>
+                    <p>Architecture reviews, code audits, team upskilling, and strategic roadmaps to accelerate your success.</p>
+                    <ul>
+                        <li>Code reviews</li>
+                        <li>Team training</li>
+                        <li>Strategic planning</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+                <p>Showcasing our latest work and innovations</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>E-commerce Platform</h3>
+                        <p>Modern, scalable e-commerce solution with advanced analytics and AI-powered recommendations.</p>
+                        <div class="portfolio-tech">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>AWS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Analytics Dashboard</h3>
+                        <p>Real-time data visualization platform for enterprise clients with custom reporting features.</p>
+                        <div class="portfolio-tech">
+                            <span>Vue.js</span>
+                            <span>Python</span>
+                            <span>PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Healthcare Mobile App</h3>
+                        <p>HIPAA-compliant mobile application connecting patients with healthcare providers.</p>
+                        <div class="portfolio-tech">
+                            <span>React Native</span>
+                            <span>Firebase</span>
+                            <span>Node.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ready to Forge Your Next Project?</h2>
+                <p>Let's discuss how we can bring your vision to life</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email Us</h4>
+                        <p>hello@hjbcodeforge.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h4>Call Us</h4>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>Visit Us</h4>
+                        <p>San Francisco, CA</p>
+                    </div>
+                </div>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="company" placeholder="Company (Optional)">
+                    </div>
+                    <div class="form-group">
+                        <select name="service" required>
+                            <option value="">Select a Service</option>
+                            <option value="custom-development">Custom Software Development</option>
+                            <option value="web-mobile">Web & Mobile Solutions</option>
+                            <option value="cloud-devops">Cloud Architecture & DevOps</option>
+                            <option value="ai-ml">AI/ML Integration</option>
+                            <option value="api-integration">API Design & Integration</option>
+                            <option value="consulting">Technical Consulting & Training</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Tell us about your project" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="images/HJBCodeForge logo v2.1.png" alt="HJBCodeForge" class="footer-logo">
+                    <p>Transforming bold ideas into reliable, scalable digital solutions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Custom Development</a></li>
+                        <li><a href="#services">Web & Mobile</a></li>
+                        <li><a href="#services">Cloud & DevOps</a></li>
+                        <li><a href="#services">AI/ML Integration</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>hello@hjbcodeforge.com</p>
+                    <p>+1 (555) 123-4567</p>
+                    <p>San Francisco, CA</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 HJBCodeForge. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+                    <p>San Francisco, CA</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 HJBCodeForge. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Enhanced debugging and forced visibility
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking services section...');
+            
+            const servicesSection = document.getElementById('services');
+            
+            if (servicesSection) {
+                // Force all possible style overrides
+                servicesSection.style.cssText = `
+                    display: block !important;
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                    height: auto !important;
+                    min-height: 100vh !important;
+                    padding: 80px 0 !important;
+                    background-color: #f8f9fa !important;
+                    position: relative !important;
+                    z-index: 999 !important;
+                    width: 100% !important;
+                    margin: 0 !important;
+                    clear: both !important;
+                `;
+                
+                // Force container visibility
+                const container = servicesSection.querySelector('.container');
+                if (container) {
+                    container.style.cssText = 'display: block !important; visibility: visible !important; opacity: 1 !important;';
+                }
+                
+                // Force grid visibility
+                const grid = servicesSection.querySelector('.services-grid');
+                if (grid) {
+                    grid.style.cssText = `
+                        display: grid !important;
+                        visibility: visible !important;
+                        opacity: 1 !important;
+                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+                        gap: 2rem !important;
+                        margin-top: 3rem !important;
+                    `;
+                }
+                
+                console.log('Services section forced visible');
+                console.log('Section computed styles:', window.getComputedStyle(servicesSection));
+            } else {
+                console.error('Services section not found in DOM');
+            }
+            
+            // Check if external CSS files loaded
+            console.log('Stylesheets loaded:', document.styleSheets.length);
+        });
+        
+        // Additional check after all resources load
+        window.addEventListener('load', function() {
+            console.log('All resources loaded, final services check...');
+            const servicesSection = document.getElementById('services');
+            if (servicesSection) {
+                const rect = servicesSection.getBoundingClientRect();
+                console.log('Services section position:', rect);
+                console.log('Services section visible height:', rect.height);
+            }
+        });
+    </script>
+</body>
+</html>
