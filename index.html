@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HJB CodeForge — Powerful software, precisely built. Custom software, SaaS products, web & mobile apps for small businesses and founders.">
+<meta name="keywords" content="custom software development, SaaS development, web development, mobile apps, small business software">
+<meta property="og:title" content="HJB CodeForge — Powerful software, precisely built.">
+<meta property="og:description" content="Custom software, SaaS products, web & mobile applications built for small businesses and non-technical founders.">
+<meta property="og:url" content="https://hjbcodeforge.com">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<title>HJB CodeForge — Powerful software, precisely built.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E8620A;
+    --gold: #D4A017;
+    --ember: #8B2500;
+    --black: #080808;
+    --surface: #111111;
+    --surface2: #1A1A1A;
+    --border: #2A2A2A;
+    --text: #E8E8E8;
+    --muted: #888888;
+    --white: #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--black);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed; pointer-events: none;
+    z-index: 9999; transform: translate(-50%,-50%);
+    transition: width 0.2s, height 0.2s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(232,98,10,0.4);
+    border-radius: 50%;
+    position: fixed; pointer-events: none;
+    z-index: 9998; transform: translate(-50%,-50%);
+    transition: width 0.2s, height 0.2s;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1; opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; letter-spacing: 2px;
+    color: var(--white); text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo span { color: var(--orange); }
+  
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; transition: color 0.2s; cursor: none;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--orange); }
+  .nav-cta {
+    background: var(--orange) !important;
+    color: var(--white) !important;
+    padding: 10px 22px; font-size: 12px !important; letter-spacing: 1px;
+  }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    width: 24px; height: 2px; background: var(--text);
+    display: block; transition: all 0.3s;
+  }
+
+  /* PAGE SYSTEM */
+  .page { display: none; min-height: 100vh; padding-top: 80px; }
+  .page.active { display: block; }
+
+  /* ===================== HOME ===================== */
+  .hero {
+    min-height: calc(100vh - 80px);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 48px; position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(232,98,10,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(139,37,0,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(232,98,10,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,98,10,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--orange);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 24px; position: relative;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--orange); }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 10vw, 140px);
+    line-height: 0.92; letter-spacing: 2px;
+    color: var(--white); position: relative; max-width: 900px;
+  }
+  .hero-title .fire { color: var(--orange); }
+  .hero-title .outline {
+    -webkit-text-stroke: 1px rgba(232,98,10,0.4); color: transparent;
+  }
+  .hero-sub {
+    font-size: 18px; color: var(--muted);
+    max-width: 500px; line-height: 1.7;
+    margin-top: 32px; position: relative; font-weight: 400;
+  }
+  .hero-actions { display: flex; gap: 16px; margin-top: 48px; position: relative; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--orange); color: var(--white);
+    padding: 16px 36px; font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: 2px;
+    text-transform: uppercase; border: none; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+    transition: background 0.2s, transform 0.2s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+  .btn-primary:hover { background: #ff7722; transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    padding: 16px 36px; font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: 2px;
+    text-transform: uppercase; border: 1px solid var(--border);
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+  .btn-ghost:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 64px; margin-top: 80px; position: relative;
+    padding-top: 48px; border-top: 1px solid var(--border); flex-wrap: wrap;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; color: var(--orange); line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+  .services-strip { padding: 80px 48px; border-top: 1px solid var(--border); }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--orange);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before { content: '//'; color: var(--ember); }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    color: var(--white); letter-spacing: 2px; margin-bottom: 48px; line-height: 1;
+  }
+  .section-title span { color: var(--orange); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--border);
+  }
+  .service-card {
+    background: var(--surface); padding: 40px 32px;
+    transition: background 0.3s; position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .service-card:hover { background: var(--surface2); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-icon { font-size: 32px; margin-bottom: 20px; display: block; }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; color: var(--white); letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .service-desc { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 400; }
+
+  .featured { padding: 80px 48px; border-top: 1px solid var(--border); }
+  .featured-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); overflow: hidden; }
+  .featured-visual {
+    background: linear-gradient(135deg, #0f0500, #1a0800, #0a0a0a);
+    padding: 60px; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; min-height: 400px;
+  }
+  .featured-visual::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(232,98,10,0.15) 0%, transparent 70%);
+  }
+  .featured-mock {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 4px; width: 100%; max-width: 340px;
+    padding: 20px; position: relative; z-index: 1;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(232,98,10,0.08);
+  }
+  .mock-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+  .mock-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .mock-row { height: 10px; background: var(--surface2); border-radius: 2px; margin-bottom: 8px; }
+  .mock-row.accent { background: rgba(232,98,10,0.3); width: 60%; }
+  .mock-row.short { width: 40%; }
+  .mock-row.gold { background: rgba(212,160,23,0.3); width: 75%; }
+  .mock-table { margin-top: 16px; border: 1px solid var(--border); }
+  .mock-th { background: rgba(232,98,10,0.15); height: 24px; }
+  .mock-td { height: 20px; border-top: 1px solid var(--border); }
+  .featured-info { padding: 60px; background: var(--surface); }
+  .project-tag {
+    display: inline-block; background: rgba(232,98,10,0.1);
+    border: 1px solid rgba(232,98,10,0.3); color: var(--orange);
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 6px 14px; font-family: 'JetBrains Mono', monospace; margin-bottom: 24px;
+  }
+  .featured-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; color: var(--white); letter-spacing: 2px; line-height: 1; margin-bottom: 16px;
+  }
+  .featured-desc { font-size: 15px; color: var(--muted); line-height: 1.8; font-weight: 400; }
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .tech-badge {
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; padding: 6px 12px; letter-spacing: 1px;
+  }
+  .featured-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--orange); font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; margin-top: 32px; transition: gap 0.2s;
+  }
+  .featured-link:hover { gap: 14px; }
+
+  .cta-band {
+    padding: 100px 48px;
+    background: linear-gradient(135deg, #0f0300, var(--black));
+    border-top: 1px solid var(--border);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-band::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232,98,10,0.08) 0%, transparent 60%);
+  }
+  .cta-band h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    color: var(--white); letter-spacing: 3px; line-height: 0.95; position: relative;
+  }
+  .cta-band h2 span { color: var(--orange); }
+  .cta-band p { color: var(--muted); font-size: 16px; margin-top: 24px; margin-bottom: 40px; position: relative; }
+
+  /* ===================== SERVICES PAGE ===================== */
+  .page-hero {
+    padding: 80px 48px 60px; border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; top: 0; right: 0; width: 600px; height: 100%;
+    background: radial-gradient(ellipse at right center, rgba(232,98,10,0.06) 0%, transparent 70%);
+  }
+  .page-hero-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 200px; color: rgba(232,98,10,0.04);
+    position: absolute; right: 48px; top: 20px;
+    line-height: 1; letter-spacing: -5px; pointer-events: none;
+  }
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 8vw, 100px);
+    color: var(--white); letter-spacing: 2px; line-height: 0.95;
+  }
+  .page-title span { color: var(--orange); }
+  .page-sub { font-size: 16px; color: var(--muted); max-width: 540px; line-height: 1.7; margin-top: 20px; font-weight: 400; }
+
+  .services-detail { padding: 80px 48px; }
+  .service-row {
+    display: grid; grid-template-columns: 80px 1fr 1fr; gap: 40px;
+    padding: 60px 0; border-bottom: 1px solid var(--border); align-items: start;
+  }
+  .service-num { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: rgba(232,98,10,0.2); line-height: 1; }
+  .service-detail-name { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--white); letter-spacing: 1px; margin-bottom: 16px; line-height: 1; }
+  .service-detail-desc { font-size: 15px; color: var(--muted); line-height: 1.8; font-weight: 400; }
+  .service-features { list-style: none; }
+  .service-features li {
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+    font-size: 14px; color: var(--muted);
+    display: flex; align-items: center; gap: 12px; font-weight: 400;
+  }
+  .service-features li::before { content: '→'; color: var(--orange); font-size: 12px; flex-shrink: 0; }
+
+  /* ===================== ABOUT ===================== */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    padding: 80px 48px; border-bottom: 1px solid var(--border);
+  }
+  .about-text { padding-right: 80px; border-right: 1px solid var(--border); }
+  .about-text p { font-size: 16px; color: var(--muted); line-height: 1.9; margin-bottom: 20px; font-weight: 400; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .about-sidebar { padding-left: 80px; }
+  .about-value { padding: 28px 0; border-bottom: 1px solid var(--border); }
+  .about-value:first-child { padding-top: 0; }
+  .value-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--orange); letter-spacing: 1px; margin-bottom: 8px; }
+  .value-desc { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 400; }
+  .skills-section { padding: 80px 48px; border-bottom: 1px solid var(--border); }
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+  .skill-group-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .skill-item { font-size: 13px; color: var(--muted); padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; font-weight: 400; }
+  .skill-item::before { content: '·'; color: var(--orange); }
+
+  /* ===================== PORTFOLIO ===================== */
+  .portfolio-grid { padding: 80px 48px; }
+  .projects-masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-top: 48px; }
+  .project-card {
+    background: var(--surface); padding: 40px; cursor: pointer;
+    transition: background 0.3s; position: relative; overflow: hidden;
+  }
+  .project-card.featured-proj { grid-column: span 2; background: linear-gradient(135deg, #0f0500, #1a0800); }
+  .project-card:hover { background: var(--surface2); }
+  .project-card.featured-proj:hover { background: linear-gradient(135deg, #150800, #220a00); }
+  .proj-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 2px; margin-bottom: 24px; opacity: 0.6; }
+  .proj-name { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--white); letter-spacing: 1px; margin-bottom: 12px; line-height: 1; }
+  .proj-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; font-weight: 400; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .proj-tag { background: rgba(232,98,10,0.08); border: 1px solid rgba(232,98,10,0.2); color: var(--orange); font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 4px 10px; letter-spacing: 1px; }
+  .proj-tag.neutral { background: var(--surface2); border-color: var(--border); color: var(--muted); }
+  .proj-status { display: inline-flex; align-items: center; gap: 6px; margin-top: 20px; font-size: 12px; color: var(--muted); }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #22cc44; box-shadow: 0 0 6px #22cc44; animation: pulse 2s infinite; }
+  .status-dot.wip { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+  .proj-link { display: inline-flex; align-items: center; gap: 8px; color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; margin-top: 24px; transition: gap 0.2s; }
+  .proj-link:hover { gap: 14px; }
+
+  /* ===================== BLOG ===================== */
+  .blog-grid { padding: 80px 48px; }
+  .posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-top: 48px; }
+  .post-card { background: var(--surface); padding: 36px; transition: background 0.3s; cursor: pointer; }
+  .post-card:hover { background: var(--surface2); }
+  .post-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-bottom: 16px; }
+  .post-tag { display: inline-block; background: rgba(232,98,10,0.1); border: 1px solid rgba(232,98,10,0.2); color: var(--orange); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; font-family: 'JetBrains Mono', monospace; margin-bottom: 16px; }
+  .post-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--white); line-height: 1.3; margin-bottom: 12px; }
+  .post-excerpt { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 400; }
+  .post-read { display: inline-flex; align-items: center; gap: 6px; color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 20px; }
+
+  /* ===================== CONTACT ===================== */
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 80px 48px; min-height: 70vh; }
+  .contact-info { padding-right: 80px; border-right: 1px solid var(--border); }
+  .contact-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--white); letter-spacing: 1px; margin-bottom: 16px; margin-top: 40px; }
+  .contact-info h3:first-child { margin-top: 0; }
+  .contact-info p { font-size: 14px; color: var(--muted); line-height: 1.8; font-weight: 400; }
+  .contact-detail { display: flex; align-items: center; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text); }
+  .contact-detail-icon { color: var(--orange); font-size: 18px; }
+  .contact-form { padding-left: 80px; }
+  .form-group { margin-bottom: 24px; }
+  .form-label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .form-input, .form-select, .form-textarea { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'Syne', sans-serif; font-size: 14px; padding: 14px 18px; outline: none; transition: border-color 0.2s; appearance: none; }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--orange); }
+  .form-textarea { resize: vertical; min-height: 140px; }
+  .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* FOOTER */
+  footer { background: var(--surface); border-top: 1px solid var(--border); padding: 60px 48px 40px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  .footer-brand p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 16px; font-weight: 400; max-width: 280px; }
+  .footer-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+  .footer-col a { display: block; color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 0; transition: color 0.2s; cursor: pointer; font-weight: 400; }
+  .footer-col a:hover { color: var(--orange); }
+  .footer-bottom { border-top: 1px solid var(--border); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 13px; color: var(--muted); font-weight: 400; }
+  .footer-tagline { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 2px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .page.active .hero-eyebrow { animation: fadeUp 0.5s 0.1s both; }
+  .page.active .hero-title { animation: fadeUp 0.6s 0.2s both; }
+  .page.active .hero-sub { animation: fadeUp 0.6s 0.35s both; }
+  .page.active .hero-actions { animation: fadeUp 0.6s 0.45s both; }
+  .page.active .hero-stats { animation: fadeUp 0.6s 0.55s both; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(8,8,8,0.98); padding: 24px; gap: 20px; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .hero { padding: 60px 24px; }
+    .services-strip, .featured, .cta-band, .services-detail, .about-grid, .skills-section, .portfolio-grid, .blog-grid, .contact-layout, footer { padding: 60px 24px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-visual { min-height: 260px; padding: 40px; }
+    .featured-info { padding: 40px; }
+    .service-row { grid-template-columns: 1fr; gap: 24px; }
+    .service-num { font-size: 40px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-text { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 40px; margin-bottom: 40px; }
+    .about-sidebar { padding-left: 0; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .projects-masonry { grid-template-columns: 1fr; }
+    .project-card.featured-proj { grid-column: span 1; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .post-card { grid-column: span 1 !important; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-info { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 48px; margin-bottom: 48px; }
+    .contact-form { padding-left: 0; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .hero-stats { gap: 32px; }
+    .page-hero { padding: 60px 24px 40px; }
+    .page-hero-num { font-size: 120px; right: 24px; }
+  }
+  @media (max-width: 480px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { flex-direction: column; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home'); return false;">
+    <img src="data:image/png;base64,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" alt="HJB CodeForge logo" style="height:40px;width:40px;object-fit:contain;">
+    HJB <span>CodeForge</span>
+  </a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="#" onclick="showPage('home'); return false;" id="nav-home" class="active">Home</a>
+    <a href="#" onclick="showPage('services'); return false;" id="nav-services">Services</a>
+    <a href="#" onclick="showPage('about'); return false;" id="nav-about">About</a>
+    <a href="#" onclick="showPage('portfolio'); return false;" id="nav-portfolio">Portfolio</a>
+    <a href="#" onclick="showPage('blog'); return false;" id="nav-blog">Blog</a>
+    <a href="#" onclick="showPage('contact'); return false;" id="nav-contact" class="nav-cta">Let's Build</a>
+  </div>
+</nav>
+
+<!-- ===================== HOME ===================== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-eyebrow">HJB CodeForge — Est. 2024</div>
+    <h1 class="hero-title">
+      POWERFUL<br>
+      <span class="fire">SOFTWARE,</span><br>
+      <span class="outline">PRECISELY</span><br>
+      BUILT.
+    </h1>
+    <p class="hero-sub">Custom software, SaaS products, web &amp; mobile applications — built for small businesses and non-technical founders who need it done right.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary" onclick="showPage('portfolio'); return false;">View Our Work &#8594;</a>
+      <a href="#" class="btn-ghost" onclick="showPage('contact'); return false;">Start a Project</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">3+</div><div class="stat-label">Products Shipped</div></div>
+      <div><div class="stat-num">4</div><div class="stat-label">Core Services</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Precision Built</div></div>
+    </div>
+  </section>
+
+  <section class="services-strip">
+    <div class="section-label">What We Build</div>
+    <h2 class="section-title">OUR <span>SERVICES</span></h2>
+    <div class="services-grid">
+      <div class="service-card"><span class="service-icon">&#9881;&#65039;</span><div class="service-name">Custom Software</div><p class="service-desc">Tailored applications built around your exact business process. No off-the-shelf compromises.</p></div>
+      <div class="service-card"><span class="service-icon">&#128640;</span><div class="service-name">SaaS Products</div><p class="service-desc">From idea to a subscription product — architecture, build, and launch-ready deployment.</p></div>
+      <div class="service-card"><span class="service-icon">&#127760;</span><div class="service-name">Web Development</div><p class="service-desc">Fast, modern web applications and sites built for performance and conversion.</p></div>
+      <div class="service-card"><span class="service-icon">&#128241;</span><div class="service-name">Mobile Apps</div><p class="service-desc">iOS and Android applications that your customers will actually enjoy using.</p></div>
+    </div>
+  </section>
+
+  <section class="featured">
+    <div class="section-label">Featured Work</div>
+    <h2 class="section-title">BUILT BY <span>CODEFORGE</span></h2>
+    <div class="featured-card">
+      <div class="featured-visual">
+        <div class="featured-mock">
+          <div class="mock-bar">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28ca41"></div>
+          </div>
+          <div class="mock-row accent"></div>
+          <div class="mock-row"></div>
+          <div class="mock-row short"></div>
+          <div class="mock-row gold"></div>
+          <div class="mock-table">
+            <div class="mock-th"></div>
+            <div class="mock-td"></div>
+            <div class="mock-td"></div>
+            <div class="mock-td"></div>
+          </div>
+        </div>
+      </div>
+      <div class="featured-info">
+        <div class="project-tag">Shopify SaaS</div>
+        <h3 class="featured-title">NET TERMS TRACKER</h3>
+        <p class="featured-desc">A complete B2B financial suite for Shopify merchants — automating Net 30 terms, credit limits, PDF invoicing, and compliance enforcement. Built for wholesale operations at any scale.</p>
+        <div class="tech-stack">
+          <span class="tech-badge">Remix</span>
+          <span class="tech-badge">React</span>
+          <span class="tech-badge">Node.js</span>
+          <span class="tech-badge">Shopify API</span>
+          <span class="tech-badge">SQLite</span>
+          <span class="tech-badge">Fly.io</span>
+        </div>
+        <a href="https://nettermstracker.com" target="_blank" rel="noopener" class="featured-link">View Project &#8594;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2>READY TO<br><span>BUILD SOMETHING</span><br>POWERFUL?</h2>
+    <p>Tell us what you need. We'll make it real.</p>
+    <a href="#" class="btn-primary" onclick="showPage('contact'); return false;">Start the Conversation &#8594;</a>
+  </section>
+</div>
+
+<!-- ===================== SERVICES ===================== -->
+<div class="page" id="page-services">
+  <div class="page-hero">
+    <div class="page-hero-num">02</div>
+    <div class="section-label">What We Do</div>
+    <h1 class="page-title">OUR<br><span>SERVICES</span></h1>
+    <p class="page-sub">Four focused disciplines. One standard: powerful software, precisely built.</p>
+  </div>
+  <div class="services-detail">
+    <div class="service-row">
+      <div class="service-num">01</div>
+      <div>
+        <div class="service-detail-name">Custom Software Development</div>
+        <p class="service-detail-desc">Off-the-shelf tools are built for everyone — which means they're perfect for no one. We build software shaped around your exact workflow, your data, and your business logic. From internal tools to client-facing platforms, everything is built to fit.</p>
+      </div>
+      <ul class="service-features">
+        <li>Business process automation</li>
+        <li>Internal tools &amp; dashboards</li>
+        <li>API integrations &amp; middleware</li>
+        <li>Legacy system modernization</li>
+        <li>Custom admin panels</li>
+      </ul>
+    </div>
+    <div class="service-row">
+      <div class="service-num">02</div>
+      <div>
+        <div class="service-detail-name">SaaS Product Development</div>
+        <p class="service-detail-desc">Got a software idea? We take it from concept to a fully-launched, subscription-ready product. Architecture, auth, billing, onboarding — we handle the full stack so you can focus on your market.</p>
+      </div>
+      <ul class="service-features">
+        <li>Product architecture &amp; planning</li>
+        <li>Multi-tenant SaaS systems</li>
+        <li>Subscription &amp; billing integration</li>
+        <li>User onboarding flows</li>
+        <li>Shopify &amp; marketplace apps</li>
+      </ul>
+    </div>
+    <div class="service-row">
+      <div class="service-num">03</div>
+      <div>
+        <div class="service-detail-name">Web Development</div>
+        <p class="service-detail-desc">Modern web applications built for speed, usability, and conversion. Whether it's a marketing site, a web app, or a full-stack platform — we build it to perform and to impress.</p>
+      </div>
+      <ul class="service-features">
+        <li>React &amp; Next.js applications</li>
+        <li>Landing pages &amp; marketing sites</li>
+        <li>E-commerce solutions</li>
+        <li>Progressive web apps</li>
+        <li>CMS integrations</li>
+      </ul>
+    </div>
+    <div class="service-row">
+      <div class="service-num">04</div>
+      <div>
+        <div class="service-detail-name">Mobile App Development</div>
+        <p class="service-detail-desc">iOS and Android apps that your users will actually enjoy. We build cross-platform and native mobile experiences with a focus on performance, polish, and real-world usability.</p>
+      </div>
+      <ul class="service-features">
+        <li>React Native cross-platform apps</li>
+        <li>iOS &amp; Android deployment</li>
+        <li>App Store submission support</li>
+        <li>Offline-first architecture</li>
+        <li>Push notifications &amp; analytics</li>
+      </ul>
+    </div>
+  </div>
+  <section class="cta-band">
+    <h2>NOT SURE<br><span>WHERE TO START?</span></h2>
+    <p>We offer a free discovery call — no pitch, just a conversation about your project.</p>
+    <a href="#" class="btn-primary" onclick="showPage('contact'); return false;">Book a Free Discovery Call &#8594;</a>
+  </section>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div class="page" id="page-about">
+  <div class="page-hero">
+    <div class="page-hero-num">03</div>
+    <div class="section-label">The Studio</div>
+    <h1 class="page-title">ABOUT<br><span>CODEFORGE</span></h1>
+    <p class="page-sub">A boutique software studio built on the belief that great software changes everything.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>HJB CodeForge is a boutique software development studio founded by <strong>Henning Botha</strong> — a full-stack developer with a passion for building things that work beautifully and perform powerfully.</p>
+      <p>We started CodeForge to serve the clients who are most often underserved by the industry: <strong>small businesses and non-technical founders</strong> who have great ideas but need a trusted technical partner to bring them to life.</p>
+      <p>The phoenix in our logo isn't accidental. It represents what we believe about software and business — that with the right foundation, anything can be rebuilt stronger, faster, and better than before.</p>
+      <p>Every project we take on gets our full attention. We don't churn out templates. We don't disappear after launch. We build <strong>powerful software, precisely</strong> — and we stand behind everything we ship.</p>
+    </div>
+    <div class="about-sidebar">
+      <div class="about-value"><div class="value-name">Precision Over Speed</div><p class="value-desc">We take the time to build it right. A fast, broken product is worth less than a solid one that took an extra week.</p></div>
+      <div class="about-value"><div class="value-name">Radical Transparency</div><p class="value-desc">You'll always know where your project stands. No surprises, no jargon — clear communication at every step.</p></div>
+      <div class="about-value"><div class="value-name">Client Empowerment</div><p class="value-desc">We build software you understand and can grow with. Handover documentation and training are part of every engagement.</p></div>
+      <div class="about-value"><div class="value-name">Craft Matters</div><p class="value-desc">Clean code, thoughtful architecture, and interfaces people enjoy using. The details are where the real work happens.</p></div>
+    </div>
+  </div>
+  <div class="skills-section">
+    <div class="section-label">Technical Stack</div>
+    <h2 class="section-title">BUILT WITH THE<br><span>RIGHT TOOLS</span></h2>
+    <div class="skills-grid">
+      <div class="skill-group"><div class="skill-group-name">Frontend</div><div class="skill-item">React &amp; Next.js</div><div class="skill-item">TypeScript</div><div class="skill-item">Tailwind CSS</div><div class="skill-item">React Native</div></div>
+      <div class="skill-group"><div class="skill-group-name">Backend</div><div class="skill-item">Node.js</div><div class="skill-item">Remix</div><div class="skill-item">REST &amp; GraphQL APIs</div><div class="skill-item">PHP / Laravel</div></div>
+      <div class="skill-group"><div class="skill-group-name">Data</div><div class="skill-item">PostgreSQL</div><div class="skill-item">SQLite &amp; Prisma</div><div class="skill-item">MySQL</div><div class="skill-item">Firebase</div></div>
+      <div class="skill-group"><div class="skill-group-name">Infrastructure</div><div class="skill-item">Vercel</div><div class="skill-item">Fly.io</div><div class="skill-item">Shopify Platform</div><div class="skill-item">Git &amp; CI/CD</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PORTFOLIO ===================== -->
+<div class="page" id="page-portfolio">
+  <div class="page-hero">
+    <div class="page-hero-num">04</div>
+    <div class="section-label">Our Work</div>
+    <h1 class="page-title">PORTFOLIO</h1>
+    <p class="page-sub">Products built with precision. Each one a real problem, solved with powerful software.</p>
+  </div>
+  <div class="portfolio-grid">
+    <div class="projects-masonry">
+      <div class="project-card featured-proj">
+        <div class="proj-num">PROJECT 01 — SHOPIFY SAAS</div>
+        <div class="proj-name">NET TERMS TRACKER</div>
+        <p class="proj-desc">A complete B2B financial automation suite for Shopify. Handles credit limits, Net 30 terms, PDF invoicing, automated compliance enforcement, and a customer finance portal — all natively inside Shopify.</p>
+        <div class="proj-tags"><span class="proj-tag">Remix</span><span class="proj-tag">React</span><span class="proj-tag">Node.js</span><span class="proj-tag">Shopify API</span><span class="proj-tag">SQLite</span><span class="proj-tag">Polaris UI</span><span class="proj-tag">Fly.io</span></div>
+        <div class="proj-status"><div class="status-dot"></div> Live &amp; Active</div>
+        <a href="https://nettermstracker.com" target="_blank" rel="noopener" class="proj-link">Visit Site &#8594;</a>
+      </div>
+      <div class="project-card">
+        <div class="proj-num">PROJECT 02 — AI SAAS</div>
+        <div class="proj-name">BOTFORGE</div>
+        <p class="proj-desc">A SaaS platform for building and deploying custom AI chatbots. Users can create, configure, and embed intelligent bots directly into their websites — no code required.</p>
+        <div class="proj-tags"><span class="proj-tag">React</span><span class="proj-tag">AI Integration</span><span class="proj-tag neutral">SaaS</span></div>
+        <div class="proj-status"><div class="status-dot"></div> Live</div>
+        <a href="https://custom-integrated-chatbot.vercel.app" target="_blank" rel="noopener" class="proj-link">View App &#8594;</a>
+      </div>
+      <div class="project-card">
+        <div class="proj-num">PROJECT 03 — WELLNESS APP</div>
+        <div class="proj-name">TRACK &amp; THRIVE</div>
+        <p class="proj-desc">A dual-purpose tracking app for personal wellness — combining calorie tracking with expense management in a single, clean interface.</p>
+        <div class="proj-tags"><span class="proj-tag neutral">PHP</span><span class="proj-tag neutral">Mobile Web</span><span class="proj-tag neutral">Wellness</span></div>
+        <div class="proj-status"><div class="status-dot wip"></div> Live</div>
+        <a href="https://trackandthrive.infinityfreeapp.com" target="_blank" rel="noopener" class="proj-link">View App &#8594;</a>
+      </div>
+      <div class="project-card">
+        <div class="proj-num">PROJECT 04 — COMING SOON</div>
+        <div class="proj-name">NEXT PROJECT</div>
+        <p class="proj-desc">Your idea could be here. We're always taking on new projects for founders and small businesses ready to build something powerful.</p>
+        <div class="proj-tags"><span class="proj-tag neutral">Your Stack</span><span class="proj-tag neutral">Your Vision</span></div>
+        <a href="#" class="proj-link" onclick="showPage('contact'); return false;">Start a Project &#8594;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== BLOG ===================== -->
+<div class="page" id="page-blog">
+  <div class="page-hero">
+    <div class="page-hero-num">05</div>
+    <div class="section-label">Insights</div>
+    <h1 class="page-title">THE<br><span>FORGE BLOG</span></h1>
+    <p class="page-sub">Technical insights, founder advice, and behind-the-scenes builds from the CodeForge studio.</p>
+  </div>
+  <div class="blog-grid">
+    <div class="posts-grid">
+      <div class="post-card" style="grid-column: span 2;">
+        <div class="post-date">MARCH 2025</div>
+        <div class="post-tag">SaaS Build</div>
+        <h3 class="post-title">Building Net Terms Tracker: How We Automated B2B Invoicing on Shopify</h3>
+        <p class="post-excerpt">A deep dive into the architecture decisions, Shopify API quirks, and compliance challenges we solved building a full B2B financial suite inside the Shopify ecosystem.</p>
+        <div class="post-read">Read Article &#8594;</div>
+      </div>
+      <div class="post-card">
+        <div class="post-date">FEBRUARY 2025</div>
+        <div class="post-tag">For Founders</div>
+        <h3 class="post-title">What Non-Technical Founders Get Wrong When Hiring a Developer</h3>
+        <p class="post-excerpt">The five most common mistakes — and how to avoid them before you write your first brief.</p>
+        <div class="post-read">Read Article &#8594;</div>
+      </div>
+      <div class="post-card">
+        <div class="post-date">JANUARY 2025</div>
+        <div class="post-tag">Tech</div>
+        <h3 class="post-title">Why We Choose Remix Over Next.js for Shopify App Development</h3>
+        <p class="post-excerpt">The architectural tradeoffs that make Remix a natural fit for Shopify's embedded app framework.</p>
+        <div class="post-read">Read Article &#8594;</div>
+      </div>
+      <div class="post-card">
+        <div class="post-date">DECEMBER 2024</div>
+        <div class="post-tag">For Founders</div>
+        <h3 class="post-title">How to Scope a Software Project Without a Technical Background</h3>
+        <p class="post-excerpt">A practical framework for non-technical founders to write better briefs, get better quotes, and build better products.</p>
+        <div class="post-read">Read Article &#8594;</div>
+      </div>
+      <div class="post-card">
+        <div class="post-date">NOVEMBER 2024</div>
+        <div class="post-tag">AI</div>
+        <h3 class="post-title">Building AI Chatbots That Actually Help Your Customers</h3>
+        <p class="post-excerpt">Lessons from building BotForge: what makes AI assistants useful versus frustrating, and how to train them right.</p>
+        <div class="post-read">Read Article &#8594;</div>
+      </div>
+      <div class="post-card">
+        <div class="post-date">OCTOBER 2024</div>
+        <div class="post-tag">Business</div>
+        <h3 class="post-title">The Solo Founder's Guide to Launching a SaaS Product</h3>
+        <p class="post-excerpt">Everything I learned going from idea to live Shopify app — the parts no tutorial covers.</p>
+        <div class="post-read">Read Article &#8594;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="page-hero-num">06</div>
+    <div class="section-label">Get In Touch</div>
+    <h1 class="page-title">LET'S<br><span>BUILD.</span></h1>
+    <p class="page-sub">Tell us about your project. We'll get back to you within 24 hours.</p>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h3>Start with a conversation.</h3>
+      <p>Whether you have a fully-formed brief or just a rough idea, we're happy to talk it through. The first call is always free — no pitch, no pressure.</p>
+      <h3>Contact Details</h3>
+      <div class="contact-detail"><span class="contact-detail-icon">&#9993;</span> hello@hjbcodeforge.com</div>
+      <div class="contact-detail"><span class="contact-detail-icon">&#127760;</span> hjbcodeforge.com</div>
+      <h3>Response Time</h3>
+      <p>We respond to all enquiries within 24 hours during business days. For urgent projects, mention it in your message and we'll prioritize.</p>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="Henning"></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Botha"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="hello@yourcompany.com"></div>
+      <div class="form-group">
+        <label class="form-label">Service Needed</label>
+        <select class="form-select form-input">
+          <option value="">Select a service...</option>
+          <option>Custom Software Development</option>
+          <option>SaaS Product Development</option>
+          <option>Web Development</option>
+          <option>Mobile App Development</option>
+          <option>Not sure yet — let's talk</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Tell Us About Your Project</label><textarea class="form-textarea" placeholder="Describe what you're trying to build, who it's for, and any timeline or budget considerations..."></textarea></div>
+      <button class="btn-primary" style="width:100%; justify-content:center;" id="submitBtn" onclick="handleFormSubmit()">Send Message &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="nav-logo" href="#" onclick="showPage('home'); return false;">
+        <img src="data:image/png;base64,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" alt="HJB CodeForge logo" style="height:40px;width:40px;object-fit:contain;">
+        HJB <span>CodeForge</span>
+      </a>
+      <p>Powerful software, precisely built. Serving small businesses and non-technical founders who need a trusted technical partner.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#" onclick="showPage('services'); return false;">Custom Software</a>
+      <a href="#" onclick="showPage('services'); return false;">SaaS Products</a>
+      <a href="#" onclick="showPage('services'); return false;">Web Development</a>
+      <a href="#" onclick="showPage('services'); return false;">Mobile Apps</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#" onclick="showPage('about'); return false;">About</a>
+      <a href="#" onclick="showPage('portfolio'); return false;">Portfolio</a>
+      <a href="#" onclick="showPage('blog'); return false;">Blog</a>
+      <a href="#" onclick="showPage('contact'); return false;">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="https://linkedin.com/company/hjbcodeforge" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://x.com/hjbcodeforge" target="_blank" rel="noopener">X / Twitter</a>
+      <a href="https://facebook.com/hjbcodeforge" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://instagram.com/hjbcodeforge" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&#169; 2025 HJB CodeForge. All rights reserved.</p>
+    <div class="footer-tagline">POWERFUL SOFTWARE, PRECISELY BUILT.</div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; ring.style.width = '56px'; ring.style.height = '56px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; ring.style.width = '36px'; ring.style.height = '36px'; });
+  });
+
+  // Navigation
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo(0, 0);
+    // Close mobile menu
+    document.getElementById('navLinks').classList.remove('open');
+  }
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Contact form
+  function handleFormSubmit() {
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '&#10003; Message Sent — We\'ll be in touch within 24 hours.';
+    btn.style.background = '#22cc44';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
