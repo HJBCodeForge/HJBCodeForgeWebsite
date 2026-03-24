@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>How We Built BotForge's RAG Pipeline: pgvector, LangChain & Streaming Chat | HJB CodeForge Blog</title>
+<meta name="description" content="A technical deep dive into BotForge's retrieval-augmented generation pipeline — covering semantic chunking, pgvector embeddings, LangChain orchestration, Supabase, and production streaming chat."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A", "on-primary": "#ffffff",
+                    "primary-container": "#ef6712", "on-primary-container": "#ffffff",
+                    "secondary": "#f6be39", "on-secondary": "#402d00",
+                    "background": "#0A0A0A", "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A", "on-surface": "#e5e2e1",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "surface-bright": "#3a3939",
+                    "outline": "#a88a7e", "outline-variant": "#594237",
+                },
+                fontFamily: { "body": ["Inter", "Arial", "sans-serif"] },
+                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem" },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    body { background-color: #0A0A0A; font-family: 'Inter', Arial, sans-serif; }
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #e1c0b2; font-size: 1.05rem; }
+    .prose h2 { font-size: 1.75rem; font-weight: 900; color: #F5F5F5; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose h3 { font-size: 1.2rem; font-weight: 700; color: #F5F5F5; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ul li { margin-bottom: 0.5rem; list-style-type: disc; }
+    .prose ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ol li { margin-bottom: 0.5rem; list-style-type: decimal; }
+    .prose strong { color: #F5F5F5; font-weight: 700; }
+    .prose a { color: #E8620A; text-decoration: underline; text-decoration-color: rgba(232,98,10,0.4); }
+    .prose a:hover { text-decoration-color: #E8620A; }
+    .code-block { background: #0e0e0e; border-radius: 0.25rem; padding: 1.5rem; margin-bottom: 1.5rem; overflow-x: auto; border-left: 3px solid #E8620A; }
+    .code-block code { font-family: 'Courier New', Courier, monospace; font-size: 0.875rem; color: #f6be39; line-height: 1.7; white-space: pre; }
+    .code-comment { color: #594237; }
+    .code-keyword { color: #E8620A; }
+    .code-string { color: #f6be39; }
+    .code-type { color: #a2c9ff; }
+    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .callout p { margin-bottom: 0; color: #e1c0b2; }
+    .diagram-box { background: #0e0e0e; border: 1px solid #2a2a2a; border-radius: 0.25rem; padding: 1.5rem; margin-bottom: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem; color: #e1c0b2; line-height: 1.9; }
+    .diagram-arrow { color: #E8620A; }
+</style>
+</head>
+<body class="font-body text-on-surface">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../services.html">Services</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../portfolio.html">Portfolio</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="../blog.html">Blog</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="../contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">Let's Build</a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0e0e0e] border-t border-[#2a2a2a] px-8 py-4 flex flex-col gap-4">
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../index.html">Home</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../services.html">Services</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../about.html">About</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../portfolio.html">Portfolio</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="../blog.html">Blog</a>
+        <a href="../contact.html" class="forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg text-center">Let's Build</a>
+    </div>
+</nav>
+
+<!-- Article Header -->
+<section class="pt-32 pb-16 px-8 max-w-[800px] mx-auto">
+    <div class="flex items-center gap-3 mb-6">
+        <a href="../blog.html" class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#E8620A] hover:underline">← Blog</a>
+        <span class="text-[#594237]">/</span>
+        <span class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#594237]">AI & Engineering</span>
+    </div>
+
+    <h1 class="text-4xl md:text-6xl font-black text-[#F5F5F5] leading-[1.05] tracking-tighter mb-6">
+        How We Built<br/>
+        <span class="forge-gradient bg-clip-text text-transparent" style="-webkit-background-clip:text;">BotForge's</span><br/>
+        RAG Pipeline
+    </h1>
+
+    <p class="text-xl text-[#e1c0b2] leading-relaxed mb-8">
+        A technical deep dive into building a production retrieval-augmented generation system — covering document ingestion, semantic chunking, pgvector similarity search, LangChain orchestration, and streaming chat responses.
+    </p>
+
+    <div class="flex flex-wrap items-center gap-6 text-[0.8rem] text-[#a88a7e] pb-8 border-b border-[#2a2a2a]">
+        <div class="flex items-center gap-2">
+            <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-8 h-8 rounded-full object-cover grayscale" onerror="this.style.display='none'"/>
+            <span class="text-[#F5F5F5] font-semibold">Henning Botha</span>
+        </div>
+        <span>March 2026</span>
+        <span>·</span>
+        <span>14 Min Read</span>
+        <span>·</span>
+        <span class="text-[#E8620A] font-semibold uppercase tracking-widest">AI & Engineering</span>
+    </div>
+</section>
+
+<!-- Hero Image -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16">
+    <div class="w-full h-64 md:h-96 bg-[#1c1b1b] rounded-lg overflow-hidden border border-[#2a2a2a] flex items-center justify-center">
+        <img src="../assets/images/botforge.png" alt="BotForge AI Platform" class="w-full h-full object-cover opacity-80" onerror="this.src='https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?w=1400&q=80&auto=format&fit=crop'"/>
+    </div>
+</div>
+
+<!-- Article Body -->
+<article class="max-w-[800px] mx-auto px-8 pb-24 prose">
+
+    <h2>What is BotForge, and Why RAG?</h2>
+
+    <p>BotForge is a platform that lets businesses deploy AI chat assistants trained on their own documentation, knowledge base, and product data. Think of it as a white-label ChatGPT that actually knows your product — your pricing, your return policy, your troubleshooting guides — rather than hallucinating answers from its training data.</p>
+
+    <p>The technology that makes this possible is Retrieval-Augmented Generation, or RAG. Instead of fine-tuning a model (expensive, slow, requires ML expertise), RAG works by finding the most relevant documents from your knowledge base at query time and inserting them into the prompt context. The LLM then generates an answer grounded in your actual documentation rather than its general training.</p>
+
+    <p>The result: an AI assistant that is accurate, up-to-date, and constrained to your domain. When a customer asks "What's your return policy for sale items?", the bot retrieves the exact paragraph from your policy document and generates a helpful, accurate response — not a generic guess.</p>
+
+    <div class="callout">
+        <p><strong>RAG vs. Fine-Tuning:</strong> Fine-tuning bakes knowledge into the model's weights at training time, which is expensive and requires re-training whenever content changes. RAG retrieves knowledge at inference time from a live database. For business knowledge that changes regularly (pricing, policies, product catalog), RAG is almost always the right choice.</p>
+    </div>
+
+    <h2>The Architecture at a Glance</h2>
+
+    <p>Before getting into each component, here's the full pipeline from document upload to streamed response:</p>
+
+    <div class="diagram-box">
+<span style="color:#F5F5F5;">INGESTION PIPELINE</span>
+───────────────────────────────────────────────
+Document (PDF/DOCX/URL/TXT)
+        <span class="diagram-arrow">↓</span>
+Text Extraction (LangChain document loaders)
+        <span class="diagram-arrow">↓</span>
+Semantic Chunking (recursive character splitter)
+        <span class="diagram-arrow">↓</span>
+Embedding Generation (OpenAI text-embedding-3-small)
+        <span class="diagram-arrow">↓</span>
+pgvector storage in Supabase (vector + metadata)
+
+<span style="color:#F5F5F5;">QUERY PIPELINE</span>
+───────────────────────────────────────────────
+User message
+        <span class="diagram-arrow">↓</span>
+Query embedding (same embedding model)
+        <span class="diagram-arrow">↓</span>
+pgvector cosine similarity search (top-k chunks)
+        <span class="diagram-arrow">↓</span>
+Context assembly + conversation history injection
+        <span class="diagram-arrow">↓</span>
+LLM call via OpenRouter (streaming)
+        <span class="diagram-arrow">↓</span>
+Server-Sent Events → streaming chat UI
+    </div>
+
+    <p>The ingestion pipeline runs at document upload time. The query pipeline runs on every user message, typically in under 300ms from message send to first streamed token. Let me walk through each stage.</p>
+
+    <h2>Stage 1: Document Ingestion and Text Extraction</h2>
+
+    <p>BotForge supports four document types: PDF files, Word documents (.docx), plain text, and web URLs. LangChain's document loaders handle the heavy lifting here. For PDFs we use <code style="color:#f6be39; background:#0e0e0e; padding:0.1rem 0.4rem;">PyPDFLoader</code>, for Word files <code style="color:#f6be39; background:#0e0e0e; padding:0.1rem 0.4rem;">Docx2txtLoader</code>, and for URLs we use a combination of <code style="color:#f6be39; background:#0e0e0e; padding:0.1rem 0.4rem;">WebBaseLoader</code> with BeautifulSoup stripping to remove navigation, headers, footers, and scripts from the extracted HTML.</p>
+
+    <p>The output from all loaders is a list of <code style="color:#f6be39; background:#0e0e0e; padding:0.1rem 0.4rem;">Document</code> objects — essentially a text string plus a metadata dictionary containing the source, page number (for PDFs), and any custom tags the user attaches during upload.</p>
+
+    <h2>Stage 2: Semantic Chunking</h2>
+
+    <p>This is where most RAG implementations go wrong, and where we spent a disproportionate amount of time. Chunking strategy has a direct, measurable impact on retrieval quality.</p>
+
+    <p>The naive approach is fixed-size chunking: split every document into 512-token chunks with 50-token overlaps. It's simple, but it produces terrible retrieval results when chunks cut across meaningful semantic boundaries — splitting a question from its answer, for instance, or separating a bullet list from its header.</p>
+
+    <p>We use LangChain's <code style="color:#f6be39; background:#0e0e0e; padding:0.1rem 0.4rem;">RecursiveCharacterTextSplitter</code> with a custom separator hierarchy that respects the document's natural structure: double newlines first (paragraphs), then single newlines (line breaks), then sentences, then words. This means the splitter tries to keep paragraphs together, only splitting smaller if a paragraph exceeds the target chunk size.</p>
+
+    <div class="code-block">
+        <code><span class="code-comment"># Python — BotForge chunking pipeline</span>
+<span class="code-keyword">from</span> langchain.text_splitter <span class="code-keyword">import</span> RecursiveCharacterTextSplitter
+<span class="code-keyword">from</span> langchain_openai <span class="code-keyword">import</span> OpenAIEmbeddings
+
+<span class="code-type">CHUNK_SIZE</span> = 800       <span class="code-comment"># tokens — sweet spot for context + retrieval precision</span>
+<span class="code-type">CHUNK_OVERLAP</span> = 100    <span class="code-comment"># token overlap to preserve continuity across chunk boundaries</span>
+
+<span class="code-keyword">def</span> <span class="code-type">chunk_documents</span>(documents: list[Document]) -> list[Document]:
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=<span class="code-type">CHUNK_SIZE</span>,
+        chunk_overlap=<span class="code-type">CHUNK_OVERLAP</span>,
+        separators=[<span class="code-string">"\n\n"</span>, <span class="code-string">"\n"</span>, <span class="code-string">". "</span>, <span class="code-string">" "</span>, <span class="code-string">""</span>],
+        length_function=<span class="code-type">len</span>,  <span class="code-comment"># can swap for token-count function</span>
+    )
+    chunks = splitter.split_documents(documents)
+
+    <span class="code-comment"># Enrich each chunk with positional metadata</span>
+    <span class="code-keyword">for</span> i, chunk <span class="code-keyword">in</span> enumerate(chunks):
+        chunk.metadata[<span class="code-string">"chunk_index"</span>] = i
+        chunk.metadata[<span class="code-string">"chunk_total"</span>] = len(chunks)
+
+    <span class="code-keyword">return</span> chunks
+
+<span class="code-keyword">def</span> <span class="code-type">embed_and_store</span>(chunks: list[Document], bot_id: str):
+    embeddings = OpenAIEmbeddings(model=<span class="code-string">"text-embedding-3-small"</span>)
+
+    <span class="code-comment"># SupabaseVectorStore handles batching and upsert to pgvector</span>
+    vectorstore = SupabaseVectorStore.from_documents(
+        chunks,
+        embeddings,
+        client=supabase_client,
+        table_name=<span class="code-string">"documents"</span>,
+        query_name=<span class="code-string">"match_documents"</span>,
+        chunk_size=500,  <span class="code-comment"># Supabase batch insert size</span>
+    )
+    <span class="code-keyword">return</span> vectorstore</code>
+    </div>
+
+    <p>One non-obvious optimization: we store each chunk alongside its <strong>surrounding context</strong> — the 100 characters immediately before and after the chunk boundary. This contextual fringe doesn't affect the embedding (we embed only the core chunk), but it's returned with the chunk during retrieval and included in the LLM prompt. This prevents the jarring "sentence starts in the middle of a thought" problem that confuses the LLM when chunks are retrieved cold.</p>
+
+    <h2>Stage 3: Embeddings and pgvector Storage</h2>
+
+    <p>Every chunk is converted to a dense vector representation using OpenAI's <code style="color:#f6be39; background:#0e0e0e; padding:0.1rem 0.4rem;">text-embedding-3-small</code> model, which produces 1536-dimensional vectors. These vectors encode the semantic meaning of the text — two chunks that say the same thing in different words will have similar vectors, even if they share no exact keywords.</p>
+
+    <p>We store these vectors in Supabase using the pgvector extension. Supabase was chosen for three reasons: it's Postgres under the hood (no proprietary query language), pgvector is battle-tested for similarity search at our scale, and the Supabase client has first-class LangChain integration. We don't need a dedicated vector database at our current scale — pgvector with an IVFFlat index handles millions of vectors comfortably.</p>
+
+    <p>The pgvector schema for the documents table is straightforward:</p>
+
+    <div class="code-block">
+        <code><span class="code-comment">-- Supabase SQL: documents table with pgvector</span>
+<span class="code-keyword">create extension if not exists</span> vector;
+
+<span class="code-keyword">create table</span> documents (
+  id          bigserial <span class="code-keyword">primary key</span>,
+  bot_id      uuid <span class="code-keyword">references</span> bots(id) <span class="code-keyword">on delete cascade</span>,
+  content     text <span class="code-keyword">not null</span>,
+  metadata    jsonb,
+  embedding   vector(1536)
+);
+
+<span class="code-comment">-- IVFFlat index for approximate nearest-neighbor search</span>
+<span class="code-comment">-- lists = sqrt(row_count) is a good starting heuristic</span>
+<span class="code-keyword">create index on</span> documents
+  <span class="code-keyword">using</span> ivfflat (embedding vector_cosine_ops)
+  <span class="code-keyword">with</span> (lists = 100);
+
+<span class="code-comment">-- RLS: each bot only retrieves its own documents</span>
+<span class="code-keyword">alter table</span> documents <span class="code-keyword">enable row level security</span>;
+
+<span class="code-keyword">create policy</span> <span class="code-string">"Bot isolation"</span> <span class="code-keyword">on</span> documents
+  <span class="code-keyword">using</span> (bot_id = auth.uid());</code>
+    </div>
+
+    <p>Row-level security is critical here. BotForge is a multi-tenant platform — dozens of businesses each have their own bots with their own private knowledge bases. RLS at the Postgres level means that even if application-layer code has a bug, one tenant can never see another tenant's documents. This is a hard security guarantee, not a soft application convention.</p>
+
+    <h2>Stage 4: Query Retrieval and Context Assembly</h2>
+
+    <p>When a user sends a message, the query pipeline fires. The user's message is embedded with the same model used for ingestion (consistency is essential — mismatched embedding models produce garbage retrieval results). The resulting query vector is compared against all stored chunk vectors using cosine similarity, and the top-k most similar chunks are retrieved.</p>
+
+    <p>We retrieve the top 5 chunks by default. This number is tunable per bot — knowledge bases with dense, highly similar documents (like a large FAQ) benefit from fewer chunks to avoid context dilution; sparse, diverse documentation benefits from more. Five is a good default for most business use cases.</p>
+
+    <p>The retrieved chunks are then assembled into a system prompt that looks roughly like this:</p>
+
+    <div class="code-block">
+        <code><span class="code-comment"># Python — context assembly for the LLM prompt</span>
+<span class="code-keyword">def</span> <span class="code-type">build_system_prompt</span>(bot_config: BotConfig, chunks: list[Document]) -> str:
+    context_blocks = <span class="code-string">"\n\n---\n\n"</span>.join([
+        f<span class="code-string">"Source: {c.metadata.get('source', 'Knowledge Base')}\n{c.page_content}"</span>
+        <span class="code-keyword">for</span> c <span class="code-keyword">in</span> chunks
+    ])
+
+    <span class="code-keyword">return</span> f<span class="code-string">"""You are {bot_config.name}, a helpful assistant for {bot_config.company_name}.
+
+INSTRUCTIONS:
+- Answer questions using ONLY the context provided below.
+- If the answer is not in the context, say so honestly.
+- Do not invent information. Do not use your general training knowledge.
+- Keep responses concise and directly useful.
+- Maintain the persona: {bot_config.persona_description}
+
+CONTEXT:
+{context_blocks}
+
+Today's date: {datetime.now().strftime('%B %d, %Y')}"""</span></code>
+    </div>
+
+    <p>The explicit instruction to use only provided context is essential. Without it, LLMs will confidently blend retrieved facts with hallucinated ones, and users will trust the output because it sounds authoritative. "I don't have information about that" is a far better answer than a plausible-sounding wrong one.</p>
+
+    <h2>Stage 5: Streaming Chat with OpenRouter</h2>
+
+    <p>BotForge uses OpenRouter as its LLM gateway rather than calling OpenAI directly. OpenRouter is a unified API that routes requests to multiple LLM providers — OpenAI, Anthropic, Google, Meta, Mistral — with automatic fallback and cost tracking. This gives us model flexibility: we can run different models for different bot configurations (GPT-4o for premium bots, Claude Haiku for high-volume low-cost bots) without changing application code.</p>
+
+    <p>The response is streamed using Server-Sent Events. The Python backend streams chunks from OpenRouter as they arrive; the Next.js frontend consumes the SSE stream and renders tokens as they come in. This makes the interface feel responsive even on long responses — users see the first words within 200–400ms rather than waiting 5 seconds for a full response to buffer.</p>
+
+    <div class="code-block">
+        <code><span class="code-comment"># Python (FastAPI) — streaming endpoint</span>
+<span class="code-keyword">from</span> fastapi <span class="code-keyword">import</span> FastAPI
+<span class="code-keyword">from</span> fastapi.responses <span class="code-keyword">import</span> StreamingResponse
+<span class="code-keyword">import</span> httpx
+
+<span class="code-keyword">async def</span> <span class="code-type">stream_llm_response</span>(messages: list[dict], model: str):
+    <span class="code-keyword">async with</span> httpx.AsyncClient() <span class="code-keyword">as</span> client:
+        <span class="code-keyword">async with</span> client.stream(
+            <span class="code-string">"POST"</span>,
+            <span class="code-string">"https://openrouter.ai/api/v1/chat/completions"</span>,
+            headers={<span class="code-string">"Authorization"</span>: f<span class="code-string">"Bearer {OPENROUTER_KEY}"</span>},
+            json={
+                <span class="code-string">"model"</span>: model,
+                <span class="code-string">"messages"</span>: messages,
+                <span class="code-string">"stream"</span>: <span class="code-keyword">True</span>,
+                <span class="code-string">"temperature"</span>: 0.3,  <span class="code-comment"># Low temp = more factual, less creative</span>
+            },
+        ) <span class="code-keyword">as</span> response:
+            <span class="code-keyword">async for</span> chunk <span class="code-keyword">in</span> response.aiter_lines():
+                <span class="code-keyword">if</span> chunk.startswith(<span class="code-string">"data: "</span>) <span class="code-keyword">and</span> chunk != <span class="code-string">"data: [DONE]"</span>:
+                    data = json.loads(chunk[6:])
+                    delta = data[<span class="code-string">"choices"</span>][0][<span class="code-string">"delta"</span>].get(<span class="code-string">"content"</span>, <span class="code-string">""</span>)
+                    <span class="code-keyword">if</span> delta:
+                        <span class="code-keyword">yield</span> f<span class="code-string">"data: {json.dumps({'token': delta})}\n\n"</span>
+
+<span class="code-type">@app.post</span>(<span class="code-string">"/chat/{bot_id}"</span>)
+<span class="code-keyword">async def</span> <span class="code-type">chat</span>(bot_id: str, body: ChatRequest):
+    chunks = <span class="code-keyword">await</span> retrieve_relevant_chunks(bot_id, body.message)
+    system_prompt = build_system_prompt(bot_config, chunks)
+    messages = [
+        {<span class="code-string">"role"</span>: <span class="code-string">"system"</span>, <span class="code-string">"content"</span>: system_prompt},
+        *body.history,
+        {<span class="code-string">"role"</span>: <span class="code-string">"user"</span>, <span class="code-string">"content"</span>: body.message},
+    ]
+    <span class="code-keyword">return</span> StreamingResponse(
+        stream_llm_response(messages, bot_config.model),
+        media_type=<span class="code-string">"text/event-stream"</span>,
+    )</code>
+    </div>
+
+    <h2>Evaluation: How Do We Know It's Working?</h2>
+
+    <p>RAG systems are notoriously hard to evaluate objectively. You can't just run unit tests on an AI. We use a combination of three approaches:</p>
+
+    <p><strong>Retrieval precision tests:</strong> We maintain a set of "golden" query-document pairs — queries we know should retrieve specific chunks — and run them automatically on every deploy. If a known query stops retrieving the expected chunk (e.g., due to a chunking change), the test fails and the deploy is blocked.</p>
+
+    <p><strong>LLM-as-judge evaluation:</strong> For end-to-end response quality, we use a separate LLM call (Claude Opus) to score responses against a rubric: accuracy, groundedness (is the answer supported by the retrieved context?), and helpfulness. This runs weekly on a sample of real production queries with PII removed.</p>
+
+    <p><strong>User feedback signals:</strong> The chat widget includes thumbs up/down feedback. We track the ratio per bot and alert merchants when their bot's satisfaction drops below a threshold. A sudden drop almost always means a knowledge base update is needed — new pricing, a policy change, a product launch that the bot doesn't know about yet.</p>
+
+    <h2>What We'd Build Differently Today</h2>
+
+    <p>If we were starting BotForge from scratch in 2026, we'd make a few changes. First, we'd invest earlier in <strong>hybrid search</strong> — combining pgvector's semantic similarity with BM25 keyword search. Pure semantic search sometimes misses exact product names, SKUs, or technical terms that don't embed well. Hybrid search with reciprocal rank fusion gives better results across the board.</p>
+
+    <p>Second, we'd implement <strong>document-level metadata filtering</strong> from day one. Some merchants want to restrict certain bots to specific document categories — the customer-facing bot should only access public documentation, not internal pricing guides. Adding metadata filtering to pgvector queries is straightforward (<code style="color:#f6be39; background:#0e0e0e; padding:0.1rem 0.4rem;">WHERE metadata->>'category' = 'public'</code>), but retrofitting the ingestion pipeline to collect and store metadata consistently is painful.</p>
+
+    <p>Third: <strong>conversation memory</strong>. The current implementation passes the last N turns of conversation history in the prompt, which works but has a hard token limit. A proper long-term memory system — summarising older turns and storing them as retrievable memories — would dramatically improve multi-turn conversation quality for complex support workflows.</p>
+
+    <h2>Closing Thoughts</h2>
+
+    <p>RAG is not magic, and it's not as simple as "connect a vector database to an LLM". The quality of the output is almost entirely determined by the quality of the pipeline that precedes the LLM call: how well you chunk, how accurately you embed, how precisely you retrieve. The LLM is the last mile — if you hand it the right context, it will produce a great answer. If you hand it irrelevant chunks, no amount of prompt engineering will save you.</p>
+
+    <p>BotForge exists because we've learned these lessons the hard way and built a platform that handles the pipeline correctly so businesses can focus on their knowledge base, not their infrastructure. If you're building an AI assistant for your business, or if you're a developer evaluating RAG architectures, I'd love to compare notes.</p>
+
+    <!-- Author + CTA -->
+    <div class="mt-16 pt-8 border-t border-[#2a2a2a] flex flex-col md:flex-row items-start gap-6">
+        <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-16 h-16 rounded-full object-cover grayscale flex-shrink-0" onerror="this.style.display='none'"/>
+        <div>
+            <div class="text-[#F5F5F5] font-black text-lg mb-1">Henning Botha</div>
+            <div class="text-[#a88a7e] text-[0.875rem] mb-4">Founder, HJB CodeForge. I build AI-powered products, Shopify apps, and SaaS tools for businesses that demand precision.</div>
+            <a href="../contact.html" class="inline-flex forge-gradient text-white px-6 py-2.5 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">
+                Discuss Your Project →
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Navigation -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="net-terms-tracker-case-study.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">← Previous</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">Building Net Terms Tracker: A Shopify B2B App Case Study</div>
+        </a>
+        <a href="majestic-monolith.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors text-right">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">Next →</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">In Defence of the Majestic Monolith</div>
+        </a>
+    </div>
+</article>
+
+<!-- Footer -->
+<footer class="border-t border-[#2a2a2a] py-12 px-8">
+    <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-8 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../index.html">Home</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../services.html">Services</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../portfolio.html">Portfolio</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../blog.html">Blog</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../contact.html">Contact</a>
+        </div>
+        <p class="text-[#594237] text-[0.8rem]">© 2026 HJB CodeForge. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

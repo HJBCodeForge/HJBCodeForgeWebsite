@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HJB CodeForge | Powerful Software, Precisely Built.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#ef6712",
+                    "on-primary-container": "#ffffff",
+                    "primary-fixed": "#ffdbcc",
+                    "primary-fixed-dim": "#ffb694",
+                    "secondary": "#f6be39",
+                    "on-secondary": "#402d00",
+                    "secondary-container": "#c59300",
+                    "on-secondary-container": "#433000",
+                    "secondary-fixed": "#ffdfa0",
+                    "secondary-fixed-dim": "#f6be39",
+                    "tertiary": "#a2c9ff",
+                    "on-tertiary": "#00315c",
+                    "background": "#0A0A0A",
+                    "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A",
+                    "on-surface": "#e5e2e1",
+                    "surface-variant": "#353534",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-dim": "#131313",
+                    "surface-bright": "#3a3939",
+                    "surface-tint": "#ffb694",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "outline": "#a88a7e",
+                    "outline-variant": "#594237",
+                    "inverse-surface": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "inverse-primary": "#a14000",
+                    "error": "#ffb4ab",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                },
+                fontFamily: {
+                    "headline": ["Inter", "Arial", "sans-serif"],
+                    "body": ["Inter", "Arial", "sans-serif"],
+                    "label": ["Inter", "Arial", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+                },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+    .phoenix-glow {
+        background: radial-gradient(circle at center, rgba(232, 98, 10, 0.15) 0%, transparent 70%);
+        filter: blur(60px);
+    }
+    .text-outline {
+        -webkit-text-stroke: 1px rgba(245, 245, 245, 0.3);
+        color: transparent;
+    }
+    .forge-gradient {
+        background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%);
+    }
+    body { background-color: #0A0A0A; }
+</style>
+</head>
+<body class="font-body text-on-surface selection:bg-primary selection:text-on-primary">
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="assets/images/logo.png"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="services.html">Services</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="portfolio.html">Portfolio</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="blog.html">Blog</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="contact.html">Contact</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">
+                Let's Build
+            </a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2 rounded-lg hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0A0A0A] border-t border-outline-variant/10 px-8 py-6 space-y-4">
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="index.html">Home</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="services.html">Services</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="about.html">About</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="portfolio.html">Portfolio</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="blog.html">Blog</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="contact.html">Contact</a>
+        <a href="contact.html" class="inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg mt-2">Let's Build</a>
+    </div>
+</nav>
+
+<main class="relative overflow-hidden pt-20">
+    <!-- Hero Section -->
+    <section class="relative min-h-[921px] flex flex-col items-start justify-center px-8 md:px-24 max-w-[1440px] mx-auto">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full phoenix-glow pointer-events-none -z-10"></div>
+        <div class="space-y-4 max-w-5xl">
+            <div class="flex items-center gap-2 text-primary font-bold tracking-widest text-[0.75rem] uppercase">
+                <span class="w-12 h-[2px] bg-primary"></span>
+                The Kinetic Forge
+            </div>
+            <h1 class="text-[3.5rem] md:text-[6rem] leading-[0.9] font-black tracking-tighter text-on-surface">
+                POWERFUL <br/>
+                <span class="text-primary italic">SOFTWARE,</span><br/>
+                <span class="text-outline">PRECISELY BUILT.</span>
+            </h1>
+            <p class="text-on-surface/60 text-lg md:text-xl max-w-xl font-medium leading-relaxed mt-6">
+                We engineer bespoke digital solutions for visionaries who demand technical excellence and high-performance design.
+            </p>
+            <div class="pt-10 flex flex-wrap gap-6">
+                <a href="contact.html" class="forge-gradient text-white px-10 py-5 font-bold uppercase tracking-widest rounded-lg flex items-center gap-3 hover:scale-105 transition-transform">
+                    Start Project
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+                <a href="portfolio.html" class="flex items-center gap-4 text-on-surface font-bold uppercase tracking-widest text-sm px-10 py-5 border border-outline-variant/30 rounded-lg hover:bg-surface-container-high transition-all">
+                    View Portfolio
+                </a>
+            </div>
+        </div>
+        <div class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 opacity-10 pointer-events-none">
+            <span class="text-[30rem] font-black leading-none select-none">CODE</span>
+        </div>
+    </section>
+
+    <!-- Services Strip -->
+    <section class="bg-surface-container py-12 border-y border-outline-variant/10">
+        <div class="flex flex-wrap gap-x-12 gap-y-6 items-center px-8 max-w-[1440px] mx-auto">
+            <div class="flex items-center gap-4 group">
+                <span class="material-symbols-outlined text-primary text-3xl">developer_board</span>
+                <span class="text-xl font-black uppercase tracking-tight text-on-surface/80 group-hover:text-primary transition-colors">Custom Software</span>
+            </div>
+            <div class="w-px h-8 bg-outline-variant/30 hidden md:block"></div>
+            <div class="flex items-center gap-4 group">
+                <span class="material-symbols-outlined text-primary text-3xl">cloud_sync</span>
+                <span class="text-xl font-black uppercase tracking-tight text-on-surface/80 group-hover:text-primary transition-colors">SaaS Products</span>
+            </div>
+            <div class="w-px h-8 bg-outline-variant/30 hidden md:block"></div>
+            <div class="flex items-center gap-4 group">
+                <span class="material-symbols-outlined text-primary text-3xl">terminal</span>
+                <span class="text-xl font-black uppercase tracking-tight text-on-surface/80 group-hover:text-primary transition-colors">Web Dev</span>
+            </div>
+            <div class="w-px h-8 bg-outline-variant/30 hidden md:block"></div>
+            <div class="flex items-center gap-4 group">
+                <span class="material-symbols-outlined text-primary text-3xl">stay_current_portrait</span>
+                <span class="text-xl font-black uppercase tracking-tight text-on-surface/80 group-hover:text-primary transition-colors">Mobile Apps</span>
+            </div>
+            <div class="w-px h-8 bg-outline-variant/30 hidden md:block"></div>
+            <div class="flex items-center gap-4 group">
+                <span class="material-symbols-outlined text-primary text-3xl">smart_toy</span>
+                <span class="text-xl font-black uppercase tracking-tight text-on-surface/80 group-hover:text-primary transition-colors">AI Integration</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Project -->
+    <section class="py-32 px-8 max-w-[1440px] mx-auto">
+        <div class="flex flex-col lg:flex-row gap-16 items-center">
+            <div class="w-full lg:w-1/2 relative">
+                <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+                <div class="bg-surface-container-high p-4 rounded-xl shadow-2xl overflow-hidden">
+                    <img alt="Net Terms Tracker Shopify App Interface" class="w-full h-auto rounded-lg transition-all duration-700" src="assets/images/net-terms.png"
+                         onerror="this.src='https://lh3.googleusercontent.com/aida/ADBb0uia-NOwyjIa7xgjHPoM_wBvpUk4Kb3QnASZ7eBvj412KXnPNiO5HotbXJgeM9vAjJ9LEbaeS487rE9SH22WVHY7tvquAnITJCCiwSexxQ2FNxkrUVaexGMMZ2B5FZJOVE3yCT6hvpQ4vBRK0wwhMAo9rSqp_OHt07adlrDHaP343wzhQE3bcoZx8GbrwwVo-s4j637ePKJ0jNnYD55VAW9CqO3rwhwkzVp6voh6GbPSV8N-uNP1k2jAoeAUvmNSAt8qoBM-FXKR_w'"/>
+                </div>
+                <div class="absolute -bottom-6 -right-6 bg-surface-container-lowest p-6 rounded-lg border-l-4 border-primary shadow-xl hidden md:block">
+                    <p class="text-[0.75rem] font-bold text-on-surface/40 uppercase tracking-widest">Featured Build</p>
+                    <p class="text-lg font-bold">Net Terms Tracker</p>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 space-y-8">
+                <div class="space-y-4">
+                    <h2 class="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none">NET TERMS TRACKER — Full-Stack Shopify B2B App</h2>
+                    <p class="text-on-surface/60 text-lg leading-relaxed max-w-lg">A production-deployed Shopify application that automates B2B Net 30 payment workflows. Replaces Draft Order workarounds with a purpose-built system featuring real-time credit checks, automated invoicing, and a self-service Customer Finance Portal.</p>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6 text-sm font-medium text-on-surface/80">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Rust-based Checkout UI Gatekeeper</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Automated Invoicing Engine</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Storefront Customer Finance Portal</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> "The Enforcer" compliance scanner</li>
+                    </ul>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <span class="px-4 py-2 bg-surface-container-lowest text-[0.7rem] font-bold tracking-widest uppercase border border-outline-variant/20 rounded">Remix</span>
+                    <span class="px-4 py-2 bg-surface-container-lowest text-[0.7rem] font-bold tracking-widest uppercase border border-outline-variant/20 rounded">React</span>
+                    <span class="px-4 py-2 bg-surface-container-lowest text-[0.7rem] font-bold tracking-widest uppercase border border-outline-variant/20 rounded">Shopify Polaris</span>
+                    <span class="px-4 py-2 bg-surface-container-lowest text-[0.7rem] font-bold tracking-widest uppercase border border-outline-variant/20 rounded">GraphQL API</span>
+                    <span class="px-4 py-2 bg-surface-container-lowest text-[0.7rem] font-bold tracking-widest uppercase border border-outline-variant/20 rounded">Rust</span>
+                    <span class="px-4 py-2 bg-surface-container-lowest text-[0.7rem] font-bold tracking-widest uppercase border border-outline-variant/20 rounded">Prisma</span>
+                    <span class="px-4 py-2 bg-surface-container-lowest text-[0.7rem] font-bold tracking-widest uppercase border border-outline-variant/20 rounded">SQLite</span>
+                    <span class="px-4 py-2 bg-surface-container-lowest text-[0.7rem] font-bold tracking-widest uppercase border border-outline-variant/20 rounded">Fly.io</span>
+                </div>
+                <div class="pt-6">
+                    <a class="inline-flex items-center gap-4 text-primary font-black uppercase tracking-[0.2em] text-sm group" href="portfolio.html">
+                        Explore Technical Case Study
+                        <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="relative py-24 px-8 overflow-hidden">
+        <div class="max-w-[1440px] mx-auto bg-primary py-20 px-8 md:px-24 flex flex-col md:flex-row justify-between items-center gap-12 rounded-2xl relative overflow-hidden">
+            <div class="absolute right-0 bottom-0 opacity-10 translate-x-1/4 translate-y-1/4 pointer-events-none">
+                <span class="material-symbols-outlined text-[30rem]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+            </div>
+            <div class="relative z-10 max-w-2xl text-white text-center md:text-left">
+                <h2 class="text-[2.5rem] md:text-[3.5rem] font-black leading-none uppercase tracking-tighter">Ready to build something powerful?</h2>
+            </div>
+            <div class="relative z-10">
+                <a href="contact.html" class="bg-[#0A0A0A] text-primary px-12 py-6 font-black uppercase tracking-widest text-lg rounded-full hover:scale-105 transition-transform shadow-2xl inline-block">
+                    Let's Build
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#0A0A0A] w-full pt-24 pb-12 border-t border-outline-variant/10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-[1440px] mx-auto">
+        <div class="space-y-6">
+            <a href="index.html" class="flex items-center gap-3">
+                <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="assets/images/logo.png"/>
+                <span class="text-2xl font-black text-[#F5F5F5]">HJB CodeForge</span>
+            </a>
+            <p class="text-[1.0rem] leading-relaxed text-[#F5F5F5]/60 max-w-xs">
+                Architecting the future of software through precision engineering and kinetic design.
+            </p>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase tracking-widest text-sm mb-6">Services</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">Custom Development</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">SaaS Architecture</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">Mobile Products</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">AI Integration</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase tracking-widest text-sm mb-6">Company</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="about.html">About Us</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="portfolio.html">Portfolio</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="blog.html">Blog</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase tracking-widest text-sm mb-6">Socials</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://x.com" target="_blank" rel="noopener">X / Twitter</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-[1440px] mx-auto px-8 mt-24 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-outline-variant/5 pt-8">
+        <p class="text-[0.85rem] text-[#F5F5F5]/40 uppercase tracking-widest">© 2026 HJB CodeForge. Powerful software, precisely built.</p>
+        <div class="flex gap-8 text-[0.85rem] text-[#F5F5F5]/40 uppercase tracking-widest">
+            <a class="hover:text-primary transition-colors" href="#">Privacy</a>
+            <a class="hover:text-primary transition-colors" href="#">Terms</a>
+        </div>
+    </div>
+</footer>
+
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-20">
+    <div class="absolute top-[10%] right-[10%] w-96 h-96 phoenix-glow opacity-30"></div>
+    <div class="absolute bottom-[20%] left-[5%] w-80 h-80 phoenix-glow opacity-20"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact | HJB CodeForge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- EmailJS SDK — connects form directly to support@hjbcodeforge.com via Gmail -->
+<!-- Setup: https://www.emailjs.com/ — free tier, 200 emails/month -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#ef6712",
+                    "on-primary-container": "#ffffff",
+                    "primary-fixed": "#ffdbcc",
+                    "primary-fixed-dim": "#ffb694",
+                    "secondary": "#f6be39",
+                    "on-secondary": "#402d00",
+                    "secondary-container": "#c59300",
+                    "on-secondary-container": "#433000",
+                    "secondary-fixed": "#ffdfa0",
+                    "secondary-fixed-dim": "#f6be39",
+                    "tertiary": "#a2c9ff",
+                    "on-tertiary": "#00315c",
+                    "background": "#0A0A0A",
+                    "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A",
+                    "on-surface": "#e5e2e1",
+                    "surface-variant": "#353534",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-dim": "#131313",
+                    "surface-bright": "#3a3939",
+                    "surface-tint": "#ffb694",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "outline": "#a88a7e",
+                    "outline-variant": "#594237",
+                    "inverse-surface": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "inverse-primary": "#a14000",
+                    "error": "#ffb4ab",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                },
+                fontFamily: {
+                    "headline": ["Inter", "Arial", "sans-serif"],
+                    "body": ["Inter", "Arial", "sans-serif"],
+                    "label": ["Inter", "Arial", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+                },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+    .forge-gradient {
+        background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%);
+    }
+    .phoenix-glow {
+        background: radial-gradient(circle at center, rgba(232, 98, 10, 0.15) 0%, transparent 70%);
+        filter: blur(60px);
+    }
+    body { background-color: #0A0A0A; }
+
+    /* Form field focus styles */
+    .forge-input {
+        background-color: #1c1b1b;
+        border: 1px solid #353534;
+        color: #e5e2e1;
+        border-radius: 0.25rem;
+        padding: 0.875rem 1rem;
+        width: 100%;
+        font-family: Inter, Arial, sans-serif;
+        font-size: 0.95rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        outline: none;
+    }
+    .forge-input::placeholder { color: #a88a7e; }
+    .forge-input:focus {
+        border-color: #E8620A;
+        box-shadow: 0 0 0 3px rgba(232, 98, 10, 0.15);
+    }
+    .forge-input.error {
+        border-color: #ffb4ab;
+        box-shadow: 0 0 0 3px rgba(255, 180, 171, 0.15);
+    }
+
+    /* Submit button states */
+    #submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    /* Success / Error message */
+    #form-success, #form-error { display: none; }
+    #form-success.visible, #form-error.visible { display: flex; }
+
+    /* Spinner */
+    .spinner {
+        display: none;
+        width: 20px; height: 20px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+    }
+    .spinner.visible { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body class="font-body text-on-surface selection:bg-primary selection:text-on-primary">
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="assets/images/logo.png"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="services.html">Services</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="portfolio.html">Portfolio</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="blog.html">Blog</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">
+                Let's Build
+            </a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2 rounded-lg hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0A0A0A] border-t border-outline-variant/10 px-8 py-6 space-y-4">
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="index.html">Home</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="services.html">Services</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="about.html">About</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="portfolio.html">Portfolio</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="blog.html">Blog</a>
+        <a href="contact.html" class="inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg mt-2">Let's Build</a>
+    </div>
+</nav>
+
+<main class="pt-20">
+
+    <!-- Page Header -->
+    <section class="relative px-8 md:px-24 max-w-[1440px] mx-auto pt-20 pb-16">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full phoenix-glow pointer-events-none -z-10"></div>
+        <div class="flex items-center gap-2 text-primary font-bold tracking-widest text-[0.75rem] uppercase mb-6">
+            <span class="w-12 h-[2px] bg-primary"></span>
+            Get In Touch
+        </div>
+        <h1 class="text-[3rem] md:text-[5rem] font-black tracking-tighter leading-[0.95] text-on-surface mb-6">
+            LET'S BUILD<br/>
+            <span class="text-primary italic">SOMETHING</span><br/>
+            <span style="-webkit-text-stroke: 1px rgba(245,245,245,0.3); color: transparent;">REMARKABLE.</span>
+        </h1>
+        <p class="text-on-surface/60 text-lg max-w-xl font-medium leading-relaxed">
+            Tell us about your project and we'll get back to you within one business day.
+        </p>
+    </section>
+
+    <!-- Contact Layout -->
+    <section class="px-8 md:px-24 max-w-[1440px] mx-auto pb-32">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+
+            <!-- Left: Contact Info -->
+            <div class="space-y-12">
+                <div>
+                    <h3 class="text-on-surface font-black uppercase tracking-widest text-sm mb-8 flex items-center gap-3">
+                        <span class="w-6 h-[2px] bg-primary"></span>
+                        Contact Details
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="material-symbols-outlined text-primary text-xl">mail</span>
+                            </div>
+                            <div>
+                                <p class="text-on-surface/40 text-xs uppercase tracking-widest font-bold mb-1">Email</p>
+                                <p class="text-on-surface font-semibold">support@hjbcodeforge.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="material-symbols-outlined text-primary text-xl">schedule</span>
+                            </div>
+                            <div>
+                                <p class="text-on-surface/40 text-xs uppercase tracking-widest font-bold mb-1">Response Time</p>
+                                <p class="text-on-surface font-semibold">Within 1 business day</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="material-symbols-outlined text-primary text-xl">public</span>
+                            </div>
+                            <div>
+                                <p class="text-on-surface/40 text-xs uppercase tracking-widest font-bold mb-1">Location</p>
+                                <p class="text-on-surface font-semibold">Remote — Worldwide</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What happens next -->
+                <div class="border border-outline-variant/20 rounded-lg p-6 bg-surface-container-low">
+                    <h4 class="text-on-surface font-black uppercase tracking-widest text-xs mb-6 text-primary">What Happens Next</h4>
+                    <div class="space-y-5">
+                        <div class="flex items-start gap-4">
+                            <span class="w-6 h-6 rounded-full forge-gradient flex items-center justify-center text-white font-black text-xs flex-shrink-0 mt-0.5">1</span>
+                            <p class="text-on-surface/70 text-sm leading-relaxed">We review your project details and prepare an initial assessment.</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-6 h-6 rounded-full forge-gradient flex items-center justify-center text-white font-black text-xs flex-shrink-0 mt-0.5">2</span>
+                            <p class="text-on-surface/70 text-sm leading-relaxed">You receive a personalised reply within one business day.</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-6 h-6 rounded-full forge-gradient flex items-center justify-center text-white font-black text-xs flex-shrink-0 mt-0.5">3</span>
+                            <p class="text-on-surface/70 text-sm leading-relaxed">We schedule a discovery call to align on scope, timeline, and budget.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Contact Form (spans 2 cols) -->
+            <div class="lg:col-span-2">
+                <div class="bg-surface-container-low border border-outline-variant/20 rounded-lg p-8 md:p-10">
+
+                    <!-- Success State -->
+                    <div id="form-success" class="items-start gap-5 bg-[#0d2e1c] border border-[#1a6b3c] rounded-lg p-8 mb-8">
+                        <span class="material-symbols-outlined text-[#4ade80] text-4xl flex-shrink-0">check_circle</span>
+                        <div>
+                            <h4 class="text-[#4ade80] font-black uppercase tracking-widest text-sm mb-2">Message Sent!</h4>
+                            <p class="text-[#4ade80]/80 text-sm leading-relaxed">Thanks for reaching out. We'll be in touch within one business day.</p>
+                        </div>
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="form-error" class="items-start gap-5 bg-[#2e0d0d] border border-[#6b1a1a] rounded-lg p-8 mb-8">
+                        <span class="material-symbols-outlined text-[#f87171] text-4xl flex-shrink-0">error</span>
+                        <div>
+                            <h4 class="text-[#f87171] font-black uppercase tracking-widest text-sm mb-2">Something Went Wrong</h4>
+                            <p class="text-[#f87171]/80 text-sm leading-relaxed" id="error-message">Please try again, or email us directly at support@hjbcodeforge.com.</p>
+                        </div>
+                    </div>
+
+                    <form id="contact-form" novalidate>
+                        <!-- Name + Email row -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-on-surface/60 text-xs uppercase tracking-widest font-bold mb-2" for="from_name">
+                                    Full Name <span class="text-primary">*</span>
+                                </label>
+                                <input
+                                    class="forge-input"
+                                    id="from_name"
+                                    name="from_name"
+                                    type="text"
+                                    placeholder="Jane Smith"
+                                    required
+                                />
+                                <p class="field-error hidden text-[#ffb4ab] text-xs mt-1.5">Please enter your name.</p>
+                            </div>
+                            <div>
+                                <label class="block text-on-surface/60 text-xs uppercase tracking-widest font-bold mb-2" for="reply_to">
+                                    Email Address <span class="text-primary">*</span>
+                                </label>
+                                <input
+                                    class="forge-input"
+                                    id="reply_to"
+                                    name="reply_to"
+                                    type="email"
+                                    placeholder="jane@company.com"
+                                    required
+                                />
+                                <p class="field-error hidden text-[#ffb4ab] text-xs mt-1.5">Please enter a valid email address.</p>
+                            </div>
+                        </div>
+
+                        <!-- Company + Budget row -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-on-surface/60 text-xs uppercase tracking-widest font-bold mb-2" for="company">
+                                    Company / Organisation
+                                </label>
+                                <input
+                                    class="forge-input"
+                                    id="company"
+                                    name="company"
+                                    type="text"
+                                    placeholder="Acme Inc. (optional)"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-on-surface/60 text-xs uppercase tracking-widest font-bold mb-2" for="budget">
+                                    Estimated Budget
+                                </label>
+                                <select class="forge-input" id="budget" name="budget">
+                                    <option value="" disabled selected>Select a range…</option>
+                                    <option value="Under $5k">Under $5,000</option>
+                                    <option value="$5k – $15k">$5,000 – $15,000</option>
+                                    <option value="$15k – $50k">$15,000 – $50,000</option>
+                                    <option value="$50k+">$50,000+</option>
+                                    <option value="Not sure yet">Not sure yet</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Service Type -->
+                        <div class="mb-6">
+                            <label class="block text-on-surface/60 text-xs uppercase tracking-widest font-bold mb-2" for="service_type">
+                                What Are You Building? <span class="text-primary">*</span>
+                            </label>
+                            <select class="forge-input" id="service_type" name="service_type" required>
+                                <option value="" disabled selected>Select a service…</option>
+                                <option value="Custom Web Application">Custom Web Application</option>
+                                <option value="SaaS Product / Platform">SaaS Product / Platform</option>
+                                <option value="Mobile App (iOS / Android)">Mobile App (iOS / Android)</option>
+                                <option value="E-commerce / Shopify">E-commerce / Shopify</option>
+                                <option value="AI / ML Integration">AI / ML Integration</option>
+                                <option value="API Development">API Development</option>
+                                <option value="Performance Audit / Rescue">Performance Audit / Rescue</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <p class="field-error hidden text-[#ffb4ab] text-xs mt-1.5">Please select a service type.</p>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="mb-8">
+                            <label class="block text-on-surface/60 text-xs uppercase tracking-widest font-bold mb-2" for="message">
+                                Tell Us About Your Project <span class="text-primary">*</span>
+                            </label>
+                            <textarea
+                                class="forge-input"
+                                id="message"
+                                name="message"
+                                rows="6"
+                                placeholder="Describe what you're building, the problem it solves, your timeline, and any technical context that would be helpful…"
+                                required
+                            ></textarea>
+                            <p class="field-error hidden text-[#ffb4ab] text-xs mt-1.5">Please describe your project.</p>
+                        </div>
+
+                        <!-- Submit -->
+                        <button
+                            id="submit-btn"
+                            type="submit"
+                            class="forge-gradient text-white w-full md:w-auto px-12 py-5 font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform text-sm"
+                        >
+                            <span id="btn-label">Send Message</span>
+                            <span class="material-symbols-outlined" id="btn-icon">send</span>
+                            <div class="spinner" id="btn-spinner"></div>
+                        </button>
+
+                        <p class="text-on-surface/30 text-xs mt-4">
+                            By submitting this form you agree to being contacted by HJB CodeForge regarding your enquiry.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#0A0A0A] border-t border-outline-variant/10 px-8 py-24">
+    <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div class="md:col-span-1">
+            <a href="index.html" class="flex items-center gap-3 mb-6">
+                <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="assets/images/logo.png"/>
+                <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+            </a>
+            <p class="text-[#F5F5F5]/40 text-sm leading-relaxed">Powerful software, precisely built.</p>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase tracking-widest text-sm mb-6">Services</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">Custom Development</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">SaaS Architecture</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">Mobile Products</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">AI Integration</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase tracking-widest text-sm mb-6">Company</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="about.html">About Us</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="portfolio.html">Portfolio</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="blog.html">Blog</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase tracking-widest text-sm mb-6">Socials</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://x.com" target="_blank" rel="noopener">X / Twitter</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-[1440px] mx-auto px-0 mt-24 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-outline-variant/5 pt-8">
+        <p class="text-[0.85rem] text-[#F5F5F5]/40 uppercase tracking-widest">© 2026 HJB CodeForge. Powerful software, precisely built.</p>
+        <div class="flex gap-8 text-[0.85rem] text-[#F5F5F5]/40 uppercase tracking-widest">
+            <a class="hover:text-[#F5F5F5]/70 transition-colors" href="#">Privacy</a>
+            <a class="hover:text-[#F5F5F5]/70 transition-colors" href="#">Terms</a>
+        </div>
+    </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+
+<script>
+    // ─────────────────────────────────────────────────────────────────────────
+    // EmailJS Configuration
+    //
+    // To activate email sending:
+    //  1. Sign up for free at https://www.emailjs.com/
+    //  2. Add an Email Service → connect your Gmail (support@hjbcodeforge.com)
+    //  3. Create an Email Template with variables:
+    //       {{from_name}}, {{reply_to}}, {{company}}, {{budget}},
+    //       {{service_type}}, {{message}}
+    //     Set "To Email" in the template to: support@hjbcodeforge.com
+    //  4. Replace the three placeholder values below with your real IDs:
+    // ─────────────────────────────────────────────────────────────────────────
+    // Configuration moved to assets/js/config.js
+    // ensuring keys are not in version control (see .gitignore)
+
+    // Initialise EmailJS
+    if (typeof EMAILJS_PUBLIC_KEY !== 'undefined') {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    } else {
+        console.error('EmailJS configuration missing. Please create assets/js/config.js with your keys.');
+    }
+
+    // ── Form submission ───────────────────────────────────────────────────────
+    const form        = document.getElementById('contact-form');
+    const submitBtn   = document.getElementById('submit-btn');
+    const btnLabel    = document.getElementById('btn-label');
+    const btnIcon     = document.getElementById('btn-icon');
+    const btnSpinner  = document.getElementById('btn-spinner');
+    const successBox  = document.getElementById('form-success');
+    const errorBox    = document.getElementById('form-error');
+    const errorMsg    = document.getElementById('error-message');
+
+    function setLoading(loading) {
+        submitBtn.disabled = loading;
+        btnLabel.textContent = loading ? 'Sending…' : 'Send Message';
+        btnIcon.classList.toggle('hidden', loading);
+        btnSpinner.classList.toggle('visible', loading);
+    }
+
+    function validateField(input) {
+        const errorEl = input.closest('div').querySelector('.field-error');
+        const valid   = input.checkValidity();
+        input.classList.toggle('error', !valid);
+        if (errorEl) errorEl.classList.toggle('hidden', valid);
+        return valid;
+    }
+
+    // Live validation on blur
+    form.querySelectorAll('[required]').forEach(input => {
+        input.addEventListener('blur', () => validateField(input));
+        input.addEventListener('input', () => {
+            if (input.classList.contains('error')) validateField(input);
+        });
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Validate all required fields
+        let allValid = true;
+        form.querySelectorAll('[required]').forEach(input => {
+            if (!validateField(input)) allValid = false;
+        });
+        if (!allValid) return;
+
+        // Hide any previous messages
+        successBox.classList.remove('visible');
+        errorBox.classList.remove('visible');
+        setLoading(true);
+
+        try {
+            await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form);
+            successBox.classList.add('visible');
+            form.reset();
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch (err) {
+            console.error('EmailJS error:', err);
+            const msg = (typeof EMAILJS_PUBLIC_KEY !== 'undefined' && EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY')
+                ? 'EmailJS is not configured yet. See the code comments in contact.html for setup instructions.'
+                : (err?.text || 'An unexpected error occurred. Please try again.');
+            errorMsg.textContent = msg;
+            errorBox.classList.add('visible');
+        } finally {
+            setLoading(false);
+        }
+    });
+</script>
+
+</body>
+</html>

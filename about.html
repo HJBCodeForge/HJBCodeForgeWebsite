@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About | HJB CodeForge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#ef6712",
+                    "on-primary-container": "#ffffff",
+                    "primary-fixed": "#ffdbcc",
+                    "primary-fixed-dim": "#ffb694",
+                    "secondary": "#f6be39",
+                    "on-secondary": "#402d00",
+                    "secondary-container": "#c59300",
+                    "on-secondary-container": "#433000",
+                    "secondary-fixed": "#ffdfa0",
+                    "secondary-fixed-dim": "#f6be39",
+                    "tertiary": "#a2c9ff",
+                    "background": "#0A0A0A",
+                    "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A",
+                    "on-surface": "#e5e2e1",
+                    "surface-variant": "#353534",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-dim": "#131313",
+                    "surface-bright": "#3a3939",
+                    "surface-tint": "#ffb694",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "outline": "#a88a7e",
+                    "outline-variant": "#594237",
+                    "inverse-surface": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "inverse-primary": "#a14000",
+                    "error": "#ffb4ab",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                },
+                fontFamily: {
+                    "headline": ["Inter", "Arial", "sans-serif"],
+                    "body": ["Inter", "Arial", "sans-serif"],
+                    "label": ["Inter", "Arial", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+                },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    .noise-bg {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.03;
+    }
+    body { background-color: #0A0A0A; }
+</style>
+</head>
+<body class="font-body text-on-surface overflow-x-hidden selection:bg-primary selection:text-on-primary">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="assets/images/logo.png"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="services.html">Services</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="portfolio.html">Portfolio</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="blog.html">Blog</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="contact.html">Contact</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">
+                Let's Build
+            </a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2 rounded-lg hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0A0A0A] border-t border-outline-variant/10 px-8 py-6 space-y-4">
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="index.html">Home</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="services.html">Services</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="about.html">About</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="portfolio.html">Portfolio</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="blog.html">Blog</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="contact.html">Contact</a>
+        <a href="contact.html" class="inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg mt-2">Let's Build</a>
+    </div>
+</nav>
+
+<main class="relative">
+    <div class="absolute inset-0 noise-bg pointer-events-none"></div>
+
+    <!-- Hero -->
+    <section class="pt-32 pb-24 px-8 max-w-[1440px] mx-auto relative overflow-hidden">
+        <div class="absolute -right-20 top-20 opacity-10 blur-3xl scale-150 pointer-events-none">
+            <img alt="Phoenix watermark" class="w-[600px] h-[600px]" src="assets/images/logo.png"/>
+        </div>
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div class="lg:col-span-8">
+                <span class="text-primary font-bold tracking-[0.2em] uppercase text-[0.75rem] mb-4 block">Our Origin</span>
+                <h1 class="text-[3.5rem] leading-none font-black tracking-tighter mb-8 text-[#F5F5F5]">
+                    PRECISION SOFTWARE FOR <br/>
+                    <span class="text-primary">NON-TECHNICAL FOUNDERS.</span>
+                </h1>
+                <p class="text-xl text-on-surface-variant max-w-2xl leading-relaxed">
+                    HJB CodeForge was born from a singular observation: brilliant entrepreneurs often fail not for lack of vision, but for lack of technical translation. We bridge the gap between human ambition and digital reality.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section class="bg-surface-container-low py-24 px-8">
+        <div class="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+            <div class="lg:col-span-5 relative">
+                <div class="aspect-square bg-surface-container-highest rounded-xl overflow-hidden shadow-2xl">
+                    <img alt="Henning Botha Founder" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" src="assets/images/headshot.png"
+                         onerror="this.src='https://lh3.googleusercontent.com/aida/ADBb0ujOxUgcrsEnteEaDvOl3OGSn-1lHxVxrqEIt1bdED8G2G6RqCiyCLXGiDGlHdK8vChP5ecU7-j6eE5fnWOwOuqpiCBVtsJzsSOWSsS6fSWgBOsPy5iLHx0qwWGFoi-ePHUH5LXlYSC1PQBD4ml-NRSCZS8M3GhqMoTQtw-QTQd0TlLeFgLXvv-iQnDbwX9e5n88VNJDPsymiLP3-pz-ipTzhD_BopYUQvZA_xgcz-Py7d7_2fAUBwsX9KB7MmoKy4PImtn3kgdx9Z0'"/>
+                </div>
+                <div class="absolute -bottom-6 -right-6 bg-primary p-6 rounded-lg shadow-xl">
+                    <span class="text-white font-black text-xl italic">Henning Botha</span>
+                    <p class="text-white/80 text-xs font-bold uppercase tracking-widest mt-1">Founder &amp; Lead Architect</p>
+                </div>
+            </div>
+            <div class="lg:col-span-7 space-y-8">
+                <h2 class="text-3xl font-black tracking-tighter text-[#F5F5F5]">THE STORY OF THE FORGE</h2>
+                <div class="space-y-6 text-on-surface-variant text-lg leading-relaxed">
+                    <p>
+                        Henning Botha started his career in the trenches of high-scale enterprise architecture, but found his true passion in the raw energy of early-stage startups. He saw too many founders burned by "black-box" development—agencies that spoke in jargon and delivered rigid, unscalable code.
+                    </p>
+                    <p>
+                        He founded HJB CodeForge to change the narrative. The studio is modeled after a master craftsman's workshop: a place where technical mastery meets radical transparency. We don't just write code; we build the technical foundations that allow non-technical visionaries to lead with confidence.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="py-32 px-8 max-w-[1440px] mx-auto">
+        <h2 class="text-center text-primary font-bold tracking-[0.2em] uppercase text-[0.75rem] mb-16">Core Values</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-surface-container p-12 rounded-lg relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-primary transform origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500"></div>
+                <span class="material-symbols-outlined text-primary text-4xl mb-6" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+                <h3 class="text-2xl font-black text-[#F5F5F5] mb-4">Precision</h3>
+                <p class="text-on-surface-variant">We believe in "measure twice, cut once." Every line of code is intentional, optimized for performance, and built to scale from day one.</p>
+            </div>
+            <div class="bg-surface-container p-12 rounded-lg relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-secondary transform origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500"></div>
+                <span class="material-symbols-outlined text-secondary text-4xl mb-6" style="font-variation-settings: 'FILL' 1;">visibility</span>
+                <h3 class="text-2xl font-black text-[#F5F5F5] mb-4">Transparency</h3>
+                <p class="text-on-surface-variant">No jargon. No smoke and mirrors. You get a direct line to the logic, the progress, and the technical decisions shaping your product.</p>
+            </div>
+            <div class="bg-surface-container p-12 rounded-lg relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-primary transform origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500"></div>
+                <span class="material-symbols-outlined text-primary text-4xl mb-6" style="font-variation-settings: 'FILL' 1;">handyman</span>
+                <h3 class="text-2xl font-black text-[#F5F5F5] mb-4">Craft</h3>
+                <p class="text-on-surface-variant">Software is a digital artifact. We treat our work with the same reverence a blacksmith treats steel—tempered for strength and finished with pride.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="bg-[#1A1A1A] py-24 px-8 overflow-hidden">
+        <div class="max-w-[1440px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div>
+                    <span class="text-secondary font-bold tracking-[0.2em] uppercase text-[0.75rem] mb-4 block">The Toolkit</span>
+                    <h2 class="text-4xl font-black tracking-tighter text-[#F5F5F5]">FORGED WITH MODERN TECH</h2>
+                </div>
+                <p class="text-on-surface-variant max-w-sm mt-4 md:mt-0">We select our stack for reliability, speed, and long-term maintainability.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-surface-container-lowest p-8 flex flex-col items-center justify-center rounded-lg border border-white/5 hover:border-primary/50 transition-colors group">
+                    <span class="text-[#F5F5F5] font-black text-lg group-hover:text-primary transition-colors">Rust</span>
+                    <span class="text-[0.6rem] text-on-surface-variant uppercase tracking-widest mt-2">Systems Logic</span>
+                </div>
+                <div class="bg-surface-container-lowest p-8 flex flex-col items-center justify-center rounded-lg border border-white/5 hover:border-primary/50 transition-colors group">
+                    <span class="text-[#F5F5F5] font-black text-lg group-hover:text-primary transition-colors">Next.js</span>
+                    <span class="text-[0.6rem] text-on-surface-variant uppercase tracking-widest mt-2">Web Framework</span>
+                </div>
+                <div class="bg-surface-container-lowest p-8 flex flex-col items-center justify-center rounded-lg border border-white/5 hover:border-primary/50 transition-colors group">
+                    <span class="text-[#F5F5F5] font-black text-lg group-hover:text-primary transition-colors">Python</span>
+                    <span class="text-[0.6rem] text-on-surface-variant uppercase tracking-widest mt-2">AI &amp; Data</span>
+                </div>
+                <div class="bg-surface-container-lowest p-8 flex flex-col items-center justify-center rounded-lg border border-white/5 hover:border-primary/50 transition-colors group">
+                    <span class="text-[#F5F5F5] font-black text-lg group-hover:text-primary transition-colors">Postgres</span>
+                    <span class="text-[0.6rem] text-on-surface-variant uppercase tracking-widest mt-2">Database</span>
+                </div>
+                <div class="bg-surface-container-lowest p-8 flex flex-col items-center justify-center rounded-lg border border-white/5 hover:border-primary/50 transition-colors group">
+                    <span class="text-[#F5F5F5] font-black text-lg group-hover:text-primary transition-colors">AWS</span>
+                    <span class="text-[0.6rem] text-on-surface-variant uppercase tracking-widest mt-2">Infrastructure</span>
+                </div>
+                <div class="bg-surface-container-lowest p-8 flex flex-col items-center justify-center rounded-lg border border-white/5 hover:border-primary/50 transition-colors group">
+                    <span class="text-[#F5F5F5] font-black text-lg group-hover:text-primary transition-colors">GraphQL</span>
+                    <span class="text-[0.6rem] text-on-surface-variant uppercase tracking-widest mt-2">Data API</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-32 px-8">
+        <div class="max-w-[1000px] mx-auto text-center">
+            <div class="inline-block p-4 bg-primary/10 rounded-full mb-8">
+                <img alt="Phoenix Logo" class="w-12 h-12" src="assets/images/logo.png"/>
+            </div>
+            <h2 class="text-5xl font-black tracking-tighter mb-8 text-[#F5F5F5]">READY TO STRIKE THE ANVIL?</h2>
+            <p class="text-xl text-on-surface-variant mb-12">Stop fighting your tech and start building your future. Let's discuss your vision.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="contact.html" class="forge-gradient text-white text-lg font-black px-12 py-4 rounded-lg shadow-2xl hover:scale-105 active:scale-95 transition-all inline-block">
+                    BOOK A CONSULTATION
+                </a>
+                <a href="portfolio.html" class="border-2 border-outline-variant text-[#F5F5F5] text-lg font-black px-12 py-4 rounded-lg hover:bg-white/5 transition-all inline-block">
+                    VIEW OUR WORK
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#0A0A0A] w-full pt-24 pb-12 border-t border-outline-variant/10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-[1440px] mx-auto">
+        <div class="space-y-6">
+            <a href="index.html" class="flex items-center gap-3">
+                <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="assets/images/logo.png"/>
+                <span class="text-2xl font-black text-[#F5F5F5]">HJB <span class="text-[#E8620A]">CodeForge</span></span>
+            </a>
+            <p class="text-[#F5F5F5]/60 mb-8 max-w-xs text-[1.0rem] leading-relaxed">
+                Building the digital infrastructure for the next generation of founders.
+            </p>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase text-xs tracking-widest mb-6">Services</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">SaaS Development</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">Technical Strategy</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">Legacy Modernization</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase text-xs tracking-widest mb-6">Company</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#E8620A]" href="about.html">About</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="portfolio.html">Portfolio</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="blog.html">Blog</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-[#E8620A] font-bold uppercase text-xs tracking-widest mb-6">Socials</h4>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://x.com" target="_blank" rel="noopener">X / Twitter</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-[1440px] mx-auto px-8 pt-12 mt-12 border-t border-white/5">
+        <p class="text-[#F5F5F5]/40 text-sm">© 2026 HJB CodeForge. Powerful software, precisely built.</p>
+    </div>
+</footer>
+</body>
+</html>
