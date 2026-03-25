@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Remix vs Next.js in 2026: A Practitioner's Guide | HJB CodeForge Blog</title>
+<meta name="description" content="A real-world comparison of Remix and Next.js based on building production Shopify apps and SaaS products. No hype — just the decisions that matter."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A", "on-primary": "#ffffff",
+                    "primary-container": "#ef6712", "on-primary-container": "#ffffff",
+                    "secondary": "#f6be39", "on-secondary": "#402d00",
+                    "background": "#0A0A0A", "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A", "on-surface": "#e5e2e1",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "surface-bright": "#3a3939",
+                    "outline": "#a88a7e", "outline-variant": "#594237",
+                },
+                fontFamily: { "body": ["Inter", "Arial", "sans-serif"] },
+                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem" },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    body { background-color: #0A0A0A; font-family: 'Inter', Arial, sans-serif; }
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #e1c0b2; font-size: 1.05rem; }
+    .prose h2 { font-size: 1.75rem; font-weight: 900; color: #F5F5F5; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose h3 { font-size: 1.2rem; font-weight: 700; color: #F5F5F5; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ul li { margin-bottom: 0.5rem; list-style-type: disc; }
+    .prose strong { color: #F5F5F5; font-weight: 700; }
+    .prose a { color: #E8620A; text-decoration: underline; text-decoration-color: rgba(232,98,10,0.4); }
+    .prose a:hover { text-decoration-color: #E8620A; }
+    .code-block { background: #0e0e0e; border-radius: 0.25rem; padding: 1.5rem; margin-bottom: 1.5rem; overflow-x: auto; border-left: 3px solid #E8620A; }
+    .code-block code { font-family: 'Courier New', Courier, monospace; font-size: 0.875rem; color: #f6be39; line-height: 1.7; white-space: pre; }
+    .code-comment { color: #594237; }
+    .code-keyword { color: #E8620A; }
+    .code-string { color: #f6be39; }
+    .code-type { color: #a2c9ff; }
+    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .callout p { margin-bottom: 0; color: #e1c0b2; }
+</style>
+</head>
+<body class="font-body text-on-surface">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../assets/images/logo.png"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../services.html">Custom Work</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../portfolio.html">Products</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="../blog.html">Blog</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="../contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">Let's Build</a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0A0A0A] border-t border-outline-variant/10 px-8 py-6 space-y-4">
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../index.html">Home</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../services.html">Custom Work</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../about.html">About</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../portfolio.html">Products</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="../blog.html">Blog</a>
+    </div>
+</nav>
+
+<main class="pt-32 pb-24">
+    <!-- Hero -->
+    <header class="px-8 max-w-[800px] mx-auto mb-16">
+        <a href="../blog.html" class="inline-flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest mb-8 hover:gap-3 transition-all">
+            <span class="material-symbols-outlined text-sm">arrow_back</span> Back to Blog
+        </a>
+        <div class="flex gap-3 mb-6">
+            <span class="bg-primary text-white text-[0.65rem] font-black uppercase px-3 py-1 tracking-wider">Engineering</span>
+            <span class="text-on-surface-variant text-[0.65rem] font-bold uppercase tracking-widest py-1">10 Min Read</span>
+            <span class="text-on-surface-variant text-[0.65rem] font-bold uppercase tracking-widest py-1">March 2026</span>
+        </div>
+        <h1 class="text-[2.5rem] md:text-[3.5rem] font-black tracking-tighter leading-[0.95] text-[#F5F5F5] mb-6">
+            Remix vs Next.js in 2026:<br/><span class="text-primary">A Practitioner's Guide</span>
+        </h1>
+        <p class="text-xl text-on-surface-variant leading-relaxed">
+            I've shipped production apps in both. Here's the unfiltered breakdown — based on real pain, not benchmarks.
+        </p>
+        <div class="mt-8 flex items-center gap-4 pt-8 border-t border-outline-variant/10">
+            <img alt="Henning Botha" class="w-12 h-12 rounded-full object-cover" src="../assets/images/headshot.png"/>
+            <div>
+                <p class="font-bold text-[#F5F5F5] text-sm">Henning Botha</p>
+                <p class="text-on-surface-variant text-xs uppercase tracking-widest">Founder &amp; Lead Architect</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Image -->
+    <div class="max-w-[1100px] mx-auto px-8 mb-12">
+        <div class="w-full h-64 md:h-96 bg-[#1c1b1b] rounded-lg overflow-hidden border border-[#2a2a2a]">
+            <img src="https://images.unsplash.com/photo-1687603917313-ccae1a289a9d?w=1400&q=80&auto=format&fit=crop" alt="Dark screen showing React and JavaScript code" class="w-full h-full object-cover opacity-80"/>
+        </div>
+    </div>
+
+    <!-- Article Body -->
+    <article class="px-8 max-w-[800px] mx-auto prose">
+
+        <p>When I started building <strong>Net Terms Tracker</strong> — a full-stack Shopify B2B app — I had to make a choice that would define the project's architecture for months: Remix or Next.js? I'd used both before, but this was the first time I was forced to pick one under real production constraints: Shopify's opinionated OAuth flow, a requirement for real-time server-side data mutations, and a tight integration with Shopify's Polaris design system.</p>
+
+        <p>I chose Remix. This post explains why — and also when I would choose Next.js instead.</p>
+
+        <h2>The Core Mental Model Difference</h2>
+
+        <p>Both frameworks are React-based, but they have fundamentally different philosophies about where data lives and how it moves.</p>
+
+        <p><strong>Next.js</strong> is a platform for rendering React — it gives you flexibility to mix Server Components, Client Components, API Routes, and static generation however you see fit. The power is immense. The tradeoff is that you're constantly making architectural decisions: where does this data fetch? Is this a Server Component or a Client Component? Do I need an API route for this or can I use a Server Action?</p>
+
+        <p><strong>Remix</strong> is built around the web platform itself — specifically around <code>Request</code> / <code>Response</code> and the nested routing model. Every route is a full data-fetching unit with a <code>loader</code> (server-side GET) and an <code>action</code> (server-side POST/PUT/DELETE). Your UI is always a function of server state. There's far less architectural ambiguity, which I've found invaluable on complex apps.</p>
+
+        <h2>Why Remix Won for the Shopify App</h2>
+
+        <p>Shopify's app development model maps almost perfectly to Remix's architecture. Here's why:</p>
+
+        <h3>1. The OAuth flow is a form submission, not a client-side dance</h3>
+
+        <p>Shopify's OAuth install flow is a series of redirects and token exchanges. In Remix, this is just a <code>loader</code> on the install route that reads the query params, exchanges the code for a token, and redirects. Clean, server-rendered, no hydration weirdness.</p>
+
+        <div class="code-block">
+<code><span class="code-comment">// app/routes/auth.$.tsx — Shopify OAuth handled in a loader</span>
+<span class="code-keyword">export</span> <span class="code-keyword">async function</span> <span class="code-type">loader</span>({ request, context }: LoaderFunctionArgs) {
+  <span class="code-keyword">const</span> { admin, session } = <span class="code-keyword">await</span> authenticate.admin(request);
+
+  <span class="code-comment">// If we reach here, auth succeeded. Redirect to app.</span>
+  <span class="code-keyword">return</span> redirect(<span class="code-string">"/app"</span>);
+}
+</code>
+        </div>
+
+        <h3>2. Mutations are first-class citizens</h3>
+
+        <p>The Net Terms Tracker is mutation-heavy: approving credit applications, updating credit limits, marking invoices paid. In Next.js, each of these would typically be a Server Action or an API route that the client calls. In Remix, each of these is just an <code>action</code> on the relevant route. The <code>useFetcher</code> hook handles the loading state automatically. Less code, less complexity.</p>
+
+        <div class="code-block">
+<code><span class="code-comment">// Approving a credit application — entire mutation in one place</span>
+<span class="code-keyword">export</span> <span class="code-keyword">async function</span> <span class="code-type">action</span>({ request }: ActionFunctionArgs) {
+  <span class="code-keyword">const</span> formData = <span class="code-keyword">await</span> request.formData();
+  <span class="code-keyword">const</span> applicationId = formData.get(<span class="code-string">"applicationId"</span>) <span class="code-keyword">as</span> string;
+
+  <span class="code-keyword">await</span> db.creditApplication.update({
+    where: { id: applicationId },
+    data: { status: <span class="code-string">"APPROVED"</span>, reviewedAt: <span class="code-keyword">new</span> Date() },
+  });
+
+  <span class="code-keyword">return</span> json({ success: <span class="code-keyword">true</span> });
+}
+</code>
+        </div>
+
+        <h3>3. Nested layouts with isolated data fetching</h3>
+
+        <p>The admin dashboard has a persistent sidebar (merchant config, credit stats) that shouldn't re-fetch every time you navigate between sections. Remix's nested routing model handles this perfectly — the sidebar data lives in a parent route's <code>loader</code>, and child routes fetch only their own data independently. In Next.js with the App Router, this is achievable but requires more deliberate component boundary management.</p>
+
+        <h2>When I'd Choose Next.js Instead</h2>
+
+        <p>Remix is not a universal win. Here's where I'd reach for Next.js:</p>
+
+        <ul>
+            <li><strong>Marketing sites with heavy static content.</strong> Next.js's SSG and ISR are best-in-class. Remix doesn't have a comparable static generation story — everything is server-rendered on request.</li>
+            <li><strong>Apps that rely heavily on React Server Components.</strong> The RSC ecosystem (server-only data streaming, Suspense integration, partial hydration) is maturing fast in Next.js. Remix has its own streaming model but it's different.</li>
+            <li><strong>Vercel-first deployments.</strong> If you're deploying to Vercel, Next.js integration is seamless — Edge Functions, Image Optimization, Analytics all just work. Remix on Vercel works but you're not a first-class citizen.</li>
+            <li><strong>Team familiarity.</strong> Next.js has a much larger community and more available developers. If you're hiring, this matters.</li>
+        </ul>
+
+        <h2>The Real Decision Framework</h2>
+
+        <div class="callout">
+            <p><strong>Choose Remix</strong> when: your app is mutation-heavy, your data is mostly dynamic (no static pages), you're building on a platform with server-driven flows (Shopify, OAuth-heavy apps), or you want a simpler data layer with less architectural decision-making.</p>
+        </div>
+
+        <div class="callout" style="border-color: #f6be39;">
+            <p><strong>Choose Next.js</strong> when: you need static generation, you're deep in the RSC ecosystem, you're on Vercel, you need a larger talent pool, or your app has a significant content/marketing surface area alongside the app itself.</p>
+        </div>
+
+        <p>Neither framework is universally better. The mistake I see founders make is treating this as a theological debate rather than a tool selection. Pick the one that maps to your problem. For B2B SaaS apps built on third-party platforms, Remix's server-first, mutation-centric model gives you a cleaner architecture with less ceremony. For content-heavy products that need fine-grained rendering control, Next.js's flexibility is unmatched.</p>
+
+        <h2>The Bottom Line</h2>
+
+        <p>After shipping Net Terms Tracker in Remix, I'd make the same call again. The <code>loader</code>/<code>action</code> model kept the codebase clean and the Shopify integration straightforward. But I'm also shipping a SaaS dashboard right now in Next.js 15 because the project has a heavy marketing site component and the team I'm working with knows Next.js.</p>
+
+        <p>Use the tool that fits the job. That's what a Forge does.</p>
+
+    </article>
+
+    <!-- CTA -->
+    <div class="px-8 max-w-[800px] mx-auto mt-16 p-8 bg-surface-container-low rounded-xl border-l-4 border-primary">
+        <p class="text-[#F5F5F5] font-bold text-lg mb-2">Building a Shopify app or SaaS product?</p>
+        <p class="text-on-surface-variant mb-4">HJB CodeForge specializes in exactly this kind of work. Let's talk about your project.</p>
+        <a href="../contact.html" class="inline-flex items-center gap-2 forge-gradient text-white px-8 py-3 rounded-lg font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform">
+            Book a Free Call <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+    </div>
+
+    <!-- Post Navigation -->
+    <div class="px-8 max-w-[800px] mx-auto mt-16 pt-8 border-t border-outline-variant/10 flex justify-between gap-8">
+        <div></div>
+        <a href="net-terms-tracker-case-study.html" class="group text-right">
+            <span class="text-on-surface-variant text-xs uppercase tracking-widest block mb-1">Next Post</span>
+            <span class="font-bold text-[#F5F5F5] group-hover:text-primary transition-colors">Building Net Terms Tracker →</span>
+        </a>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#0A0A0A] w-full pt-16 pb-8 border-t border-outline-variant/10">
+    <div class="px-8 max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+        <a href="../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-8 w-auto object-contain" src="../assets/images/logo.png"/>
+            <span class="text-lg font-black text-[#F5F5F5]">HJB CodeForge</span>
+        </a>
+        <p class="text-[#F5F5F5]/40 text-sm">© 2026 HJB CodeForge. Powerful software, precisely built.</p>
+        <a href="../blog.html" class="text-[#E8620A] font-bold text-sm uppercase tracking-widest hover:underline">← All Posts</a>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Blog | HJB CodeForge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#ef6712",
+                    "on-primary-container": "#ffffff",
+                    "primary-fixed": "#ffdbcc",
+                    "primary-fixed-dim": "#ffb694",
+                    "secondary": "#f6be39",
+                    "on-secondary": "#402d00",
+                    "secondary-container": "#c59300",
+                    "on-secondary-container": "#433000",
+                    "tertiary": "#a2c9ff",
+                    "background": "#0A0A0A",
+                    "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A",
+                    "on-surface": "#e5e2e1",
+                    "surface-variant": "#353534",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-dim": "#131313",
+                    "surface-bright": "#3a3939",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "outline": "#a88a7e",
+                    "outline-variant": "#594237",
+                    "inverse-primary": "#a14000",
+                    "error": "#ffb4ab",
+                },
+                fontFamily: {
+                    "headline": ["Inter", "Arial", "sans-serif"],
+                    "body": ["Inter", "Arial", "sans-serif"],
+                    "label": ["Inter", "Arial", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+                },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    .editorial-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+    }
+    body { background-color: #0A0A0A; font-family: 'Inter', sans-serif; }
+</style>
+</head>
+<body class="text-on-background selection:bg-primary selection:text-on-primary">
+
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <nav class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="assets/images/logo.png"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="services.html">Custom Work</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="portfolio.html">Products</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="blog.html">Blog</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 rounded font-bold uppercase text-[0.75rem] tracking-widest hover:scale-105 transition-transform">
+                Let's Build
+            </a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2 rounded-lg hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0A0A0A] border-t border-outline-variant/10 px-8 py-6 space-y-4">
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="index.html">Home</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="services.html">Custom Work</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="about.html">About</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="portfolio.html">Products</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="blog.html">Blog</a>
+        <a href="contact.html" class="inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded mt-2">Let's Build</a>
+    </div>
+</header>
+
+<main class="pt-32 pb-24 px-8 max-w-[1440px] mx-auto">
+
+    <!-- Hero -->
+    <section class="mb-24 relative">
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="flex flex-col md:flex-row justify-between items-end gap-8">
+            <div class="max-w-4xl">
+                <h1 class="text-[clamp(3.5rem,10vw,8rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6">
+                    The <span class="text-primary">Forge</span><br/>Blog
+                </h1>
+                <p class="text-xl text-on-surface-variant max-w-xl border-l-4 border-secondary pl-6 py-2">
+                    Technical precision meets human strategy. Dispatches from the front lines of software architecture and startup growth.
+                </p>
+            </div>
+            <div class="hidden lg:block text-right">
+                <span class="font-bold tracking-[0.2em] uppercase text-[0.75rem] text-primary block mb-2">Issue No. 01</span>
+                <span class="font-bold tracking-[0.2em] uppercase text-[0.75rem] text-on-surface-variant">Est. MMXXVI</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="mb-32">
+        <article class="editorial-grid">
+            <a href="blog/remix-vs-nextjs-2026.html" class="col-span-12 lg:col-span-8 relative group cursor-pointer overflow-hidden rounded-lg">
+                <div class="aspect-[16/9] w-full bg-surface-container-highest relative overflow-hidden">
+                    <img alt="Code on a dark screen showing React hooks" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                         src="https://images.unsplash.com/photo-1687603917313-ccae1a289a9d?w=1400&q=80&auto=format&fit=crop"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+                </div>
+                <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full lg:w-3/4">
+                    <div class="flex gap-4 mb-4">
+                        <span class="bg-primary text-white text-[0.65rem] font-black uppercase px-2 py-1 tracking-tighter">Engineering</span>
+                        <span class="text-on-surface-variant text-[0.65rem] font-bold uppercase py-1 tracking-widest">10 Min Read</span>
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter leading-tight mb-4 group-hover:text-primary transition-colors">
+                        Remix vs Next.js: A Practitioner's Guide for 2026
+                    </h2>
+                    <p class="text-on-surface-variant text-lg hidden md:block">
+                        A real-world comparison based on building production Shopify apps and SaaS products. No hype — just the decisions that matter.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="col-span-12 lg:col-span-4 flex flex-col justify-between gap-8 py-4">
+                <div class="p-8 bg-surface-container rounded-lg border-l-4 border-primary">
+                    <span class="text-secondary font-black text-[0.75rem] uppercase tracking-widest block mb-4">Trending Now</span>
+                    <ul class="space-y-6">
+                        <li>
+                            <a class="group" href="blog/net-terms-shopify-app-store.html">
+                                <span class="text-on-surface-variant text-xs block mb-1">01</span>
+                                <h4 class="font-bold text-xl group-hover:text-primary transition-colors">Net Terms Tracker Is Coming to the Shopify App Store</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="group" href="blog/botforge-rag-pipeline.html">
+                                <span class="text-on-surface-variant text-xs block mb-1">02</span>
+                                <h4 class="font-bold text-xl group-hover:text-primary transition-colors">How We Built BotForge's RAG Pipeline</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="group" href="blog/majestic-monolith.html">
+                                <span class="text-on-surface-variant text-xs block mb-1">03</span>
+                                <h4 class="font-bold text-xl group-hover:text-primary transition-colors">In Defence of the Majestic Monolith</h4>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative overflow-hidden bg-primary-container p-8 rounded-lg flex flex-col justify-end">
+                    <img alt="Phoenix watermark" class="absolute -top-10 -right-10 w-48 h-48 opacity-20 rotate-12" src="assets/images/logo.png"/>
+                    <h3 class="text-2xl font-black text-white mb-4 relative z-10">Subscribe to the Forge</h3>
+                    <p class="text-white/80 mb-6 relative z-10">Get bi-weekly technical deep dives delivered to your terminal.</p>
+                    <div class="relative z-10">
+                        <input class="w-full bg-black/20 border-none rounded p-3 text-white placeholder:text-white/40 focus:ring-2 focus:ring-white outline-none mb-3" placeholder="email@domain.com" type="email"/>
+                        <button class="w-full bg-[#0A0A0A] text-white py-3 font-bold uppercase tracking-widest text-xs hover:bg-surface-bright transition-colors rounded">Join the List</button>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- Latest Dispatches -->
+    <section class="mb-32">
+        <div class="flex justify-between items-center mb-12 border-b border-outline-variant/20 pb-4">
+            <h3 class="text-2xl font-black uppercase tracking-tighter">Latest Dispatches</h3>
+            <div class="flex gap-4">
+                <button class="text-primary font-bold text-xs uppercase tracking-widest border border-primary/20 px-4 py-2 hover:bg-primary/10 transition-colors">Founder Strategy</button>
+                <button class="text-on-surface-variant font-bold text-xs uppercase tracking-widest hover:text-primary transition-colors">Dev Ops</button>
+                <button class="text-on-surface-variant font-bold text-xs uppercase tracking-widest hover:text-primary transition-colors">UX Forge</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <!-- Card 1 -->
+            <article class="group">
+                <div class="aspect-video bg-surface-container-highest mb-6 overflow-hidden rounded">
+                    <img alt="Two people at a desk in a job interview" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                         src="https://images.unsplash.com/photo-1559523182-a284c3fb7cff?w=800&q=80&auto=format&fit=crop"/>
+                </div>
+                <span class="text-secondary font-bold text-[0.65rem] uppercase tracking-widest mb-2 block">Founders</span>
+                <h4 class="text-2xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors">How to Hire a Developer When You're Not Technical</h4>
+                <p class="text-on-surface-variant text-sm mb-6 line-clamp-3">A practical guide on evaluating developers, avoiding costly mistakes, and structuring engagements that protect you.</p>
+                <a class="inline-flex items-center gap-2 text-primary font-black uppercase text-[0.7rem] tracking-widest group-hover:translate-x-1 transition-transform" href="blog/hiring-developer-founder.html">
+                    Read Dispatch <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="group">
+                <div class="aspect-video bg-surface-container-highest mb-6 overflow-hidden rounded">
+                    <img alt="Person at desk working on laptop with business data" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                         src="https://images.unsplash.com/photo-1735825764457-ffdf0b5aa5dd?w=800&q=80&auto=format&fit=crop"/>
+                </div>
+                <span class="text-secondary font-bold text-[0.65rem] uppercase tracking-widest mb-2 block">Product Story</span>
+                <h4 class="text-2xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors">Building Net Terms Tracker: Coming to the Shopify App Store</h4>
+                <p class="text-on-surface-variant text-sm mb-6 line-clamp-3">How we built a Rust-powered checkout gatekeeper, automated PDF invoicing, and a customer finance portal for B2B Shopify merchants.</p>
+                <a class="inline-flex items-center gap-2 text-primary font-black uppercase text-[0.7rem] tracking-widest group-hover:translate-x-1 transition-transform" href="blog/net-terms-tracker-case-study.html">
+                    Read Dispatch <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="group">
+                <div class="aspect-video bg-surface-container-highest mb-6 overflow-hidden rounded">
+                    <img alt="Dark server rack with glowing network cables" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                         src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&auto=format&fit=crop"/>
+                </div>
+                <span class="text-secondary font-bold text-[0.65rem] uppercase tracking-widest mb-2 block">Opinion</span>
+                <h4 class="text-2xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors">In Defence of the Majestic Monolith</h4>
+                <p class="text-on-surface-variant text-sm mb-6 line-clamp-3">Small SaaS teams don't need microservices. Here's why the industry's obsession with distributed systems is costing founders time and money.</p>
+                <a class="inline-flex items-center gap-2 text-primary font-black uppercase text-[0.7rem] tracking-widest group-hover:translate-x-1 transition-transform" href="blog/majestic-monolith.html">
+                    Read Dispatch <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="group">
+                <div class="aspect-video bg-surface-container-highest mb-6 overflow-hidden rounded">
+                    <img alt="AI computer chip with glowing letter A" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                         src="https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?w=800&q=80&auto=format&fit=crop"/>
+                </div>
+                <span class="text-secondary font-bold text-[0.65rem] uppercase tracking-widest mb-2 block">AI & Engineering</span>
+                <h4 class="text-2xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors">How We Built BotForge's RAG Pipeline</h4>
+                <p class="text-on-surface-variant text-sm mb-6 line-clamp-3">A deep dive into semantic chunking, pgvector embeddings, LangChain orchestration, and production streaming chat with OpenRouter.</p>
+                <a class="inline-flex items-center gap-2 text-primary font-black uppercase text-[0.7rem] tracking-widest group-hover:translate-x-1 transition-transform" href="blog/botforge-rag-pipeline.html">
+                    Read Dispatch <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="group">
+                <div class="aspect-video bg-surface-container-highest mb-6 overflow-hidden rounded">
+                    <img alt="Dark screen showing React and JavaScript code" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                         src="https://images.unsplash.com/photo-1687603917313-ccae1a289a9d?w=800&q=80&auto=format&fit=crop"/>
+                </div>
+                <span class="text-secondary font-bold text-[0.65rem] uppercase tracking-widest mb-2 block">Engineering</span>
+                <h4 class="text-2xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors">Remix vs Next.js in 2026: A Practitioner's Guide</h4>
+                <p class="text-on-surface-variant text-sm mb-6 line-clamp-3">A first-hand comparison based on building a production Shopify app. No hype — just the decisions that actually matter.</p>
+                <a class="inline-flex items-center gap-2 text-primary font-black uppercase text-[0.7rem] tracking-widest group-hover:translate-x-1 transition-transform" href="blog/remix-vs-nextjs-2026.html">
+                    Read Dispatch <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="group">
+                <div class="aspect-video bg-surface-container-highest mb-6 overflow-hidden rounded">
+                    <img alt="Personal finance dashboard on a browser" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                         src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=80&auto=format&fit=crop"/>
+                </div>
+                <span class="text-secondary font-bold text-[0.65rem] uppercase tracking-widest mb-2 block">Product Launch</span>
+                <h4 class="text-2xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors">Introducing Track & Thrive: Finance & Wellness in Your Browser</h4>
+                <p class="text-on-surface-variant text-sm mb-6 line-clamp-3">No sign-up. No server. No nonsense. A lightweight React app for tracking credit cards, debit cards, and calories — right in your browser.</p>
+                <a class="inline-flex items-center gap-2 text-primary font-black uppercase text-[0.7rem] tracking-widest group-hover:translate-x-1 transition-transform" href="blog/introducing-track-and-thrive.html">
+                    Read Dispatch <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </article>
+
+            <!-- Card 7 -->
+            <article class="group">
+                <div class="aspect-video bg-surface-container-highest mb-6 overflow-hidden rounded">
+                    <img alt="Shopify storefront on a laptop screen" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                         src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80&auto=format&fit=crop"/>
+                </div>
+                <span class="text-secondary font-bold text-[0.65rem] uppercase tracking-widest mb-2 block">Product Announcement</span>
+                <h4 class="text-2xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors">Net Terms Tracker Is Coming to the Shopify App Store</h4>
+                <p class="text-on-surface-variant text-sm mb-6 line-clamp-3">B2B Shopify merchants: net payment terms, automated invoicing, and an overdue enforcement engine — built natively for your store.</p>
+                <a class="inline-flex items-center gap-2 text-primary font-black uppercase text-[0.7rem] tracking-widest group-hover:translate-x-1 transition-transform" href="blog/net-terms-shopify-app-store.html">
+                    Read Dispatch <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </article>
+        </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="py-24 bg-surface-container-low rounded-xl relative overflow-hidden text-center">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/10 blur-[80px] rounded-full"></div>
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-secondary/10 blur-[80px] rounded-full"></div>
+        </div>
+        <div class="relative z-10 max-w-2xl mx-auto px-8">
+            <h2 class="text-4xl md:text-5xl font-black mb-6 tracking-tighter uppercase">Three Products. Ready to Use Today.</h2>
+            <p class="text-on-surface-variant mb-10">We build software, then we ship it. Browse our live products — or get in touch if you want us to build something for you.</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="portfolio.html" class="forge-gradient text-white px-10 py-4 rounded font-black uppercase text-sm tracking-widest shadow-xl shadow-primary/20 inline-block hover:scale-105 transition-transform">See Our Products</a>
+                <a href="contact.html" class="bg-surface-bright px-10 py-4 rounded text-on-surface font-black uppercase text-sm tracking-widest border border-outline-variant/20 inline-block hover:bg-surface-container-high transition-colors">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="w-full pt-24 pb-12 bg-[#0A0A0A] border-t border-outline-variant/10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-[1440px] mx-auto">
+        <div class="col-span-1">
+            <a href="index.html" class="flex items-center gap-3 mb-4">
+                <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="assets/images/logo.png"/>
+                <span class="text-2xl font-black text-[#F5F5F5]">HJB <span class="text-[#E8620A]">CodeForge</span></span>
+            </a>
+            <p class="text-[1.0rem] leading-relaxed text-[#F5F5F5]/60 mb-8">We build software people actually use. Products first, custom work second.</p>
+            <div class="flex gap-4">
+                <a href="https://linkedin.com" target="_blank" rel="noopener" class="text-[#F5F5F5]/60 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">share</span>
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener" class="text-[#F5F5F5]/60 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">terminal</span>
+                </a>
+                <a href="https://x.com" target="_blank" rel="noopener" class="text-[#F5F5F5]/60 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">public</span>
+                </a>
+            </div>
+        </div>
+        <div>
+            <h5 class="text-[#E8620A] font-bold uppercase tracking-widest text-[0.75rem] mb-6">Our Products</h5>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://apps.shopify.com" target="_blank" rel="noopener">Net Terms Tracker</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://custom-integrated-chatbot.vercel.app/login" target="_blank" rel="noopener">BotForge</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://trackandthrive.infinityfreeapp.com/?i=1" target="_blank" rel="noopener">Track & Thrive</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">Custom Work</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5 class="text-[#E8620A] font-bold uppercase tracking-widest text-[0.75rem] mb-6">Company</h5>
+            <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="about.html">About</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="portfolio.html">Products</a></li>
+                <li><a class="text-[#E8620A]" href="blog.html">Blog</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5 class="text-[#E8620A] font-bold uppercase tracking-widest text-[0.75rem] mb-6">Studio</h5>
+            <p class="text-[1.0rem] leading-relaxed text-[#F5F5F5]/60 mb-6">
+                Built for global disruption. Powered by precision.
+            </p>
+            <div class="p-4 bg-surface-container-highest rounded-lg">
+                <span class="text-xs font-bold text-secondary uppercase block mb-1 tracking-tighter">Status</span>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span class="text-sm font-mono text-[#F5F5F5]">Products Live Now</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-[1440px] mx-auto px-8 mt-24 pt-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[#F5F5F5]/40">
+        <span>© 2026 HJB CodeForge. Built by us, used by everyone.</span>
+        <div class="flex gap-8">
+            <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+            <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

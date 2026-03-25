@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Net Terms Tracker Is Coming to the Shopify App Store | HJB CodeForge Blog</title>
+<meta name="description" content="Net Terms Tracker — the Shopify app that automates B2B Net 30 payment workflows — is in its final stages of Shopify App Store approval. Here's what it does and who it's for."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: { extend: { colors: {
+            "primary": "#E8620A", "secondary": "#f6be39",
+            "surface": "#0A0A0A", "on-surface": "#e5e2e1",
+            "surface-container-low": "#1c1b1b", "surface-container": "#201f1f",
+            "surface-container-high": "#2a2a2a", "outline-variant": "#594237",
+        }, fontFamily: { body: ["Inter","Arial","sans-serif"] }, borderRadius: { lg: "0.25rem" } } }
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; vertical-align:middle; }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    body { background-color: #0A0A0A; font-family: Inter, Arial, sans-serif; }
+    article { color: #e5e2e1; }
+    article p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.0625rem; color: #c9c5c4; }
+    article h2 { font-size: 1.75rem; font-weight: 900; color: #F5F5F5; letter-spacing: -0.03em; margin: 2.5rem 0 1rem; }
+    article h3 { font-size: 1.25rem; font-weight: 800; color: #F5F5F5; letter-spacing: -0.02em; margin: 2rem 0 0.75rem; }
+    article ul { margin-bottom: 1.5rem; padding-left: 0; list-style: none; }
+    article ul li { padding: 0.35rem 0 0.35rem 1.5rem; position: relative; color: #c9c5c4; font-size: 1rem; }
+    article ul li::before { content: "—"; position: absolute; left: 0; color: #E8620A; font-weight: 700; }
+    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .callout p { margin-bottom: 0; color: #e1c0b2; }
+    .module-card { background: #1c1b1b; border: 1px solid #2a2a2a; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1rem; border-left: 3px solid #E8620A; }
+</style>
+</head>
+<body class="font-body text-on-surface">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../portfolio.html">Products</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../services.html">Custom Work</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="../blog.html">Blog</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../contact.html">Contact</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="../portfolio.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">Our Products</a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0A0A0A] border-t border-[#594237]/10 px-8 py-6 space-y-4">
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../index.html">Home</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../portfolio.html">Products</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../about.html">About</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../services.html">Custom Work</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="../blog.html">Blog</a>
+        <a class="block font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../contact.html">Contact</a>
+        <a href="../portfolio.html" class="forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg text-center">Our Products</a>
+    </div>
+</nav>
+
+<!-- Article Header -->
+<section class="pt-32 pb-16 px-8 max-w-[800px] mx-auto">
+    <div class="flex items-center gap-3 mb-6">
+        <a href="../blog.html" class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#E8620A] hover:underline">← Blog</a>
+        <span class="text-[#594237]">/</span>
+        <span class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#594237]">Product Announcement</span>
+    </div>
+
+    <h1 class="text-4xl md:text-6xl font-black text-[#F5F5F5] leading-[1.05] tracking-tighter mb-6">
+        Net Terms Tracker<br/>
+        <span class="forge-gradient bg-clip-text text-transparent" style="-webkit-background-clip:text;">Is Coming to the</span><br/>
+        Shopify App Store
+    </h1>
+
+    <p class="text-xl text-[#e1c0b2] leading-relaxed mb-8">
+        After months of development and the final stages of Shopify's approval process, Net Terms Tracker will soon be available directly in the Shopify App Store. Here's what it does and why Shopify B2B merchants should care.
+    </p>
+
+    <div class="flex flex-wrap items-center gap-6 text-[0.8rem] text-[#a88a7e] pb-8 border-b border-[#2a2a2a]">
+        <div class="flex items-center gap-2">
+            <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-8 h-8 rounded-full object-cover grayscale" onerror="this.style.display='none'"/>
+            <span class="text-[#F5F5F5] font-semibold">Henning Botha</span>
+        </div>
+        <span>March 2026</span>
+        <span>·</span>
+        <span>8 Min Read</span>
+        <span>·</span>
+        <span class="text-[#E8620A] font-semibold uppercase tracking-widest">Product Announcement</span>
+    </div>
+</section>
+
+<!-- Hero Image -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16">
+    <div class="w-full h-64 md:h-96 bg-[#1c1b1b] rounded-lg overflow-hidden border border-[#2a2a2a]">
+        <img src="../assets/images/net-terms.png" alt="Net Terms Tracker App Interface" class="w-full h-full object-cover opacity-80" onerror="this.src='https://images.unsplash.com/photo-1735825764457-ffdf0b5aa5dd?w=1400&q=80&auto=format&fit=crop'"/>
+    </div>
+</div>
+
+<!-- Article Body -->
+<article class="max-w-[720px] mx-auto px-8 pb-24">
+
+    <p>If you run a Shopify store and sell to other businesses on Net 30 payment terms, you already know the problem. Shopify wasn't built for this. The workarounds — Draft Orders, manual invoices, spreadsheets tracking who owes what — are fragile, time-consuming, and don't scale.</p>
+
+    <p>Net Terms Tracker is the app that fills this gap. It's purpose-built for Shopify merchants doing B2B wholesale, and it handles the entire net terms workflow natively inside your Shopify admin.</p>
+
+    <h2>The Problem It Solves</h2>
+
+    <p>When a business buys from you on Net 30 terms, several things need to happen that Shopify doesn't handle out of the box:</p>
+
+    <ul>
+        <li>You need to check if the buyer is creditworthy before letting the order through</li>
+        <li>You need to generate a professional invoice they can pay against</li>
+        <li>You need to track which invoices are outstanding and follow up on overdue payments</li>
+        <li>Your buyers need a place to view their account, see what they owe, and manage their payment history</li>
+    </ul>
+
+    <p>Most merchants cobble this together from Shopify Draft Orders, a PDF tool, and a spreadsheet. Net Terms Tracker replaces all of that with a single, integrated system.</p>
+
+    <h2>What's Inside</h2>
+
+    <p>The app has four modules that work together as one cohesive system:</p>
+
+    <div class="module-card">
+        <h3 class="mt-0">The Checkout Gatekeeper</h3>
+        <p class="mb-0">Built with Rust compiled to WebAssembly, the gatekeeper runs at checkout and evaluates each buyer's credit status in near-zero latency. If a buyer is over their credit limit or has overdue invoices, the order is blocked automatically. No manual review needed for standard cases.</p>
+    </div>
+
+    <div class="module-card">
+        <h3 class="mt-0">Automated Invoicing Engine</h3>
+        <p class="mb-0">Every approved Net Terms order automatically generates a professional PDF invoice using React PDF. Invoices include all relevant order details, payment terms, due dates, and your business branding. They're stored, accessible from the admin, and can be sent directly to the buyer.</p>
+    </div>
+
+    <div class="module-card">
+        <h3 class="mt-0">The Enforcer — Overdue Payment Scanner</h3>
+        <p class="mb-0">A scheduled compliance scanner that reviews all outstanding invoices and flags overdue accounts. Merchants can see at a glance which buyers have unpaid balances and take action accordingly — manually or through automated follow-up flows.</p>
+    </div>
+
+    <div class="module-card">
+        <h3 class="mt-0">Customer Finance Portal</h3>
+        <p class="mb-0">A storefront-embedded portal that lets your B2B buyers log in and view their own account: outstanding invoices, payment history, current credit usage, and available balance. Reduces support queries and gives buyers the transparency they expect in a professional B2B relationship.</p>
+    </div>
+
+    <h2>Who It's For</h2>
+
+    <p>Net Terms Tracker is built specifically for Shopify merchants who:</p>
+
+    <ul>
+        <li>Sell to other businesses (B2B, wholesale, trade accounts)</li>
+        <li>Offer Net 30, Net 60, or similar deferred payment terms</li>
+        <li>Currently manage invoicing and credit tracking manually or through workarounds</li>
+        <li>Are spending meaningful time each month chasing payments or checking order eligibility</li>
+    </ul>
+
+    <p>If you're running a Shopify Plus store with a wholesale channel, or a standard Shopify store with a significant B2B component, this app is designed for you.</p>
+
+    <div class="callout">
+        <p><strong>Approval status:</strong> Net Terms Tracker is in the final stages of Shopify's app review process. We expect to be live on the Shopify App Store very soon. If you want to be notified the moment it's available, <a href="../contact.html" class="text-[#E8620A] font-semibold hover:underline">get in touch</a> and we'll add you to the early access list.</p>
+    </div>
+
+    <h2>The Technical Choices</h2>
+
+    <p>For those who want to understand what's under the hood: the app is built with Remix and deploys on Fly.io. The Shopify integration uses the full OAuth/session management flow via App Bridge v4. The checkout gatekeeper is a Rust module compiled to WASM — this was a deliberate choice to ensure the credit evaluation runs fast enough to never add perceptible latency to the checkout experience.</p>
+
+    <p>The invoicing engine uses @react-pdf/renderer to generate PDFs server-side. The customer portal is embedded using Shopify's Liquid theme extensions and communicates with the app backend via authenticated API calls.</p>
+
+    <p>A detailed technical breakdown of how each module was built is available in the <a href="net-terms-tracker-case-study.html" class="text-[#E8620A] hover:underline">product story post</a> if you're interested in the engineering decisions behind it.</p>
+
+    <h2>What Comes Next</h2>
+
+    <p>The initial Shopify App Store release covers the four core modules. After launch, planned additions include automated payment reminder emails, a merchant dashboard with cash flow reporting, and multi-currency support for international wholesale operations.</p>
+
+    <p>Pricing details will be announced with the app store listing. We're committed to keeping it accessible for growing businesses — not enterprise-only pricing.</p>
+
+    <!-- Author + CTA -->
+    <div class="mt-16 pt-8 border-t border-[#2a2a2a] flex flex-col md:flex-row items-start gap-6">
+        <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-16 h-16 rounded-full object-cover grayscale flex-shrink-0" onerror="this.style.display='none'"/>
+        <div>
+            <div class="text-[#F5F5F5] font-black text-lg mb-1">Henning Botha</div>
+            <div class="text-[#a88a7e] text-[0.875rem] mb-4">Founder of HJB CodeForge and builder of Net Terms Tracker. I build software that solves real problems for real businesses.</div>
+            <a href="../contact.html" class="inline-flex forge-gradient text-white px-6 py-2.5 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">
+                Get Notified at Launch →
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Navigation -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="introducing-track-and-thrive.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">← Previous</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">Introducing Track &amp; Thrive</div>
+        </a>
+        <a href="../blog.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors text-right">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">Back to Blog →</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">All Posts</div>
+        </a>
+    </div>
+</article>
+
+<!-- Footer -->
+<footer class="border-t border-[#2a2a2a] py-12 px-8">
+    <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-8 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../index.html">Home</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../portfolio.html">Products</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../blog.html">Blog</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../contact.html">Contact</a>
+        </div>
+        <p class="text-[#594237] text-[0.8rem]">© 2026 HJB CodeForge. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
