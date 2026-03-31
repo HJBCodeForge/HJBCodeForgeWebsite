@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>How to Hire a Developer When You're Not Technical | HJB CodeForge Blog</title>
+<meta name="description" content="A practical guide for non-technical founders on evaluating developers, avoiding costly mistakes, structuring engagements, and building a healthy working relationship with a technical partner."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A", "on-primary": "#ffffff",
+                    "primary-container": "#ef6712", "on-primary-container": "#ffffff",
+                    "secondary": "#f6be39", "on-secondary": "#402d00",
+                    "background": "#0A0A0A", "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A", "on-surface": "#e5e2e1",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "surface-bright": "#3a3939",
+                    "outline": "#a88a7e", "outline-variant": "#594237",
+                },
+                fontFamily: { "body": ["Inter", "Arial", "sans-serif"] },
+                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem" },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    body { background-color: #0A0A0A; font-family: 'Inter', Arial, sans-serif; }
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #e1c0b2; font-size: 1.05rem; }
+    .prose h2 { font-size: 1.75rem; font-weight: 900; color: #F5F5F5; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose h3 { font-size: 1.2rem; font-weight: 700; color: #F5F5F5; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ul li { margin-bottom: 0.5rem; list-style-type: disc; }
+    .prose ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ol li { margin-bottom: 0.75rem; list-style-type: decimal; }
+    .prose strong { color: #F5F5F5; font-weight: 700; }
+    .prose a { color: #E8620A; text-decoration: underline; text-decoration-color: rgba(232,98,10,0.4); }
+    .prose a:hover { text-decoration-color: #E8620A; }
+    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .callout p { margin-bottom: 0; color: #e1c0b2; }
+    .warning { background: #1a1200; border-left: 4px solid #f6be39; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .warning p { margin-bottom: 0; color: #e1c0b2; }
+    .checklist-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; color: #e1c0b2; }
+    .checklist-item::before { content: "✓"; color: #E8620A; font-weight: 900; flex-shrink: 0; margin-top: 0.1rem; }
+    .red-flag { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; color: #e1c0b2; }
+    .red-flag::before { content: "✗"; color: #ef4444; font-weight: 900; flex-shrink: 0; margin-top: 0.1rem; }
+</style>
+</head>
+<body class="font-body text-on-surface">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../services.html">Custom Work</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../portfolio.html">Products</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="../blog.html">Blog</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="../contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">Let's Build</a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0e0e0e] border-t border-[#2a2a2a] px-8 py-4 flex flex-col gap-4">
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../index.html">Home</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../services.html">Custom Work</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../about.html">About</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../portfolio.html">Products</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="../blog.html">Blog</a>
+        <a href="../contact.html" class="forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg text-center">Let's Build</a>
+    </div>
+</nav>
+
+<!-- Article Header -->
+<section class="pt-32 pb-16 px-8 max-w-[800px] mx-auto">
+    <div class="flex items-center gap-3 mb-6">
+        <a href="../blog.html" class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#E8620A] hover:underline">← Blog</a>
+        <span class="text-[#594237]">/</span>
+        <span class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#594237]">Founders</span>
+    </div>
+
+    <h1 class="text-4xl md:text-6xl font-black text-[#F5F5F5] leading-[1.05] tracking-tighter mb-6">
+        How to Hire a Developer<br/>
+        <span class="forge-gradient bg-clip-text text-transparent" style="-webkit-background-clip:text;">When You're Not Technical</span>
+    </h1>
+
+    <p class="text-xl text-[#e1c0b2] leading-relaxed mb-8">
+        A practical guide for non-technical founders on evaluating developers, avoiding expensive mistakes, structuring engagements, and building a healthy long-term working relationship with a technical partner.
+    </p>
+
+    <div class="flex flex-wrap items-center gap-6 text-[0.8rem] text-[#a88a7e] pb-8 border-b border-[#2a2a2a]">
+        <div class="flex items-center gap-2">
+            <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-8 h-8 rounded-full object-cover grayscale" onerror="this.style.display='none'"/>
+            <span class="text-[#F5F5F5] font-semibold">Henning Botha</span>
+        </div>
+        <span>January 2026</span>
+        <span>·</span>
+        <span>10 Min Read</span>
+        <span>·</span>
+        <span class="text-[#E8620A] font-semibold uppercase tracking-widest">Founders</span>
+    </div>
+</section>
+
+<!-- Hero Image -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16">
+    <div class="w-full h-64 md:h-96 bg-[#1c1b1b] rounded-lg overflow-hidden border border-[#2a2a2a]">
+        <img src="https://images.unsplash.com/photo-1559523182-a284c3fb7cff?w=1400&q=80&auto=format&fit=crop" alt="Three people collaborating around laptops in a team setting" class="w-full h-full object-cover opacity-80"/>
+    </div>
+</div>
+
+<!-- Article Body -->
+<article class="max-w-[800px] mx-auto px-8 pb-24 prose">
+
+    <p>I've spoken to dozens of non-technical founders over the years. The vast majority of them share a common anxiety: they know they need a developer to build their product, but they don't know how to evaluate one. They're worried about being taken advantage of. They're worried about choosing wrong, burning money, and ending up with nothing to show for it.</p>
+
+    <p>That anxiety is completely reasonable. Bad software engagements are common, expensive, and often invisible until it's too late. A developer can look credible, say the right things, and still deliver a project that's unmaintainable, unscalable, or simply wrong for your needs.</p>
+
+    <p>The good news: you don't need to learn to code to hire developers well. You need to understand what good looks like, what questions to ask, and how to structure the relationship to protect yourself. This guide covers all three.</p>
+
+    <div class="callout">
+        <p><strong>Who this is for:</strong> Founders and business owners who need software built but don't have a technical background. This applies whether you're hiring a freelancer, engaging a small agency, or evaluating a development partner for an ongoing relationship.</p>
+    </div>
+
+    <h2>Before You Hire Anyone: Get Clear on What You're Building</h2>
+
+    <p>The single biggest reason software projects fail has nothing to do with the developer. It's that the founder didn't know what they wanted clearly enough before the engagement started. Developers build what they're told to build. If the specification is vague, the output will be wrong — and you'll pay to fix it.</p>
+
+    <p>Before you talk to a single developer, you should be able to clearly describe:</p>
+
+    <ul>
+        <li><strong>Who uses the product and what job they're trying to do.</strong> Not "small businesses" — be specific. "A wholesale merchant who needs to track which customers owe them money and when it's due."</li>
+        <li><strong>The 3–5 core workflows</strong> that the product must support at launch. What does the user open the app to do? Walk through each workflow step by step in plain language.</li>
+        <li><strong>What you're NOT building in v1.</strong> Scope creep kills projects. A prioritised list of what's out of scope is as important as the spec itself.</li>
+        <li><strong>What success looks like at 3 months.</strong> A number, a capability, a milestone. Something concrete enough that both you and your developer will know unambiguously whether you've achieved it.</li>
+    </ul>
+
+    <p>If you can't write these down clearly, you're not ready to hire a developer. You're ready to hire a product consultant or spend more time on problem discovery first. A developer who charges you to help you figure out what you want is charging you at engineering rates for business strategy work — a very expensive way to do both poorly.</p>
+
+    <h2>Where to Find Good Developers</h2>
+
+    <p>The best developer hires almost always come from a warm referral. Someone you trust — a founder friend, an investor, a mentor — worked with a developer and would genuinely recommend them. This is worth 100 cold applications from job boards, because you're getting an informed first-person assessment, not a stranger's curated self-presentation.</p>
+
+    <p>If you don't have relevant referrals in your network, here's where to look:</p>
+
+    <ul>
+        <li><strong>Toptal and Gun.io</strong> — higher cost, pre-vetted talent, lower risk. Worth it for critical early-stage work where you need confidence quickly.</li>
+        <li><strong>LinkedIn</strong> — useful for finding developers who are currently freelancing or open to contract work. Look for people with a track record of similar products (Shopify apps, SaaS platforms, mobile apps — whatever matches your domain).</li>
+        <li><strong>Relevant communities</strong> — if you're building on Shopify, look in Shopify Partner communities. Building something AI-related? Developer communities around the frameworks you'll use. Domain-specific talent pools produce better-fit candidates than general job boards.</li>
+        <li><strong>Small specialist agencies</strong> — often better than large agencies for product work. A 5-person shop focused on SaaS products is far preferable to a 50-person agency that will put junior developers on your project while the senior who sold you shows up for calls.</li>
+    </ul>
+
+    <h2>How to Evaluate a Developer You Can't Code-Review</h2>
+
+    <p>You can't read their code. That's okay. You can evaluate everything around the code, which is often more predictive of project success anyway.</p>
+
+    <h3>Look at their previous work — critically</h3>
+
+    <p>Ask for examples of products they've built that are live and in use. Not mockups. Not projects that were "almost finished." Working products with real users. If they can't produce examples, that tells you something important.</p>
+
+    <p>For each example: ask them what they're most proud of about that project and what they'd do differently. A developer who can articulate both — pride in their craft and honest reflection on mistakes — is almost always a better partner than one who only tells you how great everything they built is.</p>
+
+    <h3>Ask process questions, not technology questions</h3>
+
+    <p>You can't evaluate technical skill directly, but you can evaluate process. Good process is highly correlated with good outcomes. Ask:</p>
+
+    <ul>
+        <li>"Walk me through how you'd approach the first two weeks of a new project with me." A good developer will talk about discovery, spec review, asking clarifying questions, setting up version control and deployment infrastructure, and getting something live quickly even if it's minimal.</li>
+        <li>"How do you handle scope changes during a project?" There will always be scope changes. A good developer has a clear, honest process for evaluating them and communicating the impact on timeline and cost. A bad one either says yes to everything (and blows up) or refuses to adapt (and delivers something wrong).</li>
+        <li>"What happens if we disagree about a technical decision?" This question reveals a lot about communication style and professional maturity. You want someone who can explain their reasoning clearly, listen to your perspective, and make a recommendation they stand behind — not someone who caves to whatever you say (dangerous) or dismisses your input without explanation (disrespectful).</li>
+        <li>"How do you make sure I always know what's happening with the project?" Weekly updates? A shared project board? Async communication in a Slack channel? There's no single right answer, but there should be a clear answer.</li>
+    </ul>
+
+    <h3>Check references — actually check them</h3>
+
+    <p>Ask for two to three references from past clients specifically. Not colleagues, not academic contacts — clients. People who paid them to build something. Call them. Ask specifically: "Were there any moments in the engagement where you were frustrated or felt things weren't going well? How did they handle it?" A reference who can't identify any friction is either not telling the truth or hasn't worked closely enough with the developer to know.</p>
+
+    <h2>Red Flags: What to Walk Away From</h2>
+
+    <p>These are patterns I've seen repeatedly that almost always precede a bad engagement:</p>
+
+    <div class="red-flag">They can't explain their previous projects in plain language. If a developer can only talk about their work in jargon you can't follow, they either don't understand it well themselves or they're not interested in communicating clearly. Both are problems.</div>
+
+    <div class="red-flag">They quote a fixed price immediately for a complex project without asking many questions. A complex software project cannot be accurately scoped in a 30-minute first call. A fixed quote given too fast is either a trap (they'll hit the scope limit and charge extras) or a sign they're not taking the problem seriously.</div>
+
+    <div class="red-flag">They don't push back on anything you say. You want a technical partner, not an order-taker. A developer who agrees with everything in the first call isn't being agreeable — they're telling you they'll say yes to whatever keeps you happy until the contract is signed.</div>
+
+    <div class="red-flag">They talk about technology more than outcomes. "We'll use a microservices architecture with a Kubernetes orchestration layer and event-driven messaging" means nothing if they haven't established what problem they're solving. Technology serves outcomes. Anyone leading with tech before outcomes has their priorities backwards.</div>
+
+    <div class="red-flag">Their portfolio has no live products. Mockups and "client-confidential" work are easy to fake. Demand examples of real, deployed products. Every good developer has at least a few.</div>
+
+    <div class="warning">
+        <p><strong>The offshore agency trap:</strong> Low-cost offshore development agencies often pitch aggressively and win projects on price. The pattern is consistent: strong initial communication during sales, then slow response times, high developer turnover, and code that works technically but has no tests, no documentation, and no maintainability. You will pay more to fix offshore work than you saved hiring them. Hire people you can talk to synchronously, who have clear ownership of what they're building.</p>
+    </div>
+
+    <h2>Structuring the Engagement Correctly</h2>
+
+    <p>How you structure the deal is as important as who you hire. Here's what protects you:</p>
+
+    <h3>Start with a paid discovery phase</h3>
+
+    <p>Before committing to a full project, engage the developer for a fixed-scope discovery phase — typically two to four weeks, at an agreed day rate. The output is a detailed specification document: user stories, wireframe sketches, data models, technical decisions documented. You pay for this. This does three things: it tells you how the developer works before you're deeply committed; it produces a document that any developer can use to quote and build from; and it gives you a shared vocabulary for the rest of the project.</p>
+
+    <h3>Milestone-based payments, not time-based</h3>
+
+    <p>For fixed-scope projects, structure payments around deliverables, not time. "50% on project start, 50% on delivery" is the worst possible structure — you lose all leverage the moment you pay the first half. Instead: 20% on project start, 20% on working prototype, 30% on feature-complete build, 30% on successful launch and handover. Each milestone should have clear acceptance criteria you both agree on before the work starts.</p>
+
+    <h3>Insist on version control from day one</h3>
+
+    <p>Your code should live in a Git repository that you own. Not on the developer's account. Not on their company's account. Your GitHub or GitLab organisation. This is non-negotiable. If a developer won't agree to this, walk away — they're creating dependency that serves them, not you. The first deliverable of any engagement should be: "Show me the repository with the initial commit."</p>
+
+    <h3>Ask about the handover plan before you start</h3>
+
+    <p>What happens when the project ends? How do you take ownership of the codebase? Who has access to what? Is there documentation? A developer who has a clear, confident answer to this question is building something maintainable. A developer who gets evasive about it is building something only they can maintain — which is leverage over you.</p>
+
+    <div class="callout">
+        <p><strong>The "bus factor" question:</strong> Ask your developer: "If you were hit by a bus tomorrow, how quickly could another developer pick up this codebase and continue work?" If the honest answer is "not quickly," that's a problem you need to address. The answer to this question is documentation, clear code organisation, and clean Git history — all markers of professional craftsmanship.</p>
+    </div>
+
+    <h2>Building a Good Working Relationship</h2>
+
+    <p>The best developer engagements are partnerships, not vendor relationships. Here's what the founder side of that partnership looks like:</p>
+
+    <p><strong>Be available.</strong> Unanswered questions from developers become assumptions that become bugs. If a developer is blocked waiting for your input and you take three days to respond, that's not a developer problem — that's a communication problem on your end. Agree on expected response times at the start and respect them.</p>
+
+    <p><strong>Give feedback on working software, not specs.</strong> It's very hard to know if a specification is right until you see it built. Don't be too rigid about requirements you wrote before you'd seen anything working. When the developer shows you something live and you realise the flow should work differently, say so — and treat it as a learning, not a failure. Good developers expect this and plan for it.</p>
+
+    <p><strong>Trust their technical judgment.</strong> You hired them because they know things you don't. When they tell you something will take longer than expected, or that an approach you suggested isn't right, listen. Ask them to explain their reasoning. You don't have to take their word for it blindly, but you should engage seriously with their technical reasoning before overriding it.</p>
+
+    <p><strong>Pay on time, every time.</strong> This seems obvious, but late payments damage relationships with good freelancers faster than almost anything else. Good developers are in demand. If you're a slow payer, they'll deprioritise your work for clients who pay promptly.</p>
+
+    <h2>Closing: The Right Developer Changes Everything</h2>
+
+    <p>The founder-developer relationship, when it works, is one of the highest-leverage partnerships in business. A skilled developer who understands your domain, communicates clearly, and is invested in your product's success isn't just a vendor — they're a co-author of the thing you're building.</p>
+
+    <p>Finding that person takes time and diligence. It requires being honest about what you need, asking the right questions, structuring the engagement to protect yourself, and then showing up as a good partner in return. It's worth getting right.</p>
+
+    <p>If you're evaluating developers, the single best signal is live, shipped product. Anyone can show a mockup. Check if they have deployed apps — real users, real URLs, real code in production. At HJB CodeForge, our own products (Net Terms Tracker, BotForge, Track &amp; Thrive) are our proof of work. We occasionally take on custom projects for the right partners too.</p>
+
+    <!-- Author + CTA -->
+    <div class="mt-16 pt-8 border-t border-[#2a2a2a] flex flex-col md:flex-row items-start gap-6">
+        <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-16 h-16 rounded-full object-cover grayscale flex-shrink-0" onerror="this.style.display='none'"/>
+        <div>
+            <div class="text-[#F5F5F5] font-black text-lg mb-1">Henning Botha</div>
+            <div class="text-[#a88a7e] text-[0.875rem] mb-4">Founder, HJB CodeForge. I work with founders who want software built with craft, transparency, and clear communication.</div>
+            <a href="../portfolio.html" class="inline-flex forge-gradient text-white px-6 py-2.5 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">
+                Start a Conversation →
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Navigation -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="majestic-monolith.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">← Previous</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">In Defence of the Majestic Monolith</div>
+        </a>
+        <a href="../blog.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors text-right">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">All Posts →</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">Back to the Blog</div>
+        </a>
+    </div>
+</article>
+
+<!-- Footer -->
+<footer class="border-t border-[#2a2a2a] py-12 px-8">
+    <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-8 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../index.html">Home</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../services.html">Custom Work</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../portfolio.html">Products</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../blog.html">Blog</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../contact.html">Contact</a>
+        </div>
+        <p class="text-[#594237] text-[0.8rem]">© 2026 HJB CodeForge. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

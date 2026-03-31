@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Building Net Terms Tracker: A Shopify B2B App Coming to Shopify App Store | HJB CodeForge Blog</title>
+<meta name="description" content="How we built a production Shopify app to solve B2B net payment terms — covering the Rust checkout gatekeeper, automated invoicing, Remix architecture, and lessons learned."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A", "on-primary": "#ffffff",
+                    "primary-container": "#ef6712", "on-primary-container": "#ffffff",
+                    "secondary": "#f6be39", "on-secondary": "#402d00",
+                    "background": "#0A0A0A", "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A", "on-surface": "#e5e2e1",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "surface-bright": "#3a3939",
+                    "outline": "#a88a7e", "outline-variant": "#594237",
+                },
+                fontFamily: { "body": ["Inter", "Arial", "sans-serif"] },
+                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem" },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    body { background-color: #0A0A0A; font-family: 'Inter', Arial, sans-serif; }
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #e1c0b2; font-size: 1.05rem; }
+    .prose h2 { font-size: 1.75rem; font-weight: 900; color: #F5F5F5; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose h3 { font-size: 1.2rem; font-weight: 700; color: #F5F5F5; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ul li { margin-bottom: 0.5rem; list-style-type: disc; }
+    .prose ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ol li { margin-bottom: 0.5rem; list-style-type: decimal; }
+    .prose strong { color: #F5F5F5; font-weight: 700; }
+    .prose a { color: #E8620A; text-decoration: underline; text-decoration-color: rgba(232,98,10,0.4); }
+    .prose a:hover { text-decoration-color: #E8620A; }
+    .code-block { background: #0e0e0e; border-radius: 0.25rem; padding: 1.5rem; margin-bottom: 1.5rem; overflow-x: auto; border-left: 3px solid #E8620A; }
+    .code-block code { font-family: 'Courier New', Courier, monospace; font-size: 0.875rem; color: #f6be39; line-height: 1.7; white-space: pre; }
+    .code-comment { color: #594237; }
+    .code-keyword { color: #E8620A; }
+    .code-string { color: #f6be39; }
+    .code-type { color: #a2c9ff; }
+    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .callout p { margin-bottom: 0; color: #e1c0b2; }
+    .stat-card { background: #1c1b1b; border: 1px solid #2a2a2a; border-radius: 0.25rem; padding: 1.5rem; }
+</style>
+</head>
+<body class="font-body text-on-surface">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../assets/images/logo.png" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuBTlpkd_MH0gGBqmwTfxB7LhLKOWDIVXqXgfFAbLvXXXXXXXXXXXX'"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../services.html">Custom Work</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../portfolio.html">Products</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="../blog.html">Blog</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="../contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">Let's Build</a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0e0e0e] border-t border-[#2a2a2a] px-8 py-4 flex flex-col gap-4">
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../index.html">Home</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../services.html">Custom Work</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../about.html">About</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../portfolio.html">Products</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="../blog.html">Blog</a>
+        <a href="../contact.html" class="forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg text-center">Let's Build</a>
+    </div>
+</nav>
+
+<!-- Article Header -->
+<section class="pt-32 pb-16 px-8 max-w-[800px] mx-auto">
+    <div class="flex items-center gap-3 mb-6">
+        <a href="../blog.html" class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#E8620A] hover:underline">← Blog</a>
+        <span class="text-[#594237]">/</span>
+        <span class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#594237]">Product Story</span>
+    </div>
+
+    <h1 class="text-4xl md:text-6xl font-black text-[#F5F5F5] leading-[1.05] tracking-tighter mb-6">
+        Building Net Terms Tracker:<br/>
+        <span class="forge-gradient bg-clip-text text-transparent" style="-webkit-background-clip:text;">A Shopify B2B App</span><br/>
+        Coming to Shopify App Store
+    </h1>
+
+    <p class="text-xl text-[#e1c0b2] leading-relaxed mb-8">
+        Shopify Plus stores selling wholesale still manage net payment terms in spreadsheets. Here's how we built a production app to fix that — including a Rust-powered checkout gatekeeper, automated PDF invoicing, and a self-service customer finance portal.
+    </p>
+
+    <div class="flex flex-wrap items-center gap-6 text-[0.8rem] text-[#a88a7e] pb-8 border-b border-[#2a2a2a]">
+        <div class="flex items-center gap-2">
+            <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-8 h-8 rounded-full object-cover grayscale" onerror="this.style.display='none'"/>
+            <span class="text-[#F5F5F5] font-semibold">Henning Botha</span>
+        </div>
+        <span>March 2026</span>
+        <span>·</span>
+        <span>12 Min Read</span>
+        <span>·</span>
+        <span class="text-[#E8620A] font-semibold uppercase tracking-widest">Coming to Shopify App Store</span>
+    </div>
+</section>
+
+<!-- Hero Image -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16">
+    <div class="w-full h-64 md:h-96 bg-[#1c1b1b] rounded-lg overflow-hidden border border-[#2a2a2a] flex items-center justify-center">
+        <img src="../assets/images/net-terms.png" alt="Net Terms Tracker App" class="w-full h-full object-cover opacity-80" onerror="this.src='https://images.unsplash.com/photo-1735825764457-ffdf0b5aa5dd?w=1400&q=80&auto=format&fit=crop'"/>
+    </div>
+</div>
+
+<!-- Stats Row -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="stat-card text-center">
+            <div class="text-3xl font-black text-[#E8620A] mb-1">4</div>
+            <div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Core Modules</div>
+        </div>
+        <div class="stat-card text-center">
+            <div class="text-3xl font-black text-[#E8620A] mb-1">Rust</div>
+            <div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Checkout Logic</div>
+        </div>
+        <div class="stat-card text-center">
+            <div class="text-3xl font-black text-[#E8620A] mb-1">~0ms</div>
+            <div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">WASM Gate Overhead</div>
+        </div>
+        <div class="stat-card text-center">
+            <div class="text-3xl font-black text-[#E8620A] mb-1">Fly.io</div>
+            <div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Global Deploy</div>
+        </div>
+    </div>
+</div>
+
+<!-- Article Body -->
+<article class="max-w-[800px] mx-auto px-8 pb-24 prose">
+
+    <h2>The Problem: Wholesale Commerce Still Runs on Spreadsheets</h2>
+
+    <p>If you've ever worked in B2B wholesale, you know the pain. A retailer places a large order. The merchant extends them Net 30 payment terms — the retailer has 30 days to pay the invoice. Simple enough in theory. In practice? The merchant is now tracking that debt in a Google Sheet, emailing PDF invoices manually, and losing track of which customers are overdue.</p>
+
+    <p>Shopify is the dominant platform for commerce in 2026, but its native checkout has always been built around immediate payment. You add to cart, you check out, you pay now. The concept of "place the order today, pay in 30 days" simply doesn't exist in the standard Shopify flow. Merchants either bolt on a third-party invoicing tool (usually expensive, often clunky) or resort to offline tracking.</p>
+
+    <p>Net Terms Tracker was built to solve this for Shopify Plus merchants. The goal: a fully embedded app that manages the entire net terms lifecycle — from credit applications and approvals, to order creation, invoice generation, payment tracking, and overdue alerting — without the merchant ever leaving Shopify admin.</p>
+
+    <div class="callout">
+        <p><strong>Scope:</strong> This post covers the engineering decisions behind the app — specifically the checkout enforcement mechanism, the invoicing pipeline, and the customer-facing finance portal. If you're a merchant evaluating B2B tools, the <a href="../portfolio.html">portfolio page</a> gives a better product overview.</p>
+    </div>
+
+    <h2>Tech Stack Overview</h2>
+
+    <p>Before diving into individual modules, here's the full picture of what powers Net Terms Tracker:</p>
+
+    <ul>
+        <li><strong>Frontend + Backend:</strong> Remix (React Router v7) — one framework for server-side rendering, API routes, and Shopify OAuth</li>
+        <li><strong>UI Components:</strong> Shopify Polaris — Shopify's design system, keeping the app visually native inside admin</li>
+        <li><strong>Shopify Integration:</strong> GraphQL Admin API, App Bridge v4, Checkout UI Extensions</li>
+        <li><strong>Checkout Logic:</strong> Rust compiled to WebAssembly, deployed as a Shopify Checkout UI Extension</li>
+        <li><strong>Database:</strong> SQLite (development) / Prisma ORM — lightweight and sufficient for per-merchant data isolation</li>
+        <li><strong>PDF Generation:</strong> Puppeteer running in a headless Chrome instance on the server</li>
+        <li><strong>Infrastructure:</strong> Fly.io with Docker — multi-region deployment, zero-config scaling</li>
+        <li><strong>Auth:</strong> Shopify Partner OAuth — the app authenticates merchant admins via Shopify's OAuth flow, no separate auth system needed</li>
+    </ul>
+
+    <p>The stack is deliberately boring where boring is good (Prisma, SQLite, Polaris) and deliberately interesting where performance matters (Rust/WASM for checkout). Let me explain each major module.</p>
+
+    <h2>Module 1: The Rust Checkout Gatekeeper</h2>
+
+    <p>This is the piece I'm most proud of, and the one that raised the most eyebrows during development. The core question: how do you prevent a customer without approved credit from completing an order on net terms?</p>
+
+    <p>Shopify's Checkout UI Extensions allow you to inject custom UI and logic into the checkout flow. You can display information, collect custom fields, and — critically — block checkout progression based on your own conditions. The extension runs in a sandboxed environment inside the checkout, which means the code needs to be fast, stateless, and safe. Rust compiling to WASM is a natural fit.</p>
+
+    <p>The flow works like this:</p>
+
+    <ol>
+        <li>Customer reaches checkout and selects "Net 30" as their payment method</li>
+        <li>The Checkout UI Extension fires a request to the app's backend, passing the customer ID and requested credit amount</li>
+        <li>The backend checks the customer's credit status, remaining credit limit, and overdue balance in the Prisma database</li>
+        <li>The Rust/WASM module evaluates the gating logic — approved, denied, or pending — and returns a structured decision object</li>
+        <li>The extension renders the appropriate UI: green approval, a pending message with estimated review time, or a hard block with a link to the finance portal</li>
+    </ol>
+
+    <div class="code-block">
+        <code><span class="code-comment">// Rust: Core credit eligibility logic (simplified)</span>
+<span class="code-comment">// Compiled to WASM and called from the Checkout Extension</span>
+
+<span class="code-keyword">use</span> wasm_bindgen::prelude::*;
+<span class="code-keyword">use</span> serde::{Deserialize, Serialize};
+
+<span class="code-type">#[derive(Serialize, Deserialize)]</span>
+<span class="code-keyword">pub struct</span> <span class="code-type">CreditDecision</span> {
+    <span class="code-keyword">pub</span> approved: <span class="code-type">bool</span>,
+    <span class="code-keyword">pub</span> reason: <span class="code-type">String</span>,
+    <span class="code-keyword">pub</span> available_credit: <span class="code-type">f64</span>,
+    <span class="code-keyword">pub</span> has_overdue: <span class="code-type">bool</span>,
+}
+
+<span class="code-type">#[wasm_bindgen]</span>
+<span class="code-keyword">pub fn</span> <span class="code-type">evaluate_credit</span>(
+    limit: <span class="code-type">f64</span>,
+    outstanding: <span class="code-type">f64</span>,
+    overdue_balance: <span class="code-type">f64</span>,
+    order_amount: <span class="code-type">f64</span>,
+) -> <span class="code-type">JsValue</span> {
+    <span class="code-keyword">let</span> available = limit - outstanding;
+    <span class="code-keyword">let</span> has_overdue = overdue_balance > 0.0;
+
+    <span class="code-keyword">let</span> decision = <span class="code-keyword">if</span> has_overdue {
+        CreditDecision {
+            approved: <span class="code-keyword">false</span>,
+            reason: <span class="code-string">"Outstanding overdue balance. Please clear before placing new orders."</span>.to_string(),
+            available_credit: available,
+            has_overdue: <span class="code-keyword">true</span>,
+        }
+    } <span class="code-keyword">else if</span> order_amount > available {
+        CreditDecision {
+            approved: <span class="code-keyword">false</span>,
+            reason: <span class="code-string">"Order exceeds available credit limit."</span>.to_string(),
+            available_credit: available,
+            has_overdue: <span class="code-keyword">false</span>,
+        }
+    } <span class="code-keyword">else</span> {
+        CreditDecision {
+            approved: <span class="code-keyword">true</span>,
+            reason: <span class="code-string">"Approved."</span>.to_string(),
+            available_credit: available - order_amount,
+            has_overdue: <span class="code-keyword">false</span>,
+        }
+    };
+
+    serde_wasm_bindgen::to_value(&decision).unwrap()
+}</code>
+    </div>
+
+    <p>Why Rust and not just JavaScript? A few reasons. The checkout extension environment has strict performance budgets — Shopify's runtime is intolerant of slow extensions, and a sluggish checkout is a conversion killer. WASM modules start cold in microseconds. Rust also gives us memory safety guarantees in a context where we're processing financial data — no null pointer exceptions, no unexpected type coercions. The logic is pure and testable with standard Rust unit tests before it ever touches the browser.</p>
+
+    <p>The gating logic itself is straightforward — the sophistication is in the composition. By separating the eligibility rules (Rust) from the data fetching (Remix loader) and the UI rendering (React/Polaris), each layer is independently testable and replaceable.</p>
+
+    <h2>Module 2: Shopify OAuth and Session Management</h2>
+
+    <p>Shopify app authentication is notoriously finicky, especially with embedded apps using App Bridge. The standard pattern involves OAuth redirects, session tokens, and a careful dance between the Shopify admin iframe and your app's backend. Remix's loader and action model actually makes this cleaner than it was with Next.js API routes.</p>
+
+    <div class="code-block">
+        <code><span class="code-comment">// app/routes/auth.$.tsx — Shopify OAuth entrypoint</span>
+<span class="code-keyword">import</span> { authenticate } from <span class="code-string">"~/shopify.server"</span>;
+
+<span class="code-keyword">export async function</span> <span class="code-type">loader</span>({ request }: LoaderFunctionArgs) {
+  <span class="code-comment">// Shopify's authenticate.admin handles token exchange,</span>
+  <span class="code-comment">// session storage, and redirect back to the app.</span>
+  <span class="code-keyword">await</span> authenticate.admin(request);
+  <span class="code-comment">// If we get here, auth succeeded. Redirect to app root.</span>
+  <span class="code-keyword">return</span> redirect(<span class="code-string">"/"</span>);
+}
+
+<span class="code-comment">// app/routes/_index.tsx — Protected app entrypoint</span>
+<span class="code-keyword">export async function</span> <span class="code-type">loader</span>({ request }: LoaderFunctionArgs) {
+  <span class="code-keyword">const</span> { admin, session } = <span class="code-keyword">await</span> authenticate.admin(request);
+
+  <span class="code-comment">// Fetch merchant's credit settings from our DB</span>
+  <span class="code-keyword">const</span> merchantConfig = <span class="code-keyword">await</span> db.merchantConfig.findUnique({
+    where: { shop: session.shop },
+  });
+
+  <span class="code-comment">// Fetch outstanding invoices via GraphQL</span>
+  <span class="code-keyword">const</span> response = <span class="code-keyword">await</span> admin.graphql(`
+    query GetDraftOrders {
+      draftOrders(first: 50, query: "status:open") {
+        edges { node { id name totalPrice createdAt customer { displayName } } }
+      }
+    }
+  `);
+
+  <span class="code-keyword">return</span> json({ merchantConfig, draftOrders: response.data });
+}</code>
+    </div>
+
+    <p>One thing that caught us early: Shopify sessions are per-shop, not per-user. If a merchant has multiple staff members using the app, they all share the same shop session. This means any state that needs to be user-specific (like draft approvals or audit logs of who approved what) needs explicit user tracking via Shopify's Staff Accounts API, not just the session.</p>
+
+    <h2>Module 3: Automated PDF Invoice Generation</h2>
+
+    <p>When a merchant approves a credit application and a customer places an order on net terms, the app needs to automatically generate a professional invoice and email it to the customer. This sounds simple until you try to build it.</p>
+
+    <p>We evaluated three approaches: a pure JavaScript PDF library (jsPDF, PDFKit), a templating service like DocRaptor, and headless Chrome rendering an HTML template. We went with headless Chrome via Puppeteer for one reason: <strong>the output is pixel-perfect and trivially maintainable</strong>. Invoice templates are just HTML and CSS. Designers can edit them. The output matches exactly what you see in a browser preview. No fighting with a PDF library's layout engine.</p>
+
+    <p>The invoice template is a Remix route that returns HTML when hit directly (for preview) or PDF when hit with a specific Accept header. Puppeteer on the server navigates to that route with a valid session token, captures the PDF, stores it in a temporary buffer, and pipes it to the email service.</p>
+
+    <div class="callout">
+        <p><strong>Fly.io note:</strong> Puppeteer in a Docker container on Fly.io requires a few non-obvious configuration steps. You need to install Chromium explicitly in your Dockerfile, set the executablePath to the installed Chromium binary, and pass --no-sandbox and --disable-dev-shm-usage flags. We burned two days on this. The Fly.io forum thread is worth bookmarking if you go this route.</p>
+    </div>
+
+    <h2>Module 4: The Customer Finance Portal</h2>
+
+    <p>The final major module is a self-service portal for customers — a lightweight web app (separate from the Shopify admin embed) where customers can view their credit limit, outstanding balance, invoice history, and submit a credit application if they don't have terms yet.</p>
+
+    <p>This is a public-facing Remix route, not embedded in Shopify admin. Customers authenticate via a magic link emailed to their registered Shopify customer email. The session is short-lived (4 hours) and scoped to read-only data. No Shopify OAuth needed here — just a simple JWT stored in an httpOnly cookie.</p>
+
+    <p>The portal was the most requested feature during user testing. Merchants discovered that the biggest friction in their net terms workflow wasn't the invoicing — it was customers calling the accounts department to ask basic questions: "How much credit do I have left? Is my invoice due yet? Can I see last month's orders?" The portal reduced those inbound calls to near zero for merchants using it in beta.</p>
+
+    <h2>Deployment: Fly.io + Docker</h2>
+
+    <p>Fly.io has become my default for Remix apps. The mental model is simple: you define a Dockerfile, you run <code style="color: #f6be39; background: #0e0e0e; padding: 0.1rem 0.4rem; border-radius: 0.125rem;">fly launch</code>, and you get a globally distributed app with automatic HTTPS, health checks, and rolling deploys. For a Shopify app where latency directly impacts checkout conversion, multi-region deployment matters.</p>
+
+    <p>We deploy to three regions — IAD (US East), LHR (London), and SYD (Sydney) — with Fly's anycast routing directing each merchant's traffic to the nearest instance. SQLite per-region replication is handled via Fly's LiteFS, which gives us distributed SQLite with Raft consensus. For a single-tenant-ish app (each merchant's data is isolated anyway), this is far simpler than managing a global Postgres cluster.</p>
+
+    <h2>What We'd Do Differently</h2>
+
+    <p>No project survives contact with production without regrets. Here are ours:</p>
+
+    <p><strong>Start with more schema flexibility.</strong> We designed the initial Prisma schema around our first merchant's workflow, then had to run migrations when subsequent merchants had different term structures (Net 15, Net 60, 2/10 Net 30 with early payment discounts). Adding flexibility to a schema after launch is always more painful than building it in from the start.</p>
+
+    <p><strong>Invest earlier in the test harness.</strong> The Remix + Shopify testing story is still immature. We ended up with a mix of Vitest unit tests for pure logic, Playwright end-to-end tests for critical flows, and a mock Shopify admin environment for integration tests. Getting all three to run reliably in CI took longer than it should have. This is table stakes — don't skip it.</p>
+
+    <p><strong>The customer portal should have been part of v1.</strong> We built it as a v2 feature, but the feedback loop from early merchants made it clear it should have shipped from day one. When building B2B tools, always ask: does the customer of your customer also have a job to do? Usually they do.</p>
+
+    <h2>Closing Thoughts</h2>
+
+    <p>Net Terms Tracker is the kind of app that looks simple on the surface — "it tracks invoices" — but hides surprising depth once you account for the full range of merchant workflows, edge cases in Shopify's checkout, and the operational reality of B2B commerce. The Rust/WASM checkout gatekeeper was technically interesting to build, but the real leverage came from deeply understanding the merchant's pain: the lost invoices, the awkward phone calls, the spreadsheets they'd been maintaining for years.</p>
+
+    <p>Good software is built by understanding the workflow first and choosing the technology second. The tech stack in this case — Remix, Rust/WASM, Puppeteer, Fly.io — is justified by the specific constraints of the problem, not by fashion.</p>
+
+    <p>If you're a Shopify Plus merchant looking to automate your B2B terms workflow, or a developer curious about any of the specific implementation decisions, I'd love to talk.</p>
+
+    <!-- Author + CTA -->
+    <div class="mt-16 pt-8 border-t border-[#2a2a2a] flex flex-col md:flex-row items-start gap-6">
+        <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-16 h-16 rounded-full object-cover grayscale flex-shrink-0" onerror="this.style.display='none'"/>
+        <div>
+            <div class="text-[#F5F5F5] font-black text-lg mb-1">Henning Botha</div>
+            <div class="text-[#a88a7e] text-[0.875rem] mb-4">Founder, HJB CodeForge. I build products people actually use — from Shopify apps to AI platforms. Net Terms Tracker is coming to the Shopify App Store soon.</div>
+            <a href="../contact.html" class="inline-flex forge-gradient text-white px-6 py-2.5 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">
+                Get Notified at Launch →
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Navigation -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="remix-vs-nextjs-2026.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">← Previous</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">Remix vs Next.js in 2026: A Practitioner's Guide</div>
+        </a>
+        <a href="botforge-rag-pipeline.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors text-right">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">Next →</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">How We Built BotForge's RAG Pipeline</div>
+        </a>
+    </div>
+</article>
+
+<!-- Footer -->
+<footer class="border-t border-[#2a2a2a] py-12 px-8">
+    <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-8 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../index.html">Home</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../services.html">Custom Work</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../portfolio.html">Products</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../blog.html">Blog</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../contact.html">Contact</a>
+        </div>
+        <p class="text-[#594237] text-[0.8rem]">© 2026 HJB CodeForge. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
