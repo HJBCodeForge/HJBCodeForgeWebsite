@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html class="dark" lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XKJDGFK95M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XKJDGFK95M');
+</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Contact | HJB CodeForge</title>
@@ -506,18 +514,4 @@
             successBox.classList.add('visible');
             form.reset();
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } catch (err) {
-            console.error('EmailJS error:', err);
-            const msg = (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY')
-                ? 'EmailJS is not configured yet. See the code comments in contact.html for setup instructions.'
-                : (err?.text || 'An unexpected error occurred. Please try again.');
-            errorMsg.textContent = msg;
-            errorBox.classList.add('visible');
-        } finally {
-            setLoading(false);
-        }
-    });
-</script>
-
-</body>
-</html>
+        } cat
