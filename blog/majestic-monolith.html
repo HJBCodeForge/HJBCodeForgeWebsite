@@ -184,7 +184,7 @@
 
     <p><strong>Team topology:</strong> Conway's Law states that organisations design systems that mirror their communication structures. If you have 8 teams of 8 engineers, each owning a distinct product domain, microservices with strong service ownership boundaries map well to your team structure. If you have a team of 4 engineers, you have one team. Build one thing.</p>
 
-    <p><strong>Genuinely different technology requirements:</strong> The BotForge architecture has a Python FastAPI service for the AI pipeline alongside a Next.js frontend. That's not microservices for its own sake — Python is the right language for LangChain, NumPy, and pgvector operations. The services are separated by technology constraint, not architectural ideology.</p>
+    <p><strong>Genuinely different technology requirements:</strong> The QuartzBot architecture has a Python FastAPI service for the AI pipeline alongside a Next.js frontend. That's not microservices for its own sake — Python is the right language for LangChain, NumPy, and pgvector operations. The services are separated by technology constraint, not architectural ideology.</p>
 
     <p><strong>Compliance and data isolation:</strong> If parts of your system handle regulated data (PCI, HIPAA, GDPR) and parts don't, isolation at the service level can simplify your compliance scope. This is a real architectural driver — but one that applies to a small fraction of applications.</p>
 
@@ -212,7 +212,7 @@
 
     <p>The best architecture for a startup is the one that lets you ship fast, iterate quickly, and keep your options open. A well-structured monolith gives you all three. Premature microservices give you none of them.</p>
 
-    <p>At HJB CodeForge, every product we build starts as a monolith. Net Terms Tracker is a Remix monolith deployed as a single Fly.io app. Track & Thrive is a Next.js monolith. BotForge has a two-service architecture — but only because Python and JavaScript are each the right tool for their respective jobs, not because we thought we needed a distributed system.</p>
+    <p>At HJB CodeForge, every product we build starts as a monolith. Net Terms Tracker is a Remix monolith deployed as a single Fly.io app. Track & Thrive is a Next.js monolith. QuartzBot has a two-service architecture — but only because Python and JavaScript are each the right tool for their respective jobs, not because we thought we needed a distributed system.</p>
 
     <p>The decision to split should always be driven by evidence — scaling constraints, team topology, compliance requirements — not by architectural fashion. Build the simplest thing that ships. Then let real usage data tell you what to build next.</p>
 
@@ -230,9 +230,9 @@
 
     <!-- Post Navigation -->
     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <a href="botforge-rag-pipeline.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors">
+        <a href="quartzbot-rag-pipeline.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors">
             <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">← Previous</div>
-            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">How We Built BotForge's RAG Pipeline</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">How We Built QuartzBot's RAG Pipeline</div>
         </a>
         <a href="hiring-developer-founder.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors text-right">
             <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">Next →</div>
