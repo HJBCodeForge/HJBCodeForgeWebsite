@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="icon" type="image/png" href="../../assets/images/logo.png" />
+<title>VoidRise Privacy Policy | HJB CodeForge</title>
+<meta name="description" content="Privacy policy for VoidRise, the workout RPG by HJB CodeForge. Your workout data lives on your device — no ads, no selling data, no cross-app tracking."/>
+<link rel="canonical" href="https://hjbcodeforge.com/voidrise/privacy"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A", "on-primary": "#ffffff",
+                    "background": "#0A0A0A", "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A", "on-surface": "#e5e2e1",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-container-low": "#1c1b1b",
+                    "outline-variant": "#594237",
+                },
+                fontFamily: { "body": ["Inter", "Arial", "sans-serif"] },
+                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem" },
+            },
+        },
+    }
+</script>
+<style>
+    body { background-color: #0A0A0A; font-family: 'Inter', Arial, sans-serif; }
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #e1c0b2; font-size: 1.05rem; }
+    .prose h2 { font-size: 1.5rem; font-weight: 900; color: #F5F5F5; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ul li { margin-bottom: 0.5rem; list-style-type: disc; }
+    .prose strong { color: #F5F5F5; font-weight: 700; }
+    .prose a { color: #E8620A; text-decoration: underline; text-decoration-color: rgba(232,98,10,0.4); }
+    .prose a:hover { text-decoration-color: #E8620A; }
+    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .callout p { margin-bottom: 0; color: #e1c0b2; }
+</style>
+</head>
+<body class="font-body text-on-surface">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="../../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="text-xl font-black tracking-tight text-white">HJB CodeForge</span>
+        </a>
+        <a href="../../index.html" class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">← Back to hjbcodeforge.com</a>
+    </div>
+</nav>
+
+<main class="max-w-3xl mx-auto px-6 pt-36 pb-24">
+    <p class="text-primary font-bold text-sm uppercase tracking-widest mb-3">VoidRise</p>
+    <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">Privacy Policy</h1>
+    <p class="text-on-surface-variant text-sm mb-10"><strong class="text-white">Effective date:</strong> June 12, 2026</p>
+
+    <div class="prose">
+        <p>VoidRise ("the app") is built and operated by <strong>HJB CodeForge</strong> (Henning Botha, sole proprietorship, Ottawa, Ontario, Canada). This policy explains what data VoidRise handles and what we do — and don't do — with it.</p>
+
+        <div class="callout">
+            <p><strong>The short version:</strong> your workout data lives on your device. The current version of VoidRise does not transmit any of your data off your phone. We don't sell data, we don't show ads, and we don't track you across other apps.</p>
+        </div>
+
+        <h2>1. Data the app stores</h2>
+        <p><strong>On your device (always):</strong> your hunter profile (display name, sex selection, age, height, weight, fitness level, equipment, injury flags, training schedule) and your game/workout progress (sessions, sets, loads, reps, ranks, streaks, cosmetics, in-game currency). This data stays in the app's private storage on your phone. Deleting the app deletes it.</p>
+        <p><strong>Cloud sync (future, optional):</strong> the current release stores everything locally and has no cloud sync. If a future version adds optional sync, the same profile and progress data would be stored with our backend provider <strong>Supabase</strong> so your progress can be restored or moved to a new device — keyed to your account, encrypted in transit (HTTPS/TLS), and used for nothing except providing sync. We will update this policy when that feature ships.</p>
+
+        <h2>2. Health and fitness data</h2>
+        <p>The workout data you log (exercises, sets, reps, loads, body weight, injury flags) is fitness data you enter yourself. It is used solely to generate your workouts and drive game progression, and it stays on your device.</p>
+        <p><strong>Health Connect (future, when available):</strong> if a future version offers Health Connect integration and you choose to connect, VoidRise will request the minimum scopes it needs — reading steps/activity (so rest-day movement counts toward your streak) and writing your completed workouts. Health Connect data would be processed on your device, never used for advertising, never sold, and never shared with third parties. You could revoke access at any time in Health Connect settings, and disconnecting stops all reads/writes immediately. Our handling will comply with Google Play's Health Connect permissions policy.</p>
+
+        <h2>3. Subscriptions and payments</h2>
+        <p>The current release contains no purchases. If premium subscriptions ship in a future version, they will be processed by <strong>Google Play Billing</strong> — we never see or store your payment card details. We would use <strong>RevenueCat</strong> to validate subscription status; it receives purchase tokens and anonymous app-user IDs, not your identity or workout data.</p>
+
+        <h2>4. What we DON'T do</h2>
+        <ul>
+            <li><strong>No ads.</strong> The app contains no advertising and no ad SDKs.</li>
+            <li><strong>No selling or sharing of personal data.</strong> Ever, to anyone.</li>
+            <li><strong>No cross-app tracking.</strong> No analytics that follow you outside VoidRise.</li>
+            <li><strong>No data brokers.</strong></li>
+        </ul>
+
+        <h2>5. Service providers</h2>
+        <p>The current release shares data with no one. The only third parties involved in running the app are <strong>Google Play</strong> (app distribution) and <strong>Google Fonts</strong> (typeface delivery, bundled at build time). If future features add providers (Supabase for optional sync, Google Play Billing and RevenueCat for subscriptions), each will receive only what its function requires, and this policy will be updated.</p>
+
+        <h2>6. Data retention and deletion</h2>
+        <p>On-device data is deleted when you delete the app (or use the in-app reset). If you have any data questions or requests, email <strong>support@hjbcodeforge.com</strong> — we respond within 30 days.</p>
+
+        <h2>7. Children</h2>
+        <p>VoidRise is a fitness app intended for users <strong>13 and older</strong>. We do not knowingly collect data from children under 13. If you believe a child has used the app, contact us and we will help remove any data.</p>
+
+        <h2>8. Your rights</h2>
+        <p>Depending on where you live (e.g. PIPEDA in Canada, GDPR in the EU, CCPA in California) you may have rights to access, correct, export, or delete your personal data. Email <strong>support@hjbcodeforge.com</strong> and we'll honor the request — since your data lives on your device, this is usually immediate and in your own hands.</p>
+
+        <h2>9. Changes</h2>
+        <p>If this policy changes materially, we'll update the effective date here and note it in the app's release notes.</p>
+
+        <h2>10. Contact</h2>
+        <p><strong>HJB CodeForge</strong> · Ottawa, Ontario, Canada<br/>
+        <a href="mailto:support@hjbcodeforge.com">support@hjbcodeforge.com</a> · <a href="https://hjbcodeforge.com">hjbcodeforge.com</a></p>
+    </div>
+</main>
+
+<footer class="border-t border-outline-variant/30 py-10">
+    <p class="text-center text-sm text-on-surface-variant">© 2026 HJB CodeForge · <a class="text-primary" href="../../index.html">hjbcodeforge.com</a></p>
+</footer>
+
+</body>
+</html>
