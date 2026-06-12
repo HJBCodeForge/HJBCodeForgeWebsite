@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoidRise — The Gym &amp; Fitness App With an RPG Soul</title>
+<meta name="description" content="VoidRise is a real gym &amp; fitness app — progressive-overload training, scientifically structured — wrapped in a dark-fantasy leveling RPG. Every set you log is a strike. Get stronger in real life and rank up from E to Monarch. Android, early access."/>
+<link rel="canonical" href="https://hjbcodeforge.com/voidrise/"/>
+<link rel="icon" type="image/png" href="assets/app_icon.png"/>
+<meta name="theme-color" content="#06090F"/>
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://hjbcodeforge.com/voidrise/"/>
+<meta property="og:title" content="VoidRise — The Gym &amp; Fitness App With an RPG Soul"/>
+<meta property="og:description" content="A real progressive-overload training app, wrapped in a dark-fantasy leveling RPG. Train in real life, rank up E → Monarch. Android, early access."/>
+<meta property="og:image" content="https://hjbcodeforge.com/voidrise/assets/og.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="VoidRise — The Gym & Fitness App With an RPG Soul"/>
+<meta name="twitter:description" content="A real training app wrapped in a dark-fantasy leveling RPG. Train IRL, rank up E → Monarch. Android, early access."/>
+<meta name="twitter:image" content="https://hjbcodeforge.com/voidrise/assets/og.jpg"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"VoidRise","applicationCategory":"HealthApplication","applicationSubCategory":"Fitness","operatingSystem":"Android","description":"A real gym & fitness app — progressive-overload training, scientifically structured — wrapped in a dark-fantasy leveling RPG. Train in real life and rank up from E to Monarch.","url":"https://hjbcodeforge.com/voidrise/","image":"https://hjbcodeforge.com/voidrise/assets/og.jpg","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"HJB CodeForge","url":"https://hjbcodeforge.com"}}
+</script>
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XKJDGFK95M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XKJDGFK95M');</script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = { darkMode:"class", theme:{ extend:{
+    colors:{ void:"#06090F", cyan:"#2FE6FF", violet:"#8B6CFF", gold:"#F6BE39", crimson:"#FF3B4E", ink:"#E9F4FF", muted:"#7E91A8" },
+    fontFamily:{ display:["Orbitron","sans-serif"], body:["Rajdhani","sans-serif"], mono:["'Share Tech Mono'","monospace"] }
+  }}};
+</script>
+<style>
+  :root{
+    --void:#06090F; --void-2:#0A1019; --panel:rgba(14,21,32,.66);
+    --cyan:#2FE6FF; --cyan-dim:#179fc0; --violet:#8B6CFF; --violet-2:#6D4BFF;
+    --gold:#F6BE39; --crimson:#FF3B4E; --ink:#E9F4FF; --muted:#7E91A8; --faint:#6f8398;
+    --line:rgba(47,230,255,.16); --line-strong:rgba(47,230,255,.4);
+  }
+  *{ -webkit-tap-highlight-color:transparent; }
+  a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .rank-step:focus-visible, .yt-facade:focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; border-radius:6px; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--void); color:var(--ink); font-family:'Rajdhani',sans-serif;
+    font-weight:400; letter-spacing:.01em; overflow-x:hidden;
+  }
+  ::selection{ background:rgba(47,230,255,.28); color:#fff; }
+  h1,h2,h3,.display{ font-family:'Orbitron',sans-serif; letter-spacing:-.01em; }
+  .data{ font-family:'Share Tech Mono',monospace; text-transform:uppercase; letter-spacing:.22em; }
+
+  /* ---------- atmosphere ---------- */
+  .stage-bg{ position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background:
+      radial-gradient(1100px 700px at 78% -8%, rgba(47,230,255,.13), transparent 60%),
+      radial-gradient(900px 700px at 8% 12%, rgba(139,108,255,.13), transparent 60%),
+      radial-gradient(1200px 900px at 50% 120%, rgba(47,230,255,.06), transparent 60%),
+      linear-gradient(180deg,#06090F 0%, #070C14 45%, #06090F 100%);
+  }
+  .grid-bg{ position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+    background-image:linear-gradient(rgba(47,230,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(47,230,255,.045) 1px,transparent 1px);
+    background-size:54px 54px; mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 35%,transparent 78%);
+    -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 35%,transparent 78%);
+  }
+  .noise{ position:fixed; inset:0; z-index:1000; pointer-events:none; opacity:.04; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  /* ---------- type helpers ---------- */
+  .eyebrow{ font-family:'Share Tech Mono',monospace; text-transform:uppercase; letter-spacing:.34em; font-size:.72rem; color:var(--cyan); }
+  .lede{ color:#aebfd2; font-weight:400; }
+  .glow-text{ text-shadow:0 0 24px rgba(47,230,255,.45); }
+  .grad-cyan{ background:linear-gradient(96deg,#fff 0%,#bdf3ff 40%,var(--cyan) 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .grad-gold{ background:linear-gradient(96deg,#fff7e3,#F6BE39); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+  /* ---------- panels ---------- */
+  .panel{ position:relative; background:linear-gradient(180deg,rgba(18,26,38,.72),rgba(9,13,20,.72)); border:1px solid var(--line);
+    border-radius:14px; backdrop-filter:blur(8px); }
+  .panel::before{ content:""; position:absolute; inset:0; border-radius:14px; padding:1px; pointer-events:none;
+    background:linear-gradient(160deg,rgba(47,230,255,.5),transparent 40%); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; opacity:.6; }
+  .corner{ position:absolute; width:13px; height:13px; border:1.5px solid var(--cyan); opacity:.6; }
+  .corner.tl{ top:8px; left:8px; border-right:0; border-bottom:0; }
+  .corner.tr{ top:8px; right:8px; border-left:0; border-bottom:0; }
+  .corner.bl{ bottom:8px; left:8px; border-right:0; border-top:0; }
+  .corner.br{ bottom:8px; right:8px; border-left:0; border-top:0; }
+  .hover-lift{ transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s, box-shadow .4s; }
+  .hover-lift:hover{ transform:translateY(-6px); border-color:var(--line-strong); box-shadow:0 26px 60px -28px rgba(47,230,255,.4); }
+
+  /* ---------- buttons ---------- */
+  .btn{ display:inline-flex; align-items:center; gap:.55rem; font-family:'Rajdhani',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:.92rem; padding:.92rem 1.7rem; border-radius:10px; cursor:pointer; transition:.3s; position:relative; }
+  .btn-primary{ color:#021016; background:linear-gradient(180deg,#6df3ff,#2FE6FF); box-shadow:0 0 0 1px rgba(47,230,255,.6),0 16px 40px -14px rgba(47,230,255,.7); }
+  .btn-primary:hover{ filter:brightness(1.08); box-shadow:0 0 0 1px rgba(47,230,255,.9),0 22px 54px -14px rgba(47,230,255,.9); transform:translateY(-2px); }
+  .btn-ghost{ color:var(--ink); border:1px solid var(--line-strong); background:rgba(47,230,255,.04); }
+  .btn-ghost:hover{ background:rgba(47,230,255,.1); border-color:var(--cyan); transform:translateY(-2px); }
+  .btn-gold{ color:#1c1403; background:linear-gradient(180deg,#ffe39b,#F6BE39); box-shadow:0 16px 40px -14px rgba(246,190,57,.6); }
+  .btn-gold:hover{ filter:brightness(1.06); transform:translateY(-2px); }
+
+  /* ---------- nav ---------- */
+  nav#topnav{ transition:background .4s,border-color .4s,box-shadow .4s; }
+  nav#topnav.scrolled{ background:rgba(6,9,15,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--line); box-shadow:0 16px 40px -28px #000; }
+  .navlink{ position:relative; font-weight:600; font-size:.96rem; color:#9fb2c8; transition:color .25s; letter-spacing:.04em; }
+  .navlink:hover{ color:var(--ink); }
+  .navlink::after{ content:""; position:absolute; left:0; bottom:-6px; height:1.5px; width:0; background:var(--cyan); transition:width .3s; box-shadow:0 0 8px var(--cyan); }
+  .navlink:hover::after{ width:100%; }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal[data-d="1"]{ transition-delay:.08s } .reveal[data-d="2"]{ transition-delay:.16s } .reveal[data-d="3"]{ transition-delay:.24s }
+  .reveal[data-d="4"]{ transition-delay:.32s } .reveal[data-d="5"]{ transition-delay:.4s } .reveal[data-d="6"]{ transition-delay:.48s }
+
+  /* ---------- hero ---------- */
+  #hero-glow{ position:absolute; inset:0; z-index:0; pointer-events:none; transition:background .2s; }
+  .ticker{ border-bottom:1px solid var(--line); background:rgba(47,230,255,.03); }
+  .live-dot{ width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(47,230,255,.7);animation:pulse 2.2s infinite; }
+  @keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(47,230,255,.6)} 70%{box-shadow:0 0 0 9px rgba(47,230,255,0)} 100%{box-shadow:0 0 0 0 rgba(47,230,255,0)} }
+  @keyframes float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+  /* phone device */
+  .device{ position:relative; border-radius:34px; padding:9px; background:linear-gradient(160deg,#1a2433,#0a0e16); border:1px solid rgba(47,230,255,.22); box-shadow:0 50px 100px -40px #000, 0 0 80px -30px rgba(47,230,255,.5); }
+  .device::after{ content:""; position:absolute; top:16px; left:50%; transform:translateX(-50%); width:46px; height:5px; border-radius:5px; background:#05080d; z-index:3; }
+  .device img{ display:block; width:100%; border-radius:26px; }
+  .float-slow{ animation:float 7s ease-in-out infinite; }
+
+  /* ---------- rank ladder ---------- */
+  .rank-step{ position:relative; flex:1; min-width:52px; text-align:center; cursor:pointer; padding:.6rem 0 .9rem; border-top:2px solid rgba(126,145,168,.25); transition:.3s; }
+  .rank-step .rk{ font-family:'Orbitron'; font-weight:800; font-size:1.05rem; color:#6c7e93; transition:.3s; }
+  .rank-step .tt{ display:block; font-family:'Share Tech Mono'; font-size:.56rem; letter-spacing:.18em; color:#7e91a8; margin-top:.2rem; text-transform:uppercase; }
+  .rank-step::before{ content:""; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:12px; height:12px; border-radius:50%; background:#0a0f17; border:2px solid rgba(126,145,168,.4); transition:.3s; }
+  .rank-step:hover .rk{ color:var(--ink); }
+  .rank-step.active{ border-top-color:var(--cyan); }
+  .rank-step.active .rk{ color:var(--cyan); text-shadow:0 0 16px rgba(47,230,255,.7); }
+  .rank-step.active .tt{ color:#9fb2c8; }
+  .rank-step.active::before{ background:var(--cyan); border-color:var(--cyan); box-shadow:0 0 14px var(--cyan); }
+  .rank-step[data-tier="gold"].active{ border-top-color:var(--gold); }
+  .rank-step[data-tier="gold"].active .rk{ color:var(--gold); text-shadow:0 0 16px rgba(246,190,57,.7); }
+  .rank-step[data-tier="gold"].active::before{ background:var(--gold); border-color:var(--gold); box-shadow:0 0 14px var(--gold); }
+  #rankImg{ transition:opacity .45s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+  .swap{ opacity:0; transform:scale(.97) translateY(8px); }
+
+  /* ---------- faq ---------- */
+  .faq-q{ width:100%; text-align:left; display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1.2rem 1.4rem; font-family:'Orbitron'; font-weight:600; font-size:1.02rem; color:var(--ink); cursor:pointer; }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .45s ease; }
+  .faq-a > div{ padding:0 1.4rem 1.3rem; color:#9fb2c8; line-height:1.7; }
+  .faq-item.open .faq-a{ max-height:340px; }
+  .faq-item.open .chev{ transform:rotate(45deg); border-color:var(--cyan); }
+  .chev{ width:13px;height:13px;border-right:2px solid #6c7e93;border-bottom:2px solid #6c7e93;transform:rotate(-45deg);transition:.35s; flex-shrink:0; }
+
+  /* youtube facade */
+  .yt-facade{ cursor:pointer; }
+  .yt-play{ width:84px;height:84px;border-radius:50%; background:rgba(47,230,255,.14); border:1.5px solid var(--cyan); display:grid; place-items:center; transition:.3s; box-shadow:0 0 40px -6px rgba(47,230,255,.6); }
+  .yt-facade:hover .yt-play{ background:var(--cyan); transform:scale(1.06); }
+  .yt-facade:hover .yt-play svg{ fill:#021016; }
+
+  .hairline{ height:1px; background:linear-gradient(90deg,transparent,var(--line-strong),transparent); }
+  .chip{ font-family:'Share Tech Mono'; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:#9fb2c8; border:1px solid var(--line); border-radius:999px; padding:.38rem .85rem; background:rgba(47,230,255,.03); }
+
+  @media (max-width:640px){ .rank-step .tt{ display:none; } .rank-step{ min-width:0; } .rank-step .rk{ font-size:.92rem; } #ladder{ gap:2px; } }
+  @media (prefers-reduced-motion:reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    .reveal{ opacity:1 !important; transform:none !important; }
+  }
+</style>
+</head>
+<body class="font-body antialiased">
+<div class="stage-bg"></div>
+<div class="grid-bg"></div>
+<div class="noise"></div>
+
+<!-- ===================== NAV ===================== -->
+<nav id="topnav" class="fixed top-0 inset-x-0 z-50">
+  <div class="ticker">
+    <div class="max-w-[1280px] mx-auto px-5 py-2 flex items-center justify-center gap-3 text-center">
+      <span class="live-dot"></span>
+      <span class="data text-[.62rem] sm:text-[.68rem] text-cyan">System online · Android closed test now recruiting founding hunters</span>
+    </div>
+  </div>
+  <div class="max-w-[1280px] mx-auto px-5 h-[68px] flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-3 group">
+      <img src="assets/logo_icon.webp" alt="VoidRise sigil" class="h-9 w-9 object-contain" style="filter:drop-shadow(0 0 10px rgba(47,230,255,.6))"/>
+      <span class="font-display font-black text-xl tracking-wider grad-cyan">VOIDRISE</span>
+    </a>
+    <div class="hidden lg:flex items-center gap-9">
+      <a href="#loop" class="navlink">The Loop</a>
+      <a href="#ranks" class="navlink">Ranks</a>
+      <a href="#grounds" class="navlink">Grounds</a>
+      <a href="#features" class="navlink">Features</a>
+      <a href="#science" class="navlink">The Science</a>
+      <a href="#faq" class="navlink">FAQ</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="https://play.google.com/apps/internaltest/4701393513076037097" target="_blank" rel="noopener" class="btn btn-primary !py-2.5 !px-4 text-[.8rem]">Join the Test</a>
+      <button id="burger" class="lg:hidden w-10 h-10 grid place-items-center border border-[var(--line)] rounded-lg" aria-label="Open menu" aria-expanded="false" aria-controls="mobilemenu">
+        <div class="space-y-1.5"><span class="block w-5 h-0.5 bg-ink"></span><span class="block w-5 h-0.5 bg-ink"></span><span class="block w-5 h-0.5 bg-ink"></span></div>
+      </button>
+    </div>
+  </div>
+  <div id="mobilemenu" class="lg:hidden hidden border-t border-[var(--line)] bg-[rgba(6,9,15,.96)] backdrop-blur-xl">
+    <div class="px-6 py-5 flex flex-col gap-4">
+      <a href="#loop" class="navlink mobile-link">The Loop</a>
+      <a href="#ranks" class="navlink mobile-link">Ranks</a>
+      <a href="#grounds" class="navlink mobile-link">Grounds</a>
+      <a href="#features" class="navlink mobile-link">Features</a>
+      <a href="#science" class="navlink mobile-link">The Science</a>
+      <a href="#faq" class="navlink mobile-link">FAQ</a>
+    </div>
+  </div>
+</nav>
+
+<a id="top"></a>
+
+<!-- ===================== HERO ===================== -->
+<header class="relative lg:min-h-[100svh] flex items-center pt-[124px] pb-24 overflow-hidden">
+  <div id="hero-glow"></div>
+  <!-- faint background art -->
+  <img src="assets/shadow_army.webp" alt="" aria-hidden="true" decoding="async" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140%] max-w-none opacity-[.16] pointer-events-none select-none" style="mask-image:linear-gradient(180deg,transparent,#000 70%);-webkit-mask-image:linear-gradient(180deg,transparent,#000 70%)"/>
+  <div class="relative z-10 max-w-[1280px] mx-auto px-5 w-full grid lg:grid-cols-12 gap-10 items-center">
+    <!-- left copy -->
+    <div class="lg:col-span-7">
+      <p class="eyebrow reveal in mb-5">// The System has selected you</p>
+      <h1 class="reveal in font-black leading-[.92] text-[clamp(2.9rem,9vw,6.4rem)] mb-6">
+        <span class="grad-cyan glow-text">RISE</span><br/>
+        <span class="text-ink">FROM THE</span> <span class="grad-cyan glow-text">VOID</span>
+      </h1>
+      <p class="reveal in lede text-[clamp(1.05rem,2.2vw,1.32rem)] max-w-[40rem] leading-relaxed mb-4" data-d="1">
+        VoidRise is a <strong class="text-ink font-600">real gym &amp; fitness app</strong> — progressive-overload training, scientifically structured — wrapped in a <span class="text-violet font-600">dark-fantasy leveling RPG.</span>
+      </p>
+      <p class="reveal in lede text-[clamp(1.05rem,2.2vw,1.32rem)] max-w-[40rem] leading-relaxed mb-9" data-d="2">
+        Every set you log is a <span class="text-cyan font-600">strike.</span> Every workout levels your hunter. Get stronger in real life and watch yourself ascend from <span class="data text-[.95em]">E-Rank</span> to <span class="text-gold font-600">Monarch.</span>
+      </p>
+      <div class="reveal in flex flex-wrap gap-4 mb-8" data-d="3">
+        <a href="https://play.google.com/apps/internaltest/4701393513076037097" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 1.9 13.3 12 3.6 22.1c-.3-.2-.5-.6-.5-1V2.9c0-.4.2-.8.5-1Zm11 11.5 2.9 3-9.8 5.5 6.9-8.5Zm0-2.8L7.7 2.1l9.8 5.5-2.9 3.1Zm1.5 1.4 3.7-2.1c.8-.5.8-1.6 0-2.1l-.1-.1-3.6 4.4Z"/></svg>
+          Become a Founding Hunter
+        </a>
+        <a href="#trailer" class="btn btn-ghost">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3.9v16.2c0 .8.9 1.3 1.6.9l13.2-8.1c.6-.4.6-1.4 0-1.8L6.6 3C5.9 2.6 5 3.1 5 3.9Z"/></svg>
+          Watch the Trailer
+        </a>
+      </div>
+      <div class="reveal in flex flex-wrap items-center gap-2.5" data-d="4">
+        <span class="chip">▲ Android · Early Access</span>
+        <span class="chip">No ads</span>
+        <span class="chip">Silent · never interrupts your music</span>
+        <span class="chip">Your data stays on your phone</span>
+      </div>
+    </div>
+    <!-- right phones -->
+    <div class="lg:col-span-5 relative reveal in" data-d="3">
+      <div class="relative mx-auto max-w-[300px] sm:max-w-[330px]">
+        <div class="device float-slow">
+          <img src="assets/screen_character.webp" alt="VoidRise character sheet showing rank, stats and active campaign" loading="eager" fetchpriority="high" decoding="async" width="700" height="1556"/>
+        </div>
+        <div class="device absolute -right-6 sm:-right-12 -bottom-10 w-[42%] hidden sm:block" style="animation:float 7s ease-in-out infinite .8s">
+          <img src="assets/screen_strike.webp" alt="VoidRise in-workout Strike Pad" loading="lazy" decoding="async" width="700" height="1556"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#loop" aria-label="Scroll" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-muted text-[.6rem] data flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition">
+    Descend
+    <span class="w-px h-8 bg-gradient-to-b from-cyan to-transparent"></span>
+  </a>
+</header>
+
+<!-- ===================== STAT BAND ===================== -->
+<section class="border-y border-[var(--line)] bg-[rgba(47,230,255,.02)]">
+  <div class="max-w-[1280px] mx-auto px-5 py-7 grid grid-cols-2 md:grid-cols-4 gap-y-6 divide-x divide-[var(--line)]">
+    <div class="text-center px-2"><div class="font-display font-black text-3xl grad-cyan">100</div><div class="data text-[.6rem] text-muted mt-1">Levels to climb</div></div>
+    <div class="text-center px-2"><div class="font-display font-black text-3xl grad-gold">7</div><div class="data text-[.6rem] text-muted mt-1">Ranks · E → SS</div></div>
+    <div class="text-center px-2"><div class="font-display font-black text-3xl text-violet">3</div><div class="data text-[.6rem] text-muted mt-1">Hunter classes</div></div>
+    <div class="text-center px-2"><div class="font-display font-black text-3xl text-ink">0%</div><div class="data text-[.6rem] text-muted mt-1">Stats you can buy</div></div>
+  </div>
+</section>
+
+<!-- ===================== THE LOOP ===================== -->
+<section id="loop" class="py-24 sm:py-32 relative">
+  <div class="max-w-[1280px] mx-auto px-5">
+    <div class="max-w-2xl mb-16 reveal">
+      <p class="eyebrow mb-4">// The Core Loop</p>
+      <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)] leading-[1.02] mb-5">REAL SWEAT IS THE<br/>ONLY <span class="grad-cyan">CHEAT CODE.</span></h2>
+      <p class="lede text-lg leading-relaxed">There are no shortcuts, no buyable levels, no fake numbers. The only thing that moves your hunter forward is the work you actually do. That's the integrity protocol — and it's the whole point.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+      <!-- 01 -->
+      <div class="panel hover-lift p-7 reveal" data-d="1">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <div class="data text-cyan text-xs mb-5">Step 01</div>
+        <h3 class="font-bold text-2xl mb-3 text-ink">Train. <span class="text-cyan">Strike.</span></h3>
+        <p class="lede leading-relaxed mb-6">Your workout screen is a combat interface, not a spreadsheet. Log a set with a single tap on the Strike Pad — glove-friendly, sweat-proof, gesture-driven. Heavy compounds, accessories, the works.</p>
+        <div class="rounded-xl overflow-hidden border border-[var(--line)]"><img src="assets/screen_strike.webp" loading="lazy" alt="Strike Pad set logging" class="w-full"/></div>
+      </div>
+      <!-- 02 -->
+      <div class="panel hover-lift p-7 reveal" data-d="2">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <div class="data text-violet text-xs mb-5">Step 02</div>
+        <h3 class="font-bold text-2xl mb-3 text-ink">Real metrics → <span class="text-violet">real stats.</span></h3>
+        <p class="lede leading-relaxed mb-6">Progressive overload feeds <b class="text-ink">STR</b>. Volume and pacing feed <b class="text-ink">STA</b>. Mobility and stabilizer work feed <b class="text-ink">AGI</b>. Your character sheet is a mirror of your body's actual progress.</p>
+        <div class="space-y-3 mt-8">
+          <div><div class="flex justify-between data text-[.62rem] mb-1.5"><span class="text-cyan">STR · Strength</span><span class="text-muted">load ↑</span></div><div class="h-2 rounded-full bg-[rgba(255,255,255,.06)] overflow-hidden"><div class="h-full bar rounded-full" data-w="78%" style="width:0;background:linear-gradient(90deg,#179fc0,#2FE6FF);box-shadow:0 0 12px rgba(47,230,255,.6)"></div></div></div>
+          <div><div class="flex justify-between data text-[.62rem] mb-1.5"><span class="text-cyan">STA · Stamina</span><span class="text-muted">volume ↑</span></div><div class="h-2 rounded-full bg-[rgba(255,255,255,.06)] overflow-hidden"><div class="h-full bar rounded-full" data-w="92%" style="width:0;background:linear-gradient(90deg,#179fc0,#2FE6FF);box-shadow:0 0 12px rgba(47,230,255,.6)"></div></div></div>
+          <div><div class="flex justify-between data text-[.62rem] mb-1.5"><span class="text-violet">AGI · Agility</span><span class="text-muted">mobility ↑</span></div><div class="h-2 rounded-full bg-[rgba(255,255,255,.06)] overflow-hidden"><div class="h-full bar rounded-full" data-w="61%" style="width:0;background:linear-gradient(90deg,#6D4BFF,#8B6CFF);box-shadow:0 0 12px rgba(139,108,255,.6)"></div></div></div>
+        </div>
+      </div>
+      <!-- 03 -->
+      <div class="panel hover-lift p-7 reveal" data-d="3">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <div class="data text-gold text-xs mb-5">Step 03</div>
+        <h3 class="font-bold text-2xl mb-3 text-ink">Earn the <span class="grad-gold">ascent.</span></h3>
+        <p class="lede leading-relaxed mb-6">Hit the level gate, clear the qualifying runs, then survive a harder full-body gauntlet. Pass it, and your hunter <b class="text-ink">physically transforms</b> — new armor, new aura, a new title. Ranking up is earned, never given.</p>
+        <div class="flex items-center justify-between gap-1 mt-9 text-center">
+          <span class="font-display font-black text-muted text-lg">E</span>
+          <span class="text-faint">→</span>
+          <span class="font-display font-black text-cyan text-lg">C</span>
+          <span class="text-faint">→</span>
+          <span class="font-display font-black text-ink text-lg">A</span>
+          <span class="text-faint">→</span>
+          <span class="font-display font-black grad-gold text-2xl">SS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RANK LADDER ===================== -->
+<section id="ranks" class="py-24 sm:py-32 relative border-t border-[var(--line)]">
+  <div class="max-w-[1280px] mx-auto px-5">
+    <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+      <p class="eyebrow mb-4">// Evolution System · E → SS</p>
+      <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)] leading-[1.02] mb-5">SEVEN RANKS.<br/>ONE <span class="grad-gold">ASCENT.</span></h2>
+      <p class="lede text-lg">The same hunter, evolved. As you get stronger in the real world, your character climbs from a worn, untrained Awakened to a transcendent Monarch wreathed in an aura storm. Drag through the ranks.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-10 items-center">
+      <!-- card -->
+      <div class="lg:col-span-5 order-2 lg:order-1">
+        <div class="panel p-4 max-w-[360px] mx-auto">
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img id="rankImg" src="assets/rank_e.webp" alt="Hunter rank evolution card" decoding="async" width="500" height="1111" class="w-full rounded-lg"/>
+        </div>
+      </div>
+      <!-- detail + ladder -->
+      <div class="lg:col-span-7 order-1 lg:order-2">
+        <div class="mb-9">
+          <div class="flex items-baseline gap-4 mb-2">
+            <span id="rankBig" class="font-display font-black text-[clamp(3rem,9vw,5rem)] leading-none grad-cyan">E</span>
+            <div>
+              <div id="rankTitle" class="font-display font-bold text-2xl text-ink">Awakened</div>
+              <div id="rankLvl" class="data text-cyan text-xs mt-1">Eligible · LVL 1</div>
+            </div>
+          </div>
+          <p id="rankDesc" class="lede text-lg leading-relaxed max-w-xl min-h-[3.5rem]">Where every hunter begins. No glow, no aura — just worn starter gear and an untrained build. The void is watching.</p>
+        </div>
+        <div id="ladder" class="flex gap-1 select-none" role="group" aria-label="Hunter rank ladder, E through SS">
+          <div class="rank-step active" data-i="0" role="button" tabindex="0" aria-pressed="true" aria-label="Rank E, Awakened"><span class="rk">E</span><span class="tt">Awakened</span></div>
+          <div class="rank-step" data-i="1" role="button" tabindex="0" aria-pressed="false" aria-label="Rank D, Initiate"><span class="rk">D</span><span class="tt">Initiate</span></div>
+          <div class="rank-step" data-i="2" role="button" tabindex="0" aria-pressed="false" aria-label="Rank C, Hunter"><span class="rk">C</span><span class="tt">Hunter</span></div>
+          <div class="rank-step" data-i="3" role="button" tabindex="0" aria-pressed="false" aria-label="Rank B, Elite"><span class="rk">B</span><span class="tt">Elite</span></div>
+          <div class="rank-step" data-i="4" role="button" tabindex="0" aria-pressed="false" aria-label="Rank A, Master"><span class="rk">A</span><span class="tt">Master</span></div>
+          <div class="rank-step" data-tier="gold" data-i="5" role="button" tabindex="0" aria-pressed="false" aria-label="Rank S, Sovereign"><span class="rk">S</span><span class="tt">Sovereign</span></div>
+          <div class="rank-step" data-tier="gold" data-i="6" role="button" tabindex="0" aria-pressed="false" aria-label="Rank SS, Monarch"><span class="rk">SS</span><span class="tt">Monarch</span></div>
+        </div>
+        <p class="data text-[.6rem] text-faint mt-4">Reaching a level gate only unlocks the rank-up quest — you still have to pass it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HUNTING GROUNDS ===================== -->
+<section id="grounds" class="py-24 sm:py-32 border-t border-[var(--line)]">
+  <div class="max-w-[1280px] mx-auto px-5">
+    <div class="max-w-2xl mb-14 reveal">
+      <p class="eyebrow mb-4">// Equipment Agnostic</p>
+      <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)] leading-[1.02] mb-5">TRAIN ANYWHERE.<br/>THE SYSTEM <span class="grad-cyan">ADAPTS.</span></h2>
+      <p class="lede text-lg">Tell VoidRise what you've got and it filters the entire exercise engine to match. No equipment guilt, no "you need a cable machine" dead-ends. Three Hunting Grounds, one progression.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="panel hover-lift overflow-hidden reveal" data-d="1">
+        <div class="aspect-[4/3] overflow-hidden"><img src="assets/ground_wastelands.webp" loading="lazy" alt="The Wastelands — bodyweight training" class="w-full h-full object-cover"/></div>
+        <div class="p-6"><div class="data text-cyan text-[.6rem] mb-2">Bodyweight · Calisthenics</div><h3 class="font-bold text-xl text-ink mb-2">The Wastelands</h3><p class="lede text-[.97rem] leading-relaxed">Nothing but you and gravity. Full calisthenics tracking — train in a hotel room, a park, or the apocalypse.</p></div>
+      </div>
+      <div class="panel hover-lift overflow-hidden reveal" data-d="2">
+        <div class="aspect-[4/3] overflow-hidden"><img src="assets/ground_safehouse.webp" loading="lazy" alt="The Safehouse — home gym training" class="w-full h-full object-cover"/></div>
+        <div class="p-6"><div class="data text-cyan text-[.6rem] mb-2">Home Gym</div><h3 class="font-bold text-xl text-ink mb-2">The Safehouse</h3><p class="lede text-[.97rem] leading-relaxed">Dumbbells, kettlebells, bands — check what you own and the engine programs around it. Your garage, weaponized.</p></div>
+      </div>
+      <div class="panel hover-lift overflow-hidden reveal" data-d="3">
+        <div class="aspect-[4/3] overflow-hidden"><img src="assets/ground_labyrinth.webp" loading="lazy" alt="The Grand Labyrinth — commercial gym training" class="w-full h-full object-cover"/></div>
+        <div class="p-6"><div class="data text-cyan text-[.6rem] mb-2">Commercial Gym</div><h3 class="font-bold text-xl text-ink mb-2">The Grand Labyrinth</h3><p class="lede text-[.97rem] leading-relaxed">Full barbell and machine database. Every rack, every cable, every dungeon the big floor can throw at you.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLASSES ===================== -->
+<section class="py-24 sm:py-32 border-t border-[var(--line)] relative overflow-hidden">
+  <img src="assets/gate_vortex.webp" aria-hidden="true" alt="" loading="lazy" decoding="async" class="absolute -right-32 top-10 w-[34rem] max-w-none opacity-20 pointer-events-none blur-[1px]"/>
+  <div class="max-w-[1280px] mx-auto px-5 relative">
+    <div class="max-w-2xl mb-14 reveal">
+      <p class="eyebrow mb-4">// Hunter Classes</p>
+      <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)] leading-[1.02] mb-5">CHOOSE YOUR <span class="text-violet">PATH.</span></h2>
+      <p class="lede text-lg">Your class sets your training goal and shapes how the System programs you. Pick the one that matches what you're chasing.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="panel hover-lift p-7 text-center reveal" data-d="1">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <div class="h-56 flex items-center justify-center mb-4"><img src="assets/class_vanguard.webp" loading="lazy" alt="Vanguard class" class="h-full object-contain" style="filter:drop-shadow(0 14px 36px rgba(47,230,255,.4))"/></div>
+        <div class="data text-cyan text-[.6rem] mb-2">Goal · Strength</div>
+        <h3 class="font-display font-bold text-2xl text-ink mb-2">Vanguard</h3>
+        <p class="lede text-[.97rem]">Heavy, low-rep, brutal. Built for the lifters who only care about one number going up.</p>
+      </div>
+      <div class="panel hover-lift p-7 text-center reveal" data-d="2">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <div class="h-56 flex items-center justify-center mb-4"><img src="assets/class_slayer.webp" loading="lazy" alt="Slayer class" class="h-full object-contain" style="filter:drop-shadow(0 14px 36px rgba(139,108,255,.45))"/></div>
+        <div class="data text-violet text-[.6rem] mb-2">Goal · Hypertrophy</div>
+        <h3 class="font-display font-bold text-2xl text-ink mb-2">Slayer</h3>
+        <p class="lede text-[.97rem]">Volume, pump, aesthetics. The path for building the physique, set by set.</p>
+      </div>
+      <div class="panel hover-lift p-7 text-center reveal" data-d="3">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <div class="h-56 flex items-center justify-center mb-4"><img src="assets/class_rogue.webp" loading="lazy" alt="Shadow Rogue class" class="h-full object-contain" style="filter:drop-shadow(0 14px 36px rgba(47,230,255,.4))"/></div>
+        <div class="data text-cyan text-[.6rem] mb-2">Goal · Endurance</div>
+        <h3 class="font-display font-bold text-2xl text-ink mb-2">Shadow Rogue</h3>
+        <p class="lede text-[.97rem]">Density, conditioning, stamina. Fast, relentless, and never out of breath.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FEATURES ===================== -->
+<section id="features" class="py-24 sm:py-32 border-t border-[var(--line)]">
+  <div class="max-w-[1280px] mx-auto px-5">
+    <div class="max-w-2xl mb-14 reveal">
+      <p class="eyebrow mb-4">// The Arsenal</p>
+      <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)] leading-[1.02] mb-5">BUILT LIKE A GAME.<br/>ENGINEERED LIKE A <span class="grad-cyan">COACH.</span></h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- boss -->
+      <div class="panel hover-lift overflow-hidden reveal md:row-span-2" data-d="1">
+        <div class="overflow-hidden"><img src="assets/feat_bosses.webp" loading="lazy" decoding="async" width="950" height="1702" alt="Boss fights" class="w-full"/></div>
+        <div class="p-6"><div class="data text-cyan text-[.6rem] mb-2">Mesocycle Peaks</div><h3 class="font-bold text-xl text-ink mb-2">Boss Fights</h3><p class="lede leading-relaxed">Every 4–6 week training block ends in a boss encounter — beat your Week-1 baseline by 10% to slay the Iron Golem. A "testing week" you'll actually want to show up for.</p></div>
+      </div>
+      <!-- penalty (crimson) -->
+      <div class="panel hover-lift p-6 reveal" data-d="2" style="border-color:rgba(255,59,78,.3)">
+        <span class="corner tl" style="border-color:var(--crimson)"></span><span class="corner br" style="border-color:var(--crimson)"></span>
+        <div class="data text-[.6rem] mb-2" style="color:var(--crimson)">Retention Engine</div>
+        <h3 class="font-bold text-xl text-ink mb-2">Penalty Quests</h3>
+        <p class="lede leading-relaxed">Skip a session and the whole app locks down crimson-red. To break the penalty you complete an active-recovery quest — a walk, some steps. It rebuilds the habit instead of guilt-tripping you into deleting the app.</p>
+      </div>
+      <!-- recovery -->
+      <div class="panel hover-lift p-6 reveal" data-d="3">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <div class="data text-cyan text-[.6rem] mb-2">Character Sheet</div>
+        <h3 class="font-bold text-xl text-ink mb-2">3D Recovery Heatmap</h3>
+        <p class="lede leading-relaxed">A rotating holographic physique that glows <span style="color:var(--crimson)">crimson</span> → <span class="text-gold">amber</span> → <span class="text-cyan">cyan</span> as each muscle moves through the 48–72h recovery window. Train a cyan muscle for a Prime Window bonus.</p>
+      </div>
+      <!-- codex -->
+      <div class="panel hover-lift p-6 reveal" data-d="2">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <div class="data text-cyan text-[.6rem] mb-2">Form Codex</div>
+        <h3 class="font-bold text-xl text-ink mb-2">Holographic Skill Codex</h3>
+        <p class="lede leading-relaxed">Every exercise comes with a wireframe demonstration and a 3-bullet form manual — so you always know exactly how to execute the movement, even mid-set.</p>
+      </div>
+      <!-- auras -->
+      <div class="panel hover-lift overflow-hidden reveal" data-d="3">
+        <div class="overflow-hidden"><img src="assets/feat_auras.webp" loading="lazy" decoding="async" width="950" height="1702" alt="Cosmetic auras" class="w-full"/></div>
+        <div class="p-6"><div class="data text-violet text-[.6rem] mb-2">Regalia</div><h3 class="font-bold text-xl text-ink mb-2">Auras &amp; Titles</h3><p class="lede leading-relaxed">Earn and equip animated auras, armor and titles. Cosmetics change how you look — never how you progress.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REAL APP SCREENS ===================== -->
+<section class="py-24 sm:py-32 border-t border-[var(--line)] relative overflow-hidden">
+  <div class="max-w-[1280px] mx-auto px-5">
+    <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+      <p class="eyebrow mb-4">// Live Build</p>
+      <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)] leading-[1.02] mb-5">THIS ISN'T A <span class="grad-cyan">MOCKUP.</span></h2>
+      <p class="lede text-lg">Real screens from the app that's in testing right now — character sheet, gates, dungeon briefings and the Strike Pad.</p>
+    </div>
+    <div class="flex gap-5 sm:gap-7 justify-center items-end flex-wrap">
+      <div class="device w-[150px] sm:w-[200px] reveal" data-d="1"><img src="assets/screen_gates.webp" loading="lazy" decoding="async" width="700" height="1556" alt="Gates ladder"/></div>
+      <div class="device w-[170px] sm:w-[240px] reveal" data-d="2" style="margin-bottom:1.5rem"><img src="assets/screen_character.webp" loading="lazy" decoding="async" width="700" height="1556" alt="Character sheet"/></div>
+      <div class="device w-[170px] sm:w-[240px] reveal" data-d="3" style="margin-bottom:1.5rem"><img src="assets/screen_strike.webp" loading="lazy" decoding="async" width="700" height="1556" alt="Strike Pad"/></div>
+      <div class="device w-[150px] sm:w-[200px] reveal" data-d="4"><img src="assets/screen_dungeon.webp" loading="lazy" decoding="async" width="700" height="1556" alt="Dungeon briefing"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THE SCIENCE ===================== -->
+<section id="science" class="py-24 sm:py-32 border-t border-[var(--line)]">
+  <div class="max-w-[1280px] mx-auto px-5">
+    <div class="grid lg:grid-cols-2 gap-14 items-start">
+      <div class="reveal lg:sticky lg:top-28">
+        <p class="eyebrow mb-4">// Fitness First</p>
+        <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)] leading-[1.02] mb-6">A REAL TRAINING ENGINE<br/>UNDER THE <span class="grad-cyan">FANTASY.</span></h2>
+        <p class="lede text-lg leading-relaxed mb-6">Strip away the lore and VoidRise is a serious, evidence-based hypertrophy &amp; strength app. The dark fantasy is the motivation layer — the training underneath is the real thing, built on the same principles a good coach would use.</p>
+        <a href="#cta" class="btn btn-ghost">See it for yourself →</a>
+      </div>
+      <div class="space-y-4">
+        <div class="panel p-6 reveal" data-d="1"><div class="flex items-start gap-4"><div class="data text-cyan text-sm mt-1 shrink-0">01</div><div><h3 class="font-bold text-lg text-ink mb-1.5">Progressive overload, autoregulated</h3><p class="lede leading-relaxed">Double-progression plus an end-of-set RIR check ("how many more reps did you have?") tunes every next session's load and volume to <em>your</em> real performance — not a generic template.</p></div></div></div>
+        <div class="panel p-6 reveal" data-d="2"><div class="flex items-start gap-4"><div class="data text-cyan text-sm mt-1 shrink-0">02</div><div><h3 class="font-bold text-lg text-ink mb-1.5">Enforced 48–72h recovery</h3><p class="lede leading-relaxed">The split engine respects muscle protein synthesis windows so you never smash the same group before it's recovered. The recovery heatmap shows exactly what's primed and what's still healing.</p></div></div></div>
+        <div class="panel p-6 reveal" data-d="3"><div class="flex items-start gap-4"><div class="data text-cyan text-sm mt-1 shrink-0">03</div><div><h3 class="font-bold text-lg text-ink mb-1.5">A 4-part scientific session</h3><p class="lede leading-relaxed">Every workout is structured: <b class="text-ink">Primer</b> (dynamic warm-up) → <b class="text-ink">Heavy Hitters</b> (compounds) → <b class="text-ink">Accessories</b> (isolation volume) → <b class="text-ink">The Shield</b> (stabilizers &amp; injury prevention).</p></div></div></div>
+        <div class="panel p-6 reveal" data-d="4"><div class="flex items-start gap-4"><div class="data text-cyan text-sm mt-1 shrink-0">04</div><div><h3 class="font-bold text-lg text-ink mb-1.5">Smart splits for your week</h3><p class="lede leading-relaxed">2 days → Full Body · 3 → Push/Pull/Legs · 4 → Upper/Lower · 5 → a hybrid. The Smart Split Matrix matches proven training frequencies to the days you can actually show up.</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TRAILER ===================== -->
+<section id="trailer" class="py-24 sm:py-32 border-t border-[var(--line)]">
+  <div class="max-w-[1000px] mx-auto px-5 text-center">
+    <p class="eyebrow mb-4 reveal">// See It In Motion</p>
+    <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)] mb-10 reveal">THE AWAKENING.</h2>
+    <div class="panel p-3 reveal" data-d="1">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div id="ytFacade" class="yt-facade relative rounded-xl overflow-hidden aspect-video bg-black" data-id="y59fNF_3r38" role="button" tabindex="0" aria-label="Play the VoidRise walkthrough video">
+        <img src="assets/hero_wide.webp" alt="" decoding="async" class="absolute inset-0 w-full h-full object-cover opacity-70"/>
+        <div class="absolute inset-0 grid place-items-center">
+          <div class="yt-play"><svg width="30" height="30" viewBox="0 0 24 24" fill="#2FE6FF"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="absolute bottom-4 left-5 data text-[.6rem] text-cyan/90 text-left">▶ Full walkthrough · 1:21</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section id="cta" class="py-24 sm:py-32 border-t border-[var(--line)] relative overflow-hidden">
+  <img src="assets/bg_victory.webp" aria-hidden="true" alt="" class="absolute inset-0 w-full h-full object-cover opacity-25"/>
+  <div class="absolute inset-0" style="background:radial-gradient(circle at 50% 50%,transparent,#06090F 75%)"></div>
+  <div class="max-w-[820px] mx-auto px-5 text-center relative reveal">
+    <img src="assets/logo_icon.webp" alt="" class="h-16 w-16 mx-auto mb-6" style="filter:drop-shadow(0 0 24px rgba(47,230,255,.7))"/>
+    <p class="eyebrow mb-4">// Founding Hunters Wanted</p>
+    <h2 class="font-black text-[clamp(2.2rem,6vw,4rem)] leading-[1] mb-6">THE FIRST HUNTERS<br/>GET <span class="grad-gold">MORE.</span></h2>
+    <p class="lede text-xl leading-relaxed mb-3 max-w-xl mx-auto">VoidRise is in its <b class="text-ink">Android closed test</b> right now. Get in early, shape the launch — and lock in a <b class="text-gold">free year of premium</b> when it goes live.</p>
+    <p class="data text-[.62rem] text-muted mb-9">Android · opt in with the Gmail on your phone · install &amp; keep it for the test window</p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="https://play.google.com/apps/internaltest/4701393513076037097" target="_blank" rel="noopener" class="btn btn-gold">Become a Founding Hunter</a>
+      <a href="https://www.youtube.com/@voidriseapp" target="_blank" rel="noopener" class="btn btn-ghost">Watch more</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq" class="py-24 sm:py-32 border-t border-[var(--line)]">
+  <div class="max-w-[820px] mx-auto px-5">
+    <div class="text-center mb-12 reveal">
+      <p class="eyebrow mb-4">// System Query</p>
+      <h2 class="font-black text-[clamp(2rem,5vw,3.4rem)]">FREQUENTLY ASKED</h2>
+    </div>
+    <div class="space-y-3" id="faqList">
+      <div class="faq-item panel reveal"><button class="faq-q" aria-expanded="false" aria-controls="faq1">Is this actually a real workout app?<span class="chev"></span></button><div class="faq-a" id="faq1"><div>Completely. Under the fantasy is a genuine progressive-overload training engine — autoregulated loads, structured 4-part sessions, enforced recovery windows and smart weekly splits. The RPG is there to keep you consistent, not to replace real programming.</div></div></div>
+      <div class="faq-item panel reveal"><button class="faq-q" aria-expanded="false" aria-controls="faq2">How much does it cost?<span class="chev"></span></button><div class="faq-a" id="faq2"><div>Core training is free during early access — you can't buy levels, stats or progress. A premium tier with advanced analytics, specialized programs and cosmetics is planned for launch, and founding testers get a free year of it.</div></div></div>
+      <div class="faq-item panel reveal"><button class="faq-q" aria-expanded="false" aria-controls="faq3">Do I need a gym?<span class="chev"></span></button><div class="faq-a" id="faq3"><div>No. Choose your Hunting Ground — bodyweight, home gym, or commercial gym — and the exercise engine filters to exactly what you have. You can train in an empty room or a fully-stocked floor.</div></div></div>
+      <div class="faq-item panel reveal"><button class="faq-q" aria-expanded="false" aria-controls="faq4">Is it on iPhone?<span class="chev"></span></button><div class="faq-a" id="faq4"><div>Not yet. VoidRise is launching Android-first. An iOS version is planned after launch — follow <a href="https://www.instagram.com/voidriseapp" target="_blank" rel="noopener" class="text-cyan underline">@voidriseapp</a> to hear when it lands.</div></div></div>
+      <div class="faq-item panel reveal"><button class="faq-q" aria-expanded="false" aria-controls="faq5">What's the closed test?<span class="chev"></span></button><div class="faq-a" id="faq5"><div>Before a new developer can publish on Google Play, the app runs a closed test with real users. You install it via the opt-in link, use it during the test window, and your feedback shapes the launch build. It's free, and it's how you become a founding hunter.</div></div></div>
+      <div class="faq-item panel reveal"><button class="faq-q" aria-expanded="false" aria-controls="faq6">What happens to my data?<span class="chev"></span></button><div class="faq-a" id="faq6"><div>Right now everything lives on your device — no ads, no selling data, no cross-app tracking. The app is also completely silent so it never interrupts your music. (Optional cloud sync may come later — you'll opt in.) Full details in the <a href="privacy/" class="text-cyan underline">privacy policy</a>.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="border-t border-[var(--line)] pt-16 pb-10">
+  <div class="max-w-[1280px] mx-auto px-5">
+    <div class="grid sm:grid-cols-2 gap-10 mb-12">
+      <div>
+        <a href="#top" class="flex items-center gap-3 mb-4">
+          <img src="assets/logo_icon.webp" alt="VoidRise" class="h-10 w-10" style="filter:drop-shadow(0 0 10px rgba(47,230,255,.6))"/>
+          <span class="font-display font-black text-2xl grad-cyan">VOIDRISE</span>
+        </a>
+        <p class="lede max-w-sm leading-relaxed">The gym &amp; fitness app with an RPG soul. Train in real life, evolve your hunter, rise from the void. An <a href="https://hjbcodeforge.com" class="text-cyan hover:underline" target="_blank" rel="noopener">HJB CodeForge</a> product.</p>
+      </div>
+      <div class="sm:text-right">
+        <div class="data text-[.6rem] text-muted mb-4">Follow the ascent</div>
+        <div class="flex sm:justify-end gap-3 mb-6 flex-wrap">
+          <a href="https://www.youtube.com/@voidriseapp" target="_blank" rel="noopener" class="chip hover:text-cyan hover:border-[var(--line-strong)] transition">YouTube</a>
+          <a href="https://www.instagram.com/voidriseapp" target="_blank" rel="noopener" class="chip hover:text-cyan hover:border-[var(--line-strong)] transition">Instagram</a>
+          <a href="https://x.com/voidriseapp" target="_blank" rel="noopener" class="chip hover:text-cyan hover:border-[var(--line-strong)] transition">X</a>
+          <a href="https://www.linkedin.com/company/voidrise" target="_blank" rel="noopener" class="chip hover:text-cyan hover:border-[var(--line-strong)] transition">LinkedIn</a>
+        </div>
+        <div class="flex sm:justify-end gap-5">
+          <a href="privacy/" class="navlink text-sm">Privacy</a>
+          <a href="mailto:support@hjbcodeforge.com" class="navlink text-sm">Support</a>
+          <a href="https://hjbcodeforge.com" target="_blank" rel="noopener" class="navlink text-sm">hjbcodeforge.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="hairline mb-6"></div>
+    <p class="data text-[.58rem] text-faint text-center">© 2026 HJB CodeForge · Ottawa, Canada · VoidRise™ · Rise from the void.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav scroll + mobile */
+  var nav=document.getElementById('topnav');
+  var onScroll=function(){ nav.classList.toggle('scrolled', window.scrollY>40); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  var burger=document.getElementById('burger'), menu=document.getElementById('mobilemenu');
+  burger.addEventListener('click', function(){ var open=!menu.classList.toggle('hidden'); burger.setAttribute('aria-expanded', String(open)); });
+  document.querySelectorAll('.mobile-link').forEach(function(a){ a.addEventListener('click', function(){ menu.classList.add('hidden'); burger.setAttribute('aria-expanded','false'); }); });
+
+  /* reveal + bars */
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in');
+      e.target.querySelectorAll && e.target.querySelectorAll('.bar').forEach(function(b){ b.style.width=b.getAttribute('data-w'); });
+      io.unobserve(e.target);} }); }, {threshold:.16, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ if(rm){el.classList.add('in');} else io.observe(el); });
+  if(rm){ document.querySelectorAll('.bar').forEach(function(b){ b.style.width=b.getAttribute('data-w'); }); }
+
+  /* hero pointer glow */
+  var hg=document.getElementById('hero-glow');
+  if(hg && !rm && window.matchMedia('(pointer:fine)').matches){
+    document.querySelector('header').addEventListener('pointermove', function(ev){
+      var r=this.getBoundingClientRect(); var x=(ev.clientX-r.left)/r.width*100, y=(ev.clientY-r.top)/r.height*100;
+      hg.style.background='radial-gradient(560px circle at '+x+'% '+y+'%, rgba(47,230,255,.1), transparent 60%)';
+    });
+  }
+
+  /* rank ladder */
+  var ranks=[
+    {k:'E', t:'Awakened', l:'Eligible · LVL 1',  c:'cyan',  d:'Where every hunter begins. No glow, no aura — just worn starter gear and an untrained build. The void is watching.'},
+    {k:'D', t:'Initiate', l:'Gate · LVL 17', c:'cyan',  d:'The first accents of power flicker in. Simple functional gear, a lightly-trained frame. The grind is taking hold.'},
+    {k:'C', t:'Hunter',   l:'Gate · LVL 34', c:'cyan',  d:'Solid armor and a clear accent glow over a proven, athletic build. You look like someone who trains — because you do.'},
+    {k:'B', t:'Elite',    l:'Gate · LVL 50', c:'cyan',  d:'Brighter accents, more ornate plate, defined musculature and an aura beginning to form around you.'},
+    {k:'A', t:'Master',   l:'Gate · LVL 67', c:'violet',d:'Runic, empowered armor wreathed in energy wisps. A peak physique and a visible aura. Few ever reach here.'},
+    {k:'S', t:'Sovereign',l:'Gate · LVL 84', c:'gold',  d:'Radiant energy, legendary ornate armor lit with glowing runes, particle effects and glowing eyes. A true sovereign.'},
+    {k:'SS',t:'Monarch',  l:'Gate · LVL 100',c:'gold',  d:'The ultimate form. An overwhelming aura storm, godlike legendary armor, a burst of light. Transcendent — the apex of the climb.'}
+  ];
+  var imgs=['rank_e','rank_d','rank_c','rank_b','rank_a','rank_s','rank_ss'];
+  var grad={cyan:'grad-cyan', violet:'text-violet', gold:'grad-gold'};
+  var img=document.getElementById('rankImg'), big=document.getElementById('rankBig'),
+      ttl=document.getElementById('rankTitle'), lvl=document.getElementById('rankLvl'),
+      dsc=document.getElementById('rankDesc'), steps=document.querySelectorAll('#ladder .rank-step');
+  var cur=0, timer=null, userActed=false;
+  function setRank(i){
+    cur=i; var r=ranks[i];
+    steps.forEach(function(s,j){ s.classList.toggle('active', j===i); s.setAttribute('aria-pressed', String(j===i)); });
+    img.classList.add('swap');
+    setTimeout(function(){ img.src='assets/'+imgs[i]+'.webp'; img.classList.remove('swap'); }, rm?0:200);
+    big.className='font-display font-black text-[clamp(3rem,9vw,5rem)] leading-none '+grad[r.c];
+    big.textContent=r.k; ttl.textContent=r.t; lvl.textContent=r.l;
+    lvl.className='data text-xs mt-1 '+(r.c==='gold'?'text-gold':(r.c==='violet'?'text-violet':'text-cyan'));
+    dsc.textContent=r.d;
+  }
+  steps.forEach(function(s){
+    var go=function(){ userActed=true; if(timer)clearInterval(timer); setRank(+s.getAttribute('data-i')); };
+    s.addEventListener('click', go);
+    s.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+    s.addEventListener('mouseenter', function(){ if(window.matchMedia('(pointer:fine)').matches){ userActed=true; if(timer)clearInterval(timer); setRank(+s.getAttribute('data-i')); }});
+  });
+  if(!rm){
+    var rankSec=document.getElementById('ranks');
+    new IntersectionObserver(function(es){ es.forEach(function(e){
+      if(e.isIntersecting && !timer && !userActed){ timer=setInterval(function(){ if(userActed){clearInterval(timer);return;} setRank((cur+1)%7); }, 2200); }
+    }); }, {threshold:.3}).observe(rankSec);
+  }
+
+  /* faq */
+  document.querySelectorAll('.faq-item .faq-q').forEach(function(q){
+    q.addEventListener('click', function(){ var open=q.parentElement.classList.toggle('open'); q.setAttribute('aria-expanded', String(open)); });
+  });
+
+  /* youtube facade */
+  var yf=document.getElementById('ytFacade');
+  var loadYt=function(){
+    var id=yf.getAttribute('data-id');
+    yf.innerHTML='<iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" title="VoidRise walkthrough" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>';
+  };
+  yf.addEventListener('click', loadYt);
+  yf.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); loadYt(); } });
+})();
+</script>
+</body>
+</html>

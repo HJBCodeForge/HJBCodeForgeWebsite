@@ -3,112 +3,131 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link rel="icon" type="image/png" href="../../assets/images/logo.png" />
 <title>VoidRise Privacy Policy | HJB CodeForge</title>
-<meta name="description" content="Privacy policy for VoidRise, the workout RPG by HJB CodeForge. Your workout data lives on your device — no ads, no selling data, no cross-app tracking."/>
-<link rel="canonical" href="https://hjbcodeforge.com/voidrise/privacy"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                colors: {
-                    "primary": "#E8620A", "on-primary": "#ffffff",
-                    "background": "#0A0A0A", "on-background": "#e5e2e1",
-                    "surface": "#0A0A0A", "on-surface": "#e5e2e1",
-                    "on-surface-variant": "#e1c0b2",
-                    "surface-container-low": "#1c1b1b",
-                    "outline-variant": "#594237",
-                },
-                fontFamily: { "body": ["Inter", "Arial", "sans-serif"] },
-                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem" },
-            },
-        },
-    }
-</script>
+<meta name="description" content="Privacy policy for VoidRise, the gym RPG by HJB CodeForge. Your workout data lives on your device — no ads, no selling data, no cross-app tracking."/>
+<link rel="canonical" href="https://hjbcodeforge.com/voidrise/privacy/"/>
+<link rel="icon" type="image/png" href="../assets/app_icon.png"/>
+<meta name="theme-color" content="#06090F"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 <style>
-    body { background-color: #0A0A0A; font-family: 'Inter', Arial, sans-serif; }
-    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #e1c0b2; font-size: 1.05rem; }
-    .prose h2 { font-size: 1.5rem; font-weight: 900; color: #F5F5F5; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
-    .prose ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
-    .prose ul li { margin-bottom: 0.5rem; list-style-type: disc; }
-    .prose strong { color: #F5F5F5; font-weight: 700; }
-    .prose a { color: #E8620A; text-decoration: underline; text-decoration-color: rgba(232,98,10,0.4); }
-    .prose a:hover { text-decoration-color: #E8620A; }
-    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
-    .callout p { margin-bottom: 0; color: #e1c0b2; }
+  :root{ --void:#06090F; --cyan:#2FE6FF; --violet:#8B6CFF; --ink:#E9F4FF; --muted:#9fb2c8; --line:rgba(47,230,255,.16); }
+  *{ -webkit-tap-highlight-color:transparent; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--void); color:var(--ink); font-family:'Rajdhani',sans-serif; overflow-x:hidden; }
+  ::selection{ background:rgba(47,230,255,.28); color:#fff; }
+  h1,h2,.display{ font-family:'Orbitron',sans-serif; letter-spacing:-.01em; }
+  .data{ font-family:'Share Tech Mono',monospace; text-transform:uppercase; letter-spacing:.22em; }
+  .eyebrow{ font-family:'Share Tech Mono',monospace; text-transform:uppercase; letter-spacing:.34em; font-size:.72rem; color:var(--cyan); }
+  .grad-cyan{ background:linear-gradient(96deg,#fff,#bdf3ff 40%,var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .stage-bg{ position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background:
+      radial-gradient(1000px 640px at 80% -8%, rgba(47,230,255,.12), transparent 60%),
+      radial-gradient(820px 620px at 6% 10%, rgba(139,108,255,.11), transparent 60%),
+      linear-gradient(180deg,#06090F,#070C14 45%,#06090F); }
+  .grid-bg{ position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.45;
+    background-image:linear-gradient(rgba(47,230,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(47,230,255,.045) 1px,transparent 1px);
+    background-size:54px 54px; mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 35%,transparent 78%);
+    -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 35%,transparent 78%); }
+  nav{ transition:background .4s,border-color .4s; }
+  nav.scrolled{ background:rgba(6,9,15,.85); backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
+  .navlink{ font-weight:600; color:#9fb2c8; transition:color .25s; }
+  .navlink:hover{ color:var(--ink); }
+  .panel{ position:relative; background:linear-gradient(180deg,rgba(18,26,38,.7),rgba(9,13,20,.7)); border:1px solid var(--line); border-radius:14px; backdrop-filter:blur(8px); }
+  .corner{ position:absolute; width:12px; height:12px; border:1.5px solid var(--cyan); opacity:.6; }
+  .corner.tl{ top:10px; left:10px; border-right:0; border-bottom:0; } .corner.br{ bottom:10px; right:10px; border-left:0; border-top:0; }
+  .prose p{ margin-bottom:1.4rem; line-height:1.8; color:var(--muted); font-size:1.06rem; }
+  .prose h2{ font-family:'Orbitron'; font-size:1.18rem; font-weight:700; color:#fff; margin:2.8rem 0 1rem; letter-spacing:-.01em; display:flex; align-items:baseline; gap:.7rem; }
+  .prose h2::before{ content:attr(data-n); font-family:'Share Tech Mono'; font-size:.7rem; color:var(--cyan); letter-spacing:.1em; }
+  .prose ul{ margin-bottom:1.4rem; padding-left:1.4rem; color:var(--muted); line-height:1.8; }
+  .prose ul li{ margin-bottom:.5rem; list-style-type:none; position:relative; }
+  .prose ul li::before{ content:"▸"; color:var(--cyan); position:absolute; left:-1.3rem; }
+  .prose strong{ color:#fff; font-weight:700; }
+  .prose a{ color:var(--cyan); text-decoration:underline; text-decoration-color:rgba(47,230,255,.4); }
+  .prose a:hover{ text-decoration-color:var(--cyan); }
+  .callout{ background:rgba(47,230,255,.05); border:1px solid var(--line); border-left:3px solid var(--cyan); padding:1.3rem 1.5rem; border-radius:0 .6rem .6rem 0; margin:0 0 2rem; }
+  .callout p{ margin-bottom:0; color:var(--ink); }
+  .hairline{ height:1px; background:linear-gradient(90deg,transparent,rgba(47,230,255,.4),transparent); }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } }
 </style>
 </head>
-<body class="font-body text-on-surface">
+<body>
+<div class="stage-bg"></div>
+<div class="grid-bg"></div>
 
-<!-- Navigation -->
-<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
-    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
-        <a href="../../index.html" class="flex items-center gap-3">
-            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../../assets/images/logo.png" onerror="this.style.display='none'"/>
-            <span class="text-xl font-black tracking-tight text-white">HJB CodeForge</span>
-        </a>
-        <a href="../../index.html" class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">← Back to hjbcodeforge.com</a>
-    </div>
+<nav id="nav" class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-[1100px] mx-auto px-5 h-[68px] flex items-center justify-between">
+    <a href="../" class="flex items-center gap-3">
+      <img src="../assets/logo_icon.webp" alt="VoidRise sigil" class="h-9 w-9 object-contain" style="filter:drop-shadow(0 0 10px rgba(47,230,255,.6))" onerror="this.style.display='none'"/>
+      <span class="font-black text-xl tracking-wider grad-cyan" style="font-family:'Orbitron'">VOIDRISE</span>
+    </a>
+    <a href="../" class="navlink text-sm font-bold">← Back to VoidRise</a>
+  </div>
 </nav>
 
-<main class="max-w-3xl mx-auto px-6 pt-36 pb-24">
-    <p class="text-primary font-bold text-sm uppercase tracking-widest mb-3">VoidRise</p>
-    <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">Privacy Policy</h1>
-    <p class="text-on-surface-variant text-sm mb-10"><strong class="text-white">Effective date:</strong> June 12, 2026</p>
+<main class="max-w-[820px] mx-auto px-5 pt-36 pb-20">
+  <p class="eyebrow mb-3">// System · Data Protocol</p>
+  <h1 class="text-[clamp(2.2rem,6vw,3.4rem)] font-black tracking-tight text-white mb-3">Privacy Policy</h1>
+  <p class="data text-[.62rem] text-[#9fb2c8] mb-9"><span class="text-cyan">Effective</span> · June 12, 2026</p>
 
-    <div class="prose">
-        <p>VoidRise ("the app") is built and operated by <strong>HJB CodeForge</strong> (Henning Botha, sole proprietorship, Ottawa, Ontario, Canada). This policy explains what data VoidRise handles and what we do — and don't do — with it.</p>
+  <div class="panel p-6 sm:p-9 prose">
+    <span class="corner tl"></span><span class="corner br"></span>
+    <p>VoidRise ("the app") is built and operated by <strong>HJB CodeForge</strong> (Henning Botha, sole proprietorship, Ottawa, Ontario, Canada). This policy explains what data VoidRise handles and what we do — and don't do — with it.</p>
 
-        <div class="callout">
-            <p><strong>The short version:</strong> your workout data lives on your device. The current version of VoidRise does not transmit any of your data off your phone. We don't sell data, we don't show ads, and we don't track you across other apps.</p>
-        </div>
+    <div class="callout"><p><strong>The short version:</strong> your workout data lives on your device. The current version of VoidRise does not transmit any of your data off your phone. We don't sell data, we don't show ads, and we don't track you across other apps.</p></div>
 
-        <h2>1. Data the app stores</h2>
-        <p><strong>On your device (always):</strong> your hunter profile (display name, sex selection, age, height, weight, fitness level, equipment, injury flags, training schedule) and your game/workout progress (sessions, sets, loads, reps, ranks, streaks, cosmetics, in-game currency). This data stays in the app's private storage on your phone. Deleting the app deletes it.</p>
-        <p><strong>Cloud sync (future, optional):</strong> the current release stores everything locally and has no cloud sync. If a future version adds optional sync, the same profile and progress data would be stored with our backend provider <strong>Supabase</strong> so your progress can be restored or moved to a new device — keyed to your account, encrypted in transit (HTTPS/TLS), and used for nothing except providing sync. We will update this policy when that feature ships.</p>
+    <h2 data-n="01">Data the app stores</h2>
+    <p><strong>On your device (always):</strong> your hunter profile (display name, sex selection, age, height, weight, fitness level, equipment, injury flags, training schedule) and your game/workout progress (sessions, sets, loads, reps, ranks, streaks, cosmetics, in-game currency). This data stays in the app's private storage on your phone. Deleting the app deletes it.</p>
+    <p><strong>Cloud sync (future, optional):</strong> the current release stores everything locally and has no cloud sync. If a future version adds optional sync, the same profile and progress data would be stored with our backend provider <strong>Supabase</strong> so your progress can be restored or moved to a new device — keyed to your account, encrypted in transit (HTTPS/TLS), and used for nothing except providing sync. We will update this policy when that feature ships.</p>
 
-        <h2>2. Health and fitness data</h2>
-        <p>The workout data you log (exercises, sets, reps, loads, body weight, injury flags) is fitness data you enter yourself. It is used solely to generate your workouts and drive game progression, and it stays on your device.</p>
-        <p><strong>Health Connect (future, when available):</strong> if a future version offers Health Connect integration and you choose to connect, VoidRise will request the minimum scopes it needs — reading steps/activity (so rest-day movement counts toward your streak) and writing your completed workouts. Health Connect data would be processed on your device, never used for advertising, never sold, and never shared with third parties. You could revoke access at any time in Health Connect settings, and disconnecting stops all reads/writes immediately. Our handling will comply with Google Play's Health Connect permissions policy.</p>
+    <h2 data-n="02">Health and fitness data</h2>
+    <p>The workout data you log (exercises, sets, reps, loads, body weight, injury flags) is fitness data you enter yourself. It is used solely to generate your workouts and drive game progression, and it stays on your device.</p>
+    <p><strong>Health Connect (future, when available):</strong> if a future version offers Health Connect integration and you choose to connect, VoidRise will request the minimum scopes it needs — reading steps/activity (so rest-day movement counts toward your streak) and writing your completed workouts. Health Connect data would be processed on your device, never used for advertising, never sold, and never shared with third parties. You could revoke access at any time in Health Connect settings, and disconnecting stops all reads/writes immediately. Our handling will comply with Google Play's Health Connect permissions policy.</p>
 
-        <h2>3. Subscriptions and payments</h2>
-        <p>The current release contains no purchases. If premium subscriptions ship in a future version, they will be processed by <strong>Google Play Billing</strong> — we never see or store your payment card details. We would use <strong>RevenueCat</strong> to validate subscription status; it receives purchase tokens and anonymous app-user IDs, not your identity or workout data.</p>
+    <h2 data-n="03">Subscriptions and payments</h2>
+    <p>The current release contains no purchases. If premium subscriptions ship in a future version, they will be processed by <strong>Google Play Billing</strong> — we never see or store your payment card details. We would use <strong>RevenueCat</strong> to validate subscription status; it receives purchase tokens and anonymous app-user IDs, not your identity or workout data.</p>
 
-        <h2>4. What we DON'T do</h2>
-        <ul>
-            <li><strong>No ads.</strong> The app contains no advertising and no ad SDKs.</li>
-            <li><strong>No selling or sharing of personal data.</strong> Ever, to anyone.</li>
-            <li><strong>No cross-app tracking.</strong> No analytics that follow you outside VoidRise.</li>
-            <li><strong>No data brokers.</strong></li>
-        </ul>
+    <h2 data-n="04">What we DON'T do</h2>
+    <ul>
+      <li><strong>No ads.</strong> The app contains no advertising and no ad SDKs.</li>
+      <li><strong>No selling or sharing of personal data.</strong> Ever, to anyone.</li>
+      <li><strong>No cross-app tracking.</strong> No analytics that follow you outside VoidRise.</li>
+      <li><strong>No data brokers.</strong></li>
+    </ul>
 
-        <h2>5. Service providers</h2>
-        <p>The current release shares data with no one. The only third parties involved in running the app are <strong>Google Play</strong> (app distribution) and <strong>Google Fonts</strong> (typeface delivery, bundled at build time). If future features add providers (Supabase for optional sync, Google Play Billing and RevenueCat for subscriptions), each will receive only what its function requires, and this policy will be updated.</p>
+    <h2 data-n="05">Service providers</h2>
+    <p>The current release shares data with no one. The only third parties involved in running the app are <strong>Google Play</strong> (app distribution) and <strong>Google Fonts</strong> (typeface delivery, bundled at build time). If future features add providers (Supabase for optional sync, Google Play Billing and RevenueCat for subscriptions), each will receive only what its function requires, and this policy will be updated.</p>
 
-        <h2>6. Data retention and deletion</h2>
-        <p>On-device data is deleted when you delete the app (or use the in-app reset). If you have any data questions or requests, email <strong>support@hjbcodeforge.com</strong> — we respond within 30 days.</p>
+    <h2 data-n="06">Data retention and deletion</h2>
+    <p>On-device data is deleted when you delete the app (or use the in-app reset). If you have any data questions or requests, email <strong>support@hjbcodeforge.com</strong> — we respond within 30 days.</p>
 
-        <h2>7. Children</h2>
-        <p>VoidRise is a fitness app intended for users <strong>13 and older</strong>. We do not knowingly collect data from children under 13. If you believe a child has used the app, contact us and we will help remove any data.</p>
+    <h2 data-n="07">Children</h2>
+    <p>VoidRise is a fitness app intended for users <strong>13 and older</strong>. We do not knowingly collect data from children under 13. If you believe a child has used the app, contact us and we will help remove any data.</p>
 
-        <h2>8. Your rights</h2>
-        <p>Depending on where you live (e.g. PIPEDA in Canada, GDPR in the EU, CCPA in California) you may have rights to access, correct, export, or delete your personal data. Email <strong>support@hjbcodeforge.com</strong> and we'll honor the request — since your data lives on your device, this is usually immediate and in your own hands.</p>
+    <h2 data-n="08">Your rights</h2>
+    <p>Depending on where you live (e.g. PIPEDA in Canada, GDPR in the EU, CCPA in California) you may have rights to access, correct, export, or delete your personal data. Email <strong>support@hjbcodeforge.com</strong> and we'll honor the request — since your data lives on your device, this is usually immediate and in your own hands.</p>
 
-        <h2>9. Changes</h2>
-        <p>If this policy changes materially, we'll update the effective date here and note it in the app's release notes.</p>
+    <h2 data-n="09">Changes</h2>
+    <p>If this policy changes materially, we'll update the effective date here and note it in the app's release notes.</p>
 
-        <h2>10. Contact</h2>
-        <p><strong>HJB CodeForge</strong> · Ottawa, Ontario, Canada<br/>
-        <a href="mailto:support@hjbcodeforge.com">support@hjbcodeforge.com</a> · <a href="https://hjbcodeforge.com">hjbcodeforge.com</a></p>
-    </div>
+    <h2 data-n="10">Contact</h2>
+    <p><strong>HJB CodeForge</strong> · Ottawa, Ontario, Canada<br/>
+    <a href="mailto:support@hjbcodeforge.com">support@hjbcodeforge.com</a> · <a href="https://hjbcodeforge.com" target="_blank" rel="noopener">hjbcodeforge.com</a></p>
+  </div>
 </main>
 
-<footer class="border-t border-outline-variant/30 py-10">
-    <p class="text-center text-sm text-on-surface-variant">© 2026 HJB CodeForge · <a class="text-primary" href="../../index.html">hjbcodeforge.com</a></p>
+<footer class="border-t border-[var(--line)] py-9">
+  <div class="max-w-[820px] mx-auto px-5">
+    <div class="hairline mb-6"></div>
+    <p class="data text-[.58rem] text-[#42566c] text-center">© 2026 HJB CodeForge · VoidRise™ · <a href="../" class="text-cyan">voidrise</a> · <a href="https://hjbcodeforge.com" class="text-cyan" target="_blank" rel="noopener">hjbcodeforge.com</a></p>
+  </div>
 </footer>
-
+<script>
+  var n=document.getElementById('nav');
+  var s=function(){ n.classList.toggle('scrolled', window.scrollY>30); }; s();
+  window.addEventListener('scroll', s, {passive:true});
+</script>
 </body>
 </html>
