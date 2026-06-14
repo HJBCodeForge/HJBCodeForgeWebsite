@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XKJDGFK95M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XKJDGFK95M');
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="icon" type="image/png" href="../assets/images/logo.png" />
+<title>Devlog 00: Building an Original RTS in Godot 4 | HJB CodeForge</title>
+<meta name="description" content="A build-in-public devlog for World-Hive: Leukosia, an original three-faction asymmetric RTS built solo in Godot 4. Honest look at the concept and the stage."/>
+<link rel="canonical" href="https://hjbcodeforge.com/blog/building-world-hive-leukosia.html"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A", "on-primary": "#ffffff",
+                    "primary-container": "#ef6712", "on-primary-container": "#ffffff",
+                    "secondary": "#f6be39", "on-secondary": "#402d00",
+                    "background": "#0A0A0A", "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A", "on-surface": "#e5e2e1",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "surface-bright": "#3a3939",
+                    "outline": "#a88a7e", "outline-variant": "#594237",
+                },
+                fontFamily: { "body": ["Inter", "Arial", "sans-serif"] },
+                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem" },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    body { background-color: #0A0A0A; font-family: 'Inter', Arial, sans-serif; }
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #e1c0b2; font-size: 1.05rem; }
+    .prose h2 { font-size: 1.75rem; font-weight: 900; color: #F5F5F5; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose h3 { font-size: 1.2rem; font-weight: 700; color: #F5F5F5; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ul li { margin-bottom: 0.5rem; list-style-type: disc; }
+    .prose ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ol li { margin-bottom: 0.5rem; list-style-type: decimal; }
+    .prose strong { color: #F5F5F5; font-weight: 700; }
+    .prose a { color: #E8620A; text-decoration: underline; text-decoration-color: rgba(232,98,10,0.4); }
+    .prose a:hover { text-decoration-color: #E8620A; }
+    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .callout p { margin-bottom: 0; color: #e1c0b2; }
+    .stat-card { background: #1c1b1b; border: 1px solid #2a2a2a; border-radius: 0.25rem; padding: 1.5rem; }
+</style>
+<script src="https://quartzbot.hjbcodeforge.com/widget.js" data-bot-id="a51c5fbb-4396-4fbb-ad9c-2be511a87a83" defer></script>
+<script src="../assets/js/quartzbot-theme.js" defer></script>
+</head>
+<body class="font-body text-on-surface">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../assets/images/logo.png"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../portfolio.html">Products</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="../blog.html">Blog</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../services.html">Custom Work</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="../contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">Let's Build</a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0e0e0e] border-t border-[#2a2a2a] px-8 py-4 flex flex-col gap-4">
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../index.html">Home</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../portfolio.html">Products</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../about.html">About</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="../blog.html">Blog</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../services.html">Custom Work</a>
+        <a href="../contact.html" class="forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg text-center">Let's Build</a>
+    </div>
+</nav>
+
+<!-- Article Header -->
+<section class="pt-32 pb-16 px-8 max-w-[800px] mx-auto">
+    <div class="flex items-center gap-3 mb-6">
+        <a href="../blog.html" class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#E8620A] hover:underline">← Blog</a>
+        <span class="text-[#594237]">/</span>
+        <span class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#594237]">Devlog</span>
+    </div>
+    <h1 class="text-4xl md:text-6xl font-black text-[#F5F5F5] leading-[1.05] tracking-tighter mb-6">
+        Devlog 00:<br/><span class="forge-gradient bg-clip-text text-transparent" style="-webkit-background-clip:text;">Building an Original RTS</span><br/>From Scratch in Godot 4
+    </h1>
+    <p class="text-xl text-[#e1c0b2] leading-relaxed mb-8">
+        I'm building an original real-time strategy game from scratch in Godot 4. It's called World-Hive: Leukosia, it's a solo passion project I work on at weekends, and this is devlog zero. No build, no date, no hype. Just what I'm making and why.
+    </p>
+    <div class="flex flex-wrap items-center gap-6 text-[0.8rem] text-[#a88a7e] pb-8 border-b border-[#2a2a2a]">
+        <div class="flex items-center gap-2">
+            <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-8 h-8 rounded-full object-cover grayscale" onerror="this.style.display='none'"/>
+            <span class="text-[#F5F5F5] font-semibold">Henning Botha</span>
+        </div>
+        <span>June 2026</span>
+        <span>·</span>
+        <span>6 Min Read</span>
+        <span>·</span>
+        <span class="text-[#E8620A] font-semibold uppercase tracking-widest">In Development</span>
+    </div>
+</section>
+
+<!-- Hero Image -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16"><div class="w-full h-64 md:h-96 bg-[#1c1b1b] rounded-lg overflow-hidden border border-[#2a2a2a]"><img src="../assets/images/world-hive-leukosia.png" alt="World-Hive: Leukosia concept art" class="w-full h-full object-cover"/></div></div>
+
+<!-- Stats Row -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16"><div class="grid grid-cols-2 md:grid-cols-4 gap-4"><div class="stat-card text-center"><div class="text-3xl font-black text-[#E8620A] mb-1">3</div><div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Asymmetric Factions</div></div><div class="stat-card text-center"><div class="text-3xl font-black text-[#E8620A] mb-1">Godot 4</div><div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Engine</div></div><div class="stat-card text-center"><div class="text-3xl font-black text-[#E8620A] mb-1">M0–M6</div><div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">MVP Complete</div></div><div class="stat-card text-center"><div class="text-3xl font-black text-[#E8620A] mb-1">1</div><div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Living Planet</div></div></div></div>
+
+<!-- Article Body -->
+<article class="max-w-[800px] mx-auto px-8 pb-24 prose">
+
+    <p>There is no public build of this game. No download, no wishlist link, no release window. I'm telling you that up front so the rest of this reads honestly. <strong>World-Hive: Leukosia</strong> is a real-time strategy game I'm building alone, on weekends, from scratch in Godot 4. This is devlog 00, the first entry in building it in public.</p>
+
+    <p>HJB CodeForge exists to ship its own SaaS products, and that work pays the bills. Leukosia is the thing I make when the SaaS work is done for the day. It's a passion project, not a revenue line, and I want to be clear about that before I get into the part I'm genuinely excited about. The concept is good, and the systems pull against each other in ways that are genuinely hard to balance.</p>
+
+    <h2>Why I'm building this</h2>
+
+    <p>The honest answer is that I love the genre and I wanted to understand it from the inside. You can play a thousand hours of RTS and still not know why one unit feels responsive and another feels like wading through mud, or why one faction is a joy and another is a chore. The only way to learn that is to build it badly, then build it less badly, then keep going.</p>
+
+    <p>Godot 4 is the right tool for a solo developer who wants control without a publisher's roadmap dictating the work. I own the whole stack. I can chase a strange idea for three weekends and throw it out if it doesn't hold up. No committee, no scope creep imposed from outside. That creative freedom is the whole point of a side project, and it's why this one gets to be weird.</p>
+
+    <h2>Three factions, and why I refused to mirror them</h2>
+
+    <p>Leukosia has three factions. The Meridian Hegemony are alt-history steampunk colonial humans, landing their 4th Pioneer Vanguard on a world that isn't theirs. The Vaelori are ancient luminous aliens. And the third faction is the planet itself, which I'll come back to, because it's the idea the whole game hangs on.</p>
+
+    <p>The factions are asymmetric. Not asymmetric in the lazy sense where one side gets a reskinned tank with a different hat. They're balanced through opposite expression of similar capabilities. Where one faction solves a problem with brute industrial output, another solves the same problem with something slower and stranger that pays off differently. Same job, opposite method.</p>
+
+    <p>That is much harder to balance than mirror factions, and I knew that going in. Mirror factions are safe because the math is symmetrical. Genuine asymmetry means every matchup is its own tuning problem, and a buff to one side ripples everywhere. I took that on deliberately. A faction you've never quite played before is worth ten that feel like a palette swap.</p>
+
+    <h2>The planet fights back, and it doesn't care if you're peaceful</h2>
+
+    <p>Here is the idea I'm proudest of. The third faction is the Leukosia Swarm, the living planet's own immune response. It's AI-only, with no human player, and it works on one rule that changes how the entire game is played.</p>
+
+    <p>The Swarm treats <strong>presence</strong> as the infection. Not the damage you deal. Not how aggressive you are. Just the fact that invaders are there, occupying ground that isn't theirs. Most strategy games punish you for fighting. Leukosia punishes you for existing. The more invader presence builds up on the map, the more biomatter the Swarm spawns from its veins to purge it. The further the invaders spread, the more the planet wakes. Stay contained and it stirs less. That single rule turns map control from a pure advantage into a constant cost you have to weigh.</p>
+
+    <div class="callout"><p>In most RTS games, expansion is free until someone stops you. In Leukosia, expansion is the thing that summons the enemy. Presence on the map is what draws the planet's response. That one inversion reframes every decision on the board.</p></div>
+
+    <h2>One resource, shared by everyone</h2>
+
+    <p>There's a single shared resource called Fungus. It's a continuous field across the map, in the lineage of Tiberium and Spice for anyone who grew up on those games. One resource keeps the economy legible and the conflict sharp. You're not managing five spreadsheets of materials. You're fighting over the same ground everyone else wants, and that ties straight back into the presence mechanic. The richest ground is contested ground, contested ground is crowded ground, and crowded ground is exactly what the planet reacts to. The systems pull against each other on purpose.</p>
+
+    <h2>What's actually done</h2>
+
+    <p>I want to be precise here, because build-in-public only works if the status is real. Here's where Leukosia stands today:</p>
+
+    <ul><li>The MVP is code-complete across the early milestones, M0 through M6. The core loop runs.</li><li>The canonical world and lore are locked at version 1.0. The factions, the planet, the rules of the fiction are settled and not drifting week to week.</li><li>Art and asset production is in progress. The pipeline recently moved toward 3D, which is its own deep rabbit hole and probably a devlog of its own.</li><li>There is no public release and no public build. None of this is playable by anyone but me yet.</li></ul>
+
+    <h2>Where it's going, honestly</h2>
+
+    <p>I'm not going to promise you a date, because I don't have one and a solo weekend project doesn't get to make those promises. Platforms like Windows, Linux, and an Itch.io page are planned, not committed. Treat them as direction, not a contract. The next stretch is the art pass. The pipeline just moved to 3D, so the work is getting units and buildings to look as deliberate as the systems behind them already feel.</p>
+
+    <p>If the idea of a planet that treats presence as an infection is the kind of thing you'd want to watch take shape, follow along on the HJB CodeForge product lineup page. There's nothing to buy and nothing to download. Just the work, in the open, one devlog at a time. See you in 01.</p>
+
+    <!-- Author + CTA -->
+    <div class="mt-16 pt-8 border-t border-[#2a2a2a] flex flex-col md:flex-row items-start gap-6">
+        <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-16 h-16 rounded-full object-cover grayscale flex-shrink-0" onerror="this.style.display='none'"/>
+        <div>
+            <div class="text-[#F5F5F5] font-black text-lg mb-1">Henning Botha</div>
+            <div class="text-[#a88a7e] text-[0.875rem] mb-4">I'm Henning Botha, founder of HJB CodeForge, and Leukosia is the game I build on weekends for the love of the genre. Follow it taking shape on the HJB CodeForge product lineup page.</div>
+            <a href="../portfolio.html#world-hive" class="inline-flex forge-gradient text-white px-6 py-2.5 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">See the Lineup →</a>
+        </div>
+    </div>
+
+    <!-- Post Navigation -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="introducing-vrellix.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">← Previous</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">We Built Our Own CRM. Then We Turned It Into Vrellix</div>
+        </a>
+        <a href="net-terms-tracker-case-study.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors text-right">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">Next →</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">Building Net Terms Tracker</div>
+        </a>
+    </div>
+</article>
+
+<!-- Footer -->
+<footer class="border-t border-[#2a2a2a] py-12 px-8">
+    <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-8 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../index.html">Home</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../portfolio.html">Products</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../about.html">About</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../blog.html">Blog</a>
+        </div>
+        <p class="text-[#594237] text-[0.75rem]">© 2026 HJB CodeForge</p>
+    </div>
+</footer>
+
+</body>
+</html>

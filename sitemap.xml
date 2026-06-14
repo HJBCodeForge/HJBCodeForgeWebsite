@@ -82,4 +82,19 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://hjbcodeforge.com/blog/introducing-voidrise.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hjbcodeforge.com/blog/introducing-vrellix.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hjbcodeforge.com/blog/building-world-hive-leukosia.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

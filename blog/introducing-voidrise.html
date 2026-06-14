@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XKJDGFK95M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XKJDGFK95M');
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="icon" type="image/png" href="../assets/images/logo.png" />
+<title>VoidRise: A Gym App With an RPG Soul | HJB CodeForge</title>
+<meta name="description" content="VoidRise is a real progressive-overload training app wrapped in a dark-fantasy leveling RPG. Every set you log is a strike. Android early access by request."/>
+<link rel="canonical" href="https://hjbcodeforge.com/blog/introducing-voidrise.html"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#E8620A", "on-primary": "#ffffff",
+                    "primary-container": "#ef6712", "on-primary-container": "#ffffff",
+                    "secondary": "#f6be39", "on-secondary": "#402d00",
+                    "background": "#0A0A0A", "on-background": "#e5e2e1",
+                    "surface": "#0A0A0A", "on-surface": "#e5e2e1",
+                    "on-surface-variant": "#e1c0b2",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container": "#201f1f",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "surface-bright": "#3a3939",
+                    "outline": "#a88a7e", "outline-variant": "#594237",
+                },
+                fontFamily: { "body": ["Inter", "Arial", "sans-serif"] },
+                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem" },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    body { background-color: #0A0A0A; font-family: 'Inter', Arial, sans-serif; }
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #e1c0b2; font-size: 1.05rem; }
+    .prose h2 { font-size: 1.75rem; font-weight: 900; color: #F5F5F5; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose h3 { font-size: 1.2rem; font-weight: 700; color: #F5F5F5; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ul li { margin-bottom: 0.5rem; list-style-type: disc; }
+    .prose ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e1c0b2; line-height: 1.8; }
+    .prose ol li { margin-bottom: 0.5rem; list-style-type: decimal; }
+    .prose strong { color: #F5F5F5; font-weight: 700; }
+    .prose a { color: #E8620A; text-decoration: underline; text-decoration-color: rgba(232,98,10,0.4); }
+    .prose a:hover { text-decoration-color: #E8620A; }
+    .callout { background: #201f1f; border-left: 4px solid #E8620A; padding: 1.25rem 1.5rem; border-radius: 0 0.25rem 0.25rem 0; margin-bottom: 1.5rem; }
+    .callout p { margin-bottom: 0; color: #e1c0b2; }
+    .stat-card { background: #1c1b1b; border: 1px solid #2a2a2a; border-radius: 0.25rem; padding: 1.5rem; }
+</style>
+<script src="https://quartzbot.hjbcodeforge.com/widget.js" data-bot-id="a51c5fbb-4396-4fbb-ad9c-2be511a87a83" defer></script>
+<script src="../assets/js/quartzbot-theme.js" defer></script>
+</head>
+<body class="font-body text-on-surface">
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+    <div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+        <a href="../index.html" class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-10 w-auto object-contain" src="../assets/images/logo.png"/>
+            <span class="text-xl font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../index.html">Home</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../portfolio.html">Products</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../about.html">About</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A] border-b-2 border-[#E8620A] pb-1" href="../blog.html">Blog</a>
+            <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A] transition-colors" href="../services.html">Custom Work</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="../contact.html" class="hidden md:inline-flex forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">Let's Build</a>
+            <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-[#F5F5F5] p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0e0e0e] border-t border-[#2a2a2a] px-8 py-4 flex flex-col gap-4">
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../index.html">Home</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../portfolio.html">Products</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../about.html">About</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#E8620A]" href="../blog.html">Blog</a>
+        <a class="font-bold tracking-[0.05em] uppercase text-[0.75rem] text-[#F5F5F5] hover:text-[#E8620A]" href="../services.html">Custom Work</a>
+        <a href="../contact.html" class="forge-gradient text-white px-6 py-2 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg text-center">Let's Build</a>
+    </div>
+</nav>
+
+<!-- Article Header -->
+<section class="pt-32 pb-16 px-8 max-w-[800px] mx-auto">
+    <div class="flex items-center gap-3 mb-6">
+        <a href="../blog.html" class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#E8620A] hover:underline">← Blog</a>
+        <span class="text-[#594237]">/</span>
+        <span class="font-bold tracking-[0.1em] uppercase text-[0.7rem] text-[#594237]">Product Launch</span>
+    </div>
+    <h1 class="text-4xl md:text-6xl font-black text-[#F5F5F5] leading-[1.05] tracking-tighter mb-6">
+        Introducing VoidRise:<br/><span class="forge-gradient bg-clip-text text-transparent" style="-webkit-background-clip:text;">The Gym App</span><br/>With an RPG Soul
+    </h1>
+    <p class="text-xl text-[#e1c0b2] leading-relaxed mb-8">
+        Most fitness apps don't fail because the plan is wrong. They fail because the motivation runs out a few weeks in. VoidRise fixes that by making every set you log in the gym move a character forward, from rank E all the way to Monarch.
+    </p>
+    <div class="flex flex-wrap items-center gap-6 text-[0.8rem] text-[#a88a7e] pb-8 border-b border-[#2a2a2a]">
+        <div class="flex items-center gap-2">
+            <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-8 h-8 rounded-full object-cover grayscale" onerror="this.style.display='none'"/>
+            <span class="text-[#F5F5F5] font-semibold">Henning Botha</span>
+        </div>
+        <span>June 2026</span>
+        <span>·</span>
+        <span>5 Min Read</span>
+        <span>·</span>
+        <span class="text-[#E8620A] font-semibold uppercase tracking-widest">Early Access · Android</span>
+    </div>
+</section>
+
+<!-- Hero Image -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16"><div class="w-full h-64 md:h-96 bg-[#06090F] rounded-lg overflow-hidden border border-[#2a2a2a]"><img src="../voidrise/assets/hero_wide.webp" alt="VoidRise dark-fantasy key art" class="w-full h-full object-cover"/></div></div>
+
+<!-- Stats Row -->
+<div class="max-w-[1100px] mx-auto px-8 mb-16"><div class="grid grid-cols-2 md:grid-cols-4 gap-4"><div class="stat-card text-center"><div class="text-3xl font-black text-[#E8620A] mb-1">E → Monarch</div><div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Rank Path</div></div><div class="stat-card text-center"><div class="text-3xl font-black text-[#E8620A] mb-1">Android</div><div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Platform</div></div><div class="stat-card text-center"><div class="text-3xl font-black text-[#E8620A] mb-1">Free</div><div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">In Early Access</div></div><div class="stat-card text-center"><div class="text-3xl font-black text-[#E8620A] mb-1">Flutter</div><div class="text-[0.75rem] uppercase tracking-widest text-[#a88a7e] font-bold">Built With</div></div></div></div>
+
+<!-- Article Body -->
+<article class="max-w-[800px] mx-auto px-8 pb-24 prose">
+
+    <p>I've watched the same thing happen too many times. Someone downloads a workout app, fills in their goals, trains hard for two weeks, then quietly stops opening it. The plan was fine. The science was fine. What ran out was the reason to come back.</p>
+
+    <p>That is the actual problem with fitness apps. Not a lack of programming, a lack of pull. So I built <strong>VoidRise</strong>: a real strength-training app structured around progressive overload, wrapped in a dark-fantasy leveling RPG. It is a training app first. The RPG is the layer that keeps you showing up.</p>
+
+    <h2>Every set you log is a strike</h2>
+
+    <p>Here is the core mechanic. When you finish a set in the gym and log it, that set becomes a strike inside VoidRise. Your real workouts drive your in-game progress. Nothing is simulated, nothing is faked. You don't tap a button to pretend you trained. You train, you log, your character moves.</p>
+
+    <p>Progress runs through a rank ladder: E, D, C, B, A, S, SS, and finally Monarch. You start at the bottom like everyone else. You climb because you did the work, not because you watched an ad or paid to skip a step. An RPG is built to make repetition feel like progress, and that is exactly what a plain workout log never gives you. Adherence is the hard part of fitness. A leveling system gives you a reason to come back tomorrow, and that's the lever VoidRise pulls.</p>
+
+    <div class="callout"><p>VoidRise is a real training app with a game on top. It is not a game pretending to be fitness. The lifts are real, the programming is real, and the RPG exists to keep you adding load over time.</p></div>
+
+    <h2>The world is built so there's always a next fight</h2>
+
+    <p>You pick a hunter class that shapes how you play, and you push through gates, dungeons, and bosses. None of it replaces the workout. It frames it. The boss is the reason you finish the last set instead of skipping it.</p>
+
+    <ul><li><strong>Hunter classes.</strong> Rogue, Slayer, and Vanguard, each a different way to approach the climb.</li><li><strong>Ranks.</strong> The E-to-Monarch ladder that tracks how far your real training has taken you.</li><li><strong>Hunting grounds and gates.</strong> Places to test what you've built.</li><li><strong>Dungeons and bosses.</strong> Milestones that turn a training block into something you want to clear.</li><li><strong>A shadow army.</strong> A force that grows as you do.</li></ul>
+
+    <h2>Your real lifts become your stats</h2>
+
+    <p>This is the part I care about most. VoidRise maps your real lifts to your character's stats. Real-to-digital mapping means the strength you build in the gym is the strength your hunter carries. When your numbers go up in real life, your character gets stronger in a way you can see.</p>
+
+    <p>That tight link is the whole point. It keeps the game honest and it keeps the training central. You can't out-game your stats. You can only out-train them.</p>
+
+    <h2>Where VoidRise is right now</h2>
+
+    <p>I'll be straight about the stage, because building in public means no inflated claims. VoidRise is on Android, in early access through a closed test with a limited number of tester spots. There's a Google Play Console account set up, but it is not on the public Play Store yet. Access is by request. Email support@hjbcodeforge.com and ask for a tester spot. It's free to play during early access. The app is built with Flutter, there's a dedicated page at hjbcodeforge.com/voidrise, and you can watch it in motion at youtube.com/@voidriseapp.</p>
+
+    <p>Early access is where the app gets sharper. Testers train, the data comes in, and I ship a better version off the back of it. The closed test is small on purpose so I can listen closely to the people lifting alongside it. If you want training that actually levels you up, request a tester spot, log your first set, and start the climb from E. I'll see you on the way to Monarch.</p>
+
+    <!-- Author + CTA -->
+    <div class="mt-16 pt-8 border-t border-[#2a2a2a] flex flex-col md:flex-row items-start gap-6">
+        <img src="../assets/images/headshot.png" alt="Henning Botha" class="w-16 h-16 rounded-full object-cover grayscale flex-shrink-0" onerror="this.style.display='none'"/>
+        <div>
+            <div class="text-[#F5F5F5] font-black text-lg mb-1">Henning Botha</div>
+            <div class="text-[#a88a7e] text-[0.875rem] mb-4">I'm Henning Botha, founder of HJB CodeForge, and I built VoidRise because motivation, not programming, is what makes fitness apps fail. Request an Android tester spot at hjbcodeforge.com/voidrise and start your climb.</div>
+            <a href="../voidrise/" class="inline-flex forge-gradient text-white px-6 py-2.5 font-bold uppercase text-[0.75rem] tracking-widest rounded-lg hover:scale-105 transition-transform">Explore VoidRise →</a>
+        </div>
+    </div>
+
+    <!-- Post Navigation -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="introducing-track-and-thrive.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">← Previous</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">Introducing Track & Thrive</div>
+        </a>
+        <a href="introducing-vrellix.html" class="group block bg-[#1c1b1b] border border-[#2a2a2a] hover:border-[#E8620A] rounded-lg p-6 transition-colors text-right">
+            <div class="text-[0.7rem] uppercase tracking-widest text-[#594237] mb-2 font-bold">Next →</div>
+            <div class="text-[#F5F5F5] font-bold group-hover:text-[#E8620A] transition-colors">We Built Our Own CRM. Then We Turned It Into Vrellix</div>
+        </a>
+    </div>
+</article>
+
+<!-- Footer -->
+<footer class="border-t border-[#2a2a2a] py-12 px-8">
+    <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+            <img alt="HJB CodeForge Logo" class="h-8 w-auto object-contain" src="../assets/images/logo.png" onerror="this.style.display='none'"/>
+            <span class="font-black text-[#F5F5F5] tracking-tighter">HJB CodeForge</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../index.html">Home</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../portfolio.html">Products</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../about.html">About</a>
+            <a class="text-[#a88a7e] hover:text-[#E8620A] text-[0.8rem] transition-colors" href="../blog.html">Blog</a>
+        </div>
+        <p class="text-[#594237] text-[0.75rem]">© 2026 HJB CodeForge</p>
+    </div>
+</footer>
+
+</body>
+</html>
