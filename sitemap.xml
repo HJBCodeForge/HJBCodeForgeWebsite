@@ -47,7 +47,7 @@
 
   <!-- Blog Posts -->
   <url>
-    <loc>https://hjbcodeforge.com/blog/botforge-rag-pipeline.html</loc>
+    <loc>https://hjbcodeforge.com/blog/quartzbot-rag-pipeline.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>

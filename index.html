@@ -13,7 +13,19 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link rel="icon" type="image/png" href="assets/images/logo.png" />
 <title>HJB CodeForge | Software Built By Us, Used By You.</title>
+<meta name="description" content="HJB CodeForge builds software people actually use — VoidRise (the fitness RPG), Net Terms Tracker for Shopify B2B, the QuartzBot AI platform, Vrellix CRM, and more. Real products, live now."/>
+<link rel="canonical" href="https://hjbcodeforge.com/"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://hjbcodeforge.com/"/>
+<meta property="og:title" content="HJB CodeForge | Built By Us, Used By Everyone."/>
+<meta property="og:description" content="A studio shipping real products: VoidRise fitness RPG, Net Terms Tracker for Shopify, QuartzBot AI, Vrellix CRM, and more."/>
+<meta property="og:image" content="https://hjbcodeforge.com/assets/images/logo.png"/>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -34,6 +46,7 @@
                     "on-secondary-container": "#433000",
                     "secondary-fixed": "#ffdfa0",
                     "secondary-fixed-dim": "#f6be39",
+                    "ember": "#8B2500",
                     "tertiary": "#a2c9ff",
                     "on-tertiary": "#00315c",
                     "background": "#0A0A0A",
@@ -76,22 +89,62 @@
     }
 </script>
 <style>
-    .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        vertical-align: middle;
-    }
-    .phoenix-glow {
-        background: radial-gradient(circle at center, rgba(232, 98, 10, 0.15) 0%, transparent 70%);
-        filter: blur(60px);
-    }
-    .text-outline {
-        -webkit-text-stroke: 1px rgba(245, 245, 245, 0.3);
-        color: transparent;
-    }
-    .forge-gradient {
-        background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%);
-    }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
     body { background-color: #0A0A0A; }
+    html { scroll-behavior: smooth; }
+
+    .forge-gradient { background: linear-gradient(135deg, #ffb694 0%, #ef6712 100%); }
+    .forge-text { background: linear-gradient(120deg, #ffd9b0 0%, #E8620A 55%, #f6be39 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .text-outline { -webkit-text-stroke: 1px rgba(245, 245, 245, 0.28); color: transparent; }
+
+    /* atmosphere */
+    .phoenix-glow { background: radial-gradient(circle at center, rgba(232, 98, 10, 0.16) 0%, transparent 70%); filter: blur(60px); }
+    .ember-field { position: fixed; inset: 0; z-index: -2; pointer-events: none;
+        background:
+          radial-gradient(900px 620px at 82% -6%, rgba(232,98,10,.16), transparent 60%),
+          radial-gradient(820px 600px at 6% 8%, rgba(246,190,57,.08), transparent 62%),
+          radial-gradient(1100px 800px at 50% 116%, rgba(139,37,0,.18), transparent 60%),
+          linear-gradient(180deg,#0A0A0A 0%, #0c0a09 50%, #0A0A0A 100%); }
+    .forge-grid { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+        background-image: linear-gradient(rgba(232,98,10,.05) 1px,transparent 1px), linear-gradient(90deg,rgba(232,98,10,.05) 1px,transparent 1px);
+        background-size: 56px 56px;
+        -webkit-mask-image: radial-gradient(ellipse 92% 60% at 50% 0%, #000 30%, transparent 76%);
+        mask-image: radial-gradient(ellipse 92% 60% at 50% 0%, #000 30%, transparent 76%); }
+    .grain { position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .04; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+    /* reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal[data-d="1"]{transition-delay:.07s}.reveal[data-d="2"]{transition-delay:.14s}.reveal[data-d="3"]{transition-delay:.21s}
+    .reveal[data-d="4"]{transition-delay:.28s}.reveal[data-d="5"]{transition-delay:.35s}.reveal[data-d="6"]{transition-delay:.42s}
+    @media (prefers-reduced-motion: reduce){ .reveal{opacity:1;transform:none;transition:none} html{scroll-behavior:auto} }
+
+    .card-lift { transition: transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s, box-shadow .4s; }
+    .card-lift:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -34px rgba(232,98,10,.5); }
+    .eyebrow { letter-spacing: .28em; }
+
+    /* VoidRise portal palette (product brand inside its own section) */
+    .vr { --vr-cyan:#2FE6FF; --vr-violet:#8B6CFF; --vr-gold:#F6BE39; --vr-void:#06090F; }
+    .vr-stage { background:
+        radial-gradient(700px 460px at 78% 6%, rgba(47,230,255,.16), transparent 62%),
+        radial-gradient(620px 520px at 10% 88%, rgba(139,108,255,.18), transparent 60%),
+        linear-gradient(165deg, #070c14 0%, #06090F 60%, #080a10 100%);
+        border: 1px solid rgba(47,230,255,.16); }
+    .vr-grid { background-image: linear-gradient(rgba(47,230,255,.06) 1px,transparent 1px), linear-gradient(90deg,rgba(47,230,255,.06) 1px,transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(ellipse 80% 80% at 70% 20%, #000 30%, transparent 80%); mask-image: radial-gradient(ellipse 80% 80% at 70% 20%, #000 30%, transparent 80%); }
+    .vr-corner { position:absolute; width:14px; height:14px; border:1.5px solid var(--vr-cyan); opacity:.55; }
+    .vr-corner.tl{top:10px;left:10px;border-right:0;border-bottom:0}.vr-corner.tr{top:10px;right:10px;border-left:0;border-bottom:0}
+    .vr-corner.bl{bottom:10px;left:10px;border-right:0;border-top:0}.vr-corner.br{bottom:10px;right:10px;border-left:0;border-top:0}
+    .vr-rank { font-family:'Inter',sans-serif; font-weight:900; display:inline-flex; align-items:center; justify-content:center; width:2.1rem; height:2.1rem; border-radius:.4rem; border:1px solid rgba(47,230,255,.3); color:#bdf3ff; background:rgba(47,230,255,.06); font-size:.85rem; }
+    .vr-rank.mon { width:auto; padding:0 .8rem; border-color:rgba(246,190,57,.55); color:#ffe7a8; background:rgba(246,190,57,.08); }
+    .device { position:relative; border-radius:30px; padding:8px; background:linear-gradient(160deg,#1a2433,#0a0e16); border:1px solid rgba(47,230,255,.22); box-shadow:0 50px 100px -42px #000, 0 0 70px -34px rgba(47,230,255,.55); }
+    .device img{ display:block; width:100%; border-radius:22px; }
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .floaty{ animation: floaty 7s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce){ .floaty{animation:none} }
+
+    /* marquee strip */
+    .strip-scroll::-webkit-scrollbar{ height:0 }
 </style>
 <!-- Sender.net -->
 <script>
@@ -112,6 +165,10 @@
 <script src="assets/js/quartzbot-theme.js" defer></script>
 </head>
 <body class="font-body text-on-surface selection:bg-primary selection:text-on-primary">
+
+<div class="ember-field"></div>
+<div class="forge-grid"></div>
+<div class="grain"></div>
 
 <!-- Top Navigation -->
 <nav class="fixed top-0 w-full z-50 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
@@ -148,143 +205,311 @@
 
 <main class="relative overflow-hidden pt-20">
 
-    <!-- QuartzBot Launch Banner -->
-    <div id="launch-banner" class="w-full bg-gradient-to-r from-[#00C2FF]/20 via-[#BC13FE]/20 to-[#E8620A]/20 border-b border-[#00C2FF]/20 py-3 px-6 flex items-center justify-center gap-4 text-sm relative">
-        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse flex-shrink-0"></span>
+    <!-- VoidRise Launch Banner -->
+    <div id="launch-banner" class="w-full bg-gradient-to-r from-[#2FE6FF]/15 via-[#8B6CFF]/15 to-[#E8620A]/15 border-b border-[#2FE6FF]/20 py-3 px-6 flex items-center justify-center gap-4 text-sm relative">
+        <span class="w-2 h-2 rounded-full bg-[#2FE6FF] animate-pulse flex-shrink-0"></span>
         <p class="text-[#F5F5F5] font-medium text-center">
-            <span class="font-black text-white">QuartzBot is live.</span>
-            Train an AI chatbot on your content and embed it on your site in minutes.
-            <a href="https://quartzbot.hjbcodeforge.com" target="_blank" rel="noopener" class="ml-2 font-black text-[#00C2FF] hover:underline underline-offset-2 whitespace-nowrap">
-                Try it free →
+            <span class="font-black text-white">VoidRise is in early access.</span>
+            A real training app with an RPG soul. Rank up from E to Monarch.
+            <a href="voidrise/" class="ml-2 font-black text-[#2FE6FF] hover:underline underline-offset-2 whitespace-nowrap">
+                Get early access →
             </a>
         </p>
         <button onclick="document.getElementById('launch-banner').style.display='none'" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#F5F5F5]/40 hover:text-[#F5F5F5] transition-colors text-lg leading-none" aria-label="Dismiss">✕</button>
     </div>
 
     <!-- Hero Section -->
-    <section class="relative min-h-[921px] flex flex-col items-start justify-center px-8 md:px-24 max-w-[1440px] mx-auto">
+    <section class="relative min-h-[88vh] flex flex-col items-start justify-center px-8 md:px-24 max-w-[1440px] mx-auto">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full phoenix-glow pointer-events-none -z-10"></div>
         <div class="space-y-4 max-w-5xl">
-            <div class="flex items-center gap-2 text-primary font-bold tracking-widest text-[0.75rem] uppercase">
+            <div class="reveal in flex items-center gap-2 text-primary font-bold eyebrow text-[0.75rem] uppercase">
                 <span class="w-12 h-[2px] bg-primary"></span>
                 The Kinetic Forge
             </div>
-            <h1 class="text-[3.5rem] md:text-[6rem] leading-[0.9] font-black tracking-tighter text-on-surface">
+            <h1 class="reveal in text-[3.5rem] md:text-[6rem] leading-[0.9] font-black tracking-tighter text-on-surface" data-d="1">
                 BUILT BY US,<br/>
-                <span class="text-primary italic">USED BY</span><br/>
+                <span class="forge-text italic">USED BY</span><br/>
                 <span class="text-outline">EVERYONE.</span>
             </h1>
-            <p class="text-on-surface/60 text-lg md:text-xl max-w-xl font-medium leading-relaxed mt-6">
-                We build software people actually use — Shopify apps, AI platforms, and personal finance tools. Real products, available now.
+            <p class="reveal in text-on-surface/60 text-lg md:text-xl max-w-2xl font-medium leading-relaxed mt-6" data-d="2">
+                We ship software people actually use. A fitness RPG, a Shopify B2B engine, an AI platform, a founder CRM, and more. All built in-house. All live or on the way.
             </p>
-            <div class="pt-10 flex flex-wrap gap-6">
+            <div class="reveal in pt-10 flex flex-wrap gap-6" data-d="3">
                 <a href="portfolio.html" class="forge-gradient text-white px-10 py-5 font-bold uppercase tracking-widest rounded-lg flex items-center gap-3 hover:scale-105 transition-transform">
                     Explore Our Products
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </a>
-                <a href="contact.html" class="flex items-center gap-4 text-on-surface font-bold uppercase tracking-widest text-sm px-10 py-5 border border-outline-variant/30 rounded-lg hover:bg-surface-container-high transition-all">
-                    Work With Us
+                <a href="voidrise/" class="flex items-center gap-3 text-on-surface font-bold uppercase tracking-widest text-sm px-10 py-5 border border-[#2FE6FF]/30 rounded-lg hover:bg-[#2FE6FF]/5 hover:border-[#2FE6FF]/60 transition-all">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#2FE6FF] animate-pulse"></span>
+                    Meet VoidRise
                 </a>
             </div>
         </div>
-        <div class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 opacity-10 pointer-events-none">
+        <div class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 opacity-[0.06] pointer-events-none">
             <span class="text-[30rem] font-black leading-none select-none">CODE</span>
         </div>
     </section>
 
     <!-- Products Strip -->
-    <section class="bg-surface-container py-12 border-y border-outline-variant/10">
+    <section class="bg-surface-container/60 backdrop-blur-sm py-14 border-y border-outline-variant/10">
         <div class="px-8 max-w-[1440px] mx-auto">
-            <p class="text-on-surface/40 text-xs uppercase tracking-widest font-bold mb-8">Our Products — Available Now</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="flex items-end justify-between mb-8 flex-wrap gap-3">
+                <p class="text-on-surface/40 text-xs uppercase tracking-widest font-bold">Six products. One forge.</p>
+                <a href="portfolio.html" class="text-primary text-xs uppercase tracking-widest font-bold hover:gap-3 flex items-center gap-2 transition-all">See all <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- VoidRise -->
+                <a href="voidrise/" class="reveal card-lift group flex items-start gap-4 p-5 bg-surface-container-low border border-[#2FE6FF]/20 rounded-xl hover:border-[#2FE6FF]/50 transition-all" data-d="1">
+                    <div class="w-11 h-11 rounded-lg bg-[#2FE6FF]/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-[#2FE6FF]/20 transition-colors">
+                        <span class="material-symbols-outlined text-[#2FE6FF] text-xl">swords</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
+                            <p class="text-on-surface font-black text-sm uppercase tracking-tight">VoidRise</p>
+                            <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2 py-0.5 bg-[#2FE6FF]/15 text-[#2FE6FF] rounded">Early Access · Android</span>
+                        </div>
+                        <p class="text-on-surface/50 text-xs leading-relaxed">Train for real. Level up like it's an RPG, ranking E to Monarch.</p>
+                    </div>
+                </a>
                 <!-- Net Terms Tracker -->
-                <a href="https://apps.shopify.com/net-terms-tracker?utm_source=hjbcodeforge.com&amp;utm_medium=website&amp;utm_campaign=home" target="_blank" rel="noopener" class="group flex items-start gap-4 p-5 bg-surface-container-low border border-outline-variant/20 rounded-lg hover:border-primary/40 transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                <a href="https://apps.shopify.com/net-terms-tracker?utm_source=hjbcodeforge.com&amp;utm_medium=website&amp;utm_campaign=home" target="_blank" rel="noopener" class="reveal card-lift group flex items-start gap-4 p-5 bg-surface-container-low border border-outline-variant/20 rounded-xl hover:border-primary/40 transition-all" data-d="2">
+                    <div class="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
                         <span class="material-symbols-outlined text-primary text-xl">store</span>
                     </div>
                     <div>
-                        <div class="flex items-center gap-2 mb-1">
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
                             <p class="text-on-surface font-black text-sm uppercase tracking-tight">Net Terms Tracker</p>
                             <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2 py-0.5 bg-green-900/40 text-green-400 rounded">Live on Shopify</span>
                         </div>
-                        <p class="text-on-surface/50 text-xs leading-relaxed">Automate B2B Net 30 payment workflows directly inside Shopify.</p>
+                        <p class="text-on-surface/50 text-xs leading-relaxed">B2B net terms, credit limits, and invoices, built into Shopify.</p>
                     </div>
                 </a>
                 <!-- QuartzBot -->
-                <a href="https://quartzbot.hjbcodeforge.com" target="_blank" rel="noopener" class="group flex items-start gap-4 p-5 bg-surface-container-low border border-outline-variant/20 rounded-lg hover:border-primary/40 transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
-                        <span class="material-symbols-outlined text-primary text-xl">smart_toy</span>
+                <a href="https://quartzbot.hjbcodeforge.com" target="_blank" rel="noopener" class="reveal card-lift group flex items-start gap-4 p-5 bg-surface-container-low border border-outline-variant/20 rounded-xl hover:border-[#00C2FF]/40 transition-all" data-d="3">
+                    <div class="w-11 h-11 rounded-lg bg-[#00C2FF]/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-[#00C2FF]/20 transition-colors">
+                        <span class="material-symbols-outlined text-[#00C2FF] text-xl">smart_toy</span>
                     </div>
                     <div>
-                        <div class="flex items-center gap-2 mb-1">
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
                             <p class="text-on-surface font-black text-sm uppercase tracking-tight">QuartzBot</p>
-                            <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2 py-0.5 bg-green-900/40 text-green-400 rounded">Live — Paid Plans Available</span>
+                            <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2 py-0.5 bg-green-900/40 text-green-400 rounded">Live · Paid plans</span>
                         </div>
-                        <p class="text-on-surface/50 text-xs leading-relaxed">Deploy a custom AI chatbot trained on your own business content.</p>
+                        <p class="text-on-surface/50 text-xs leading-relaxed">An AI chatbot trained on your business, not the internet.</p>
+                    </div>
+                </a>
+                <!-- Vrellix -->
+                <a href="https://vrellix.com" target="_blank" rel="noopener" class="reveal card-lift group flex items-start gap-4 p-5 bg-surface-container-low border border-outline-variant/20 rounded-xl hover:border-[#22D3D8]/40 transition-all" data-d="4">
+                    <div class="w-11 h-11 rounded-lg bg-[#2563CC]/15 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-[#2563CC]/25 transition-colors">
+                        <span class="material-symbols-outlined text-[#22D3D8] text-xl">hub</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
+                            <p class="text-on-surface font-black text-sm uppercase tracking-tight">Vrellix</p>
+                            <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2 py-0.5 bg-green-900/40 text-green-400 rounded">Live</span>
+                        </div>
+                        <p class="text-on-surface/50 text-xs leading-relaxed">CRM, marketing, and support in one place for solo founders.</p>
                     </div>
                 </a>
                 <!-- Track & Thrive -->
-                <a href="https://trackandthrive.infinityfreeapp.com/?i=1" target="_blank" rel="noopener" class="group flex items-start gap-4 p-5 bg-surface-container-low border border-outline-variant/20 rounded-lg hover:border-primary/40 transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                <a href="https://trackandthrive.infinityfreeapp.com/?i=1" target="_blank" rel="noopener" class="reveal card-lift group flex items-start gap-4 p-5 bg-surface-container-low border border-outline-variant/20 rounded-xl hover:border-primary/40 transition-all" data-d="5">
+                    <div class="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
                         <span class="material-symbols-outlined text-primary text-xl">monitoring</span>
                     </div>
                     <div>
-                        <div class="flex items-center gap-2 mb-1">
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
                             <p class="text-on-surface font-black text-sm uppercase tracking-tight">Track &amp; Thrive</p>
-                            <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2 py-0.5 bg-green-900/40 text-green-400 rounded">Live — Free</span>
+                            <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2 py-0.5 bg-green-900/40 text-green-400 rounded">Live · Free</span>
                         </div>
-                        <p class="text-on-surface/50 text-xs leading-relaxed">Track spending, budgets, and daily calorie intake — no account needed.</p>
+                        <p class="text-on-surface/50 text-xs leading-relaxed">Spending, budgets, and calories. No account needed.</p>
+                    </div>
+                </a>
+                <!-- World-Hive: Leukosia -->
+                <a href="portfolio.html#world-hive" class="reveal card-lift group flex items-start gap-4 p-5 bg-surface-container-low border border-outline-variant/20 rounded-xl hover:border-secondary/40 transition-all" data-d="6">
+                    <div class="w-11 h-11 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary/20 transition-colors">
+                        <span class="material-symbols-outlined text-secondary text-xl">stadia_controller</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
+                            <p class="text-on-surface font-black text-sm uppercase tracking-tight">World-Hive: Leukosia</p>
+                            <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2 py-0.5 bg-secondary/15 text-secondary rounded">In Development</span>
+                        </div>
+                        <p class="text-on-surface/50 text-xs leading-relaxed">An original three-faction real-time strategy game.</p>
                     </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Featured Product -->
-    <section class="py-32 px-8 max-w-[1440px] mx-auto">
-        <div class="flex flex-col lg:flex-row gap-16 items-center">
-            <div class="w-full lg:w-1/2 relative">
-                <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
-                <div class="bg-surface-container-high p-4 rounded-xl shadow-2xl overflow-hidden">
-                    <img alt="Net Terms Tracker Shopify App Interface" class="w-full h-auto rounded-lg transition-all duration-700" src="assets/images/net-terms.png"
-                         onerror="this.src='https://images.unsplash.com/photo-1735825764457-ffdf0b5aa5dd?w=1400&q=80&auto=format&fit=crop'"/>
+    <!-- PRIMARY FEATURE: VoidRise -->
+    <section class="py-28 px-8 max-w-[1440px] mx-auto">
+        <div class="vr reveal vr-stage rounded-3xl relative overflow-hidden p-8 md:p-14">
+            <div class="absolute inset-0 vr-grid pointer-events-none"></div>
+            <span class="vr-corner tl"></span><span class="vr-corner tr"></span><span class="vr-corner bl"></span><span class="vr-corner br"></span>
+            <div class="relative flex flex-col lg:flex-row gap-12 items-center">
+                <!-- copy -->
+                <div class="w-full lg:w-1/2 space-y-7">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <span class="inline-flex items-center gap-2 text-[#2FE6FF] text-[0.7rem] font-bold uppercase tracking-[0.28em]">
+                            <span class="w-8 h-[2px] bg-[#2FE6FF]"></span> Featured · New
+                        </span>
+                        <span class="text-[0.6rem] font-bold uppercase tracking-widest px-2.5 py-1 bg-[#2FE6FF]/15 text-[#2FE6FF] rounded border border-[#2FE6FF]/30">Early Access · Android</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black tracking-tighter leading-[0.95] text-white">
+                        VoidRise — The Gym App<br/><span style="background:linear-gradient(96deg,#fff,#bdf3ff 45%,#2FE6FF);-webkit-background-clip:text;background-clip:text;color:transparent;">With an RPG Soul.</span>
+                    </h2>
+                    <p class="text-[#aebfd2] text-lg leading-relaxed max-w-xl">
+                        A real progressive-overload training app wrapped in a dark-fantasy leveling RPG. Every set you log lands as a strike. Get stronger in real life and rank up from E all the way to Monarch.
+                    </p>
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm font-medium text-[#cfe0f0]">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#2FE6FF] text-base">fitness_center</span> Science-based progressive overload</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#2FE6FF] text-base">bolt</span> Log every workout as an RPG strike</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#2FE6FF] text-base">military_tech</span> Rank up E → Monarch</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#2FE6FF] text-base">skull</span> Bosses, gates, and a shadow army</li>
+                    </ul>
+                    <!-- rank ladder -->
+                    <div class="flex items-center gap-2 flex-wrap pt-1">
+                        <span class="vr-rank">E</span><span class="vr-rank">D</span><span class="vr-rank">C</span><span class="vr-rank">B</span><span class="vr-rank">A</span><span class="vr-rank">S</span><span class="vr-rank">SS</span>
+                        <span class="material-symbols-outlined text-[#2FE6FF]/60 text-base">arrow_forward</span>
+                        <span class="vr-rank mon">MONARCH</span>
+                    </div>
+                    <div class="pt-3 flex flex-wrap gap-5 items-center">
+                        <a href="voidrise/" class="text-[#021016] bg-gradient-to-b from-[#6df3ff] to-[#2FE6FF] px-7 py-3.5 rounded-lg font-black uppercase tracking-widest text-sm shadow-[0_18px_44px_-16px_rgba(47,230,255,.8)] inline-flex items-center gap-3 hover:scale-105 transition-transform">
+                            Explore VoidRise <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                        <a href="https://www.youtube.com/@voidriseapp" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-[#cfe0f0] font-bold uppercase tracking-widest text-sm hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">play_circle</span> Watch on YouTube
+                        </a>
+                    </div>
                 </div>
-                <div class="absolute -bottom-6 -right-6 bg-surface-container-lowest p-6 rounded-lg border-l-4 border-primary shadow-xl hidden md:block">
-                    <p class="text-[0.75rem] font-bold text-on-surface/40 uppercase tracking-widest">Featured Product</p>
-                    <p class="text-lg font-bold">Net Terms Tracker</p>
+                <!-- visual -->
+                <div class="w-full lg:w-1/2 relative flex items-center justify-center min-h-[420px]">
+                    <img src="voidrise/assets/hero_feature.webp" alt="VoidRise hunter key art" loading="lazy" class="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-40"/>
+                    <div class="absolute inset-0 rounded-2xl" style="background:linear-gradient(180deg,rgba(6,9,15,.2),rgba(6,9,15,.75));"></div>
+                    <div class="relative floaty w-[230px] md:w-[260px]">
+                        <div class="device">
+                            <img src="voidrise/assets/screen_strike.webp" alt="VoidRise in-dungeon strike pad" loading="lazy"/>
+                        </div>
+                    </div>
+                    <div class="relative floaty hidden sm:block w-[180px] md:w-[200px] -ml-10 mt-16" style="animation-delay:-2.5s;">
+                        <div class="device">
+                            <img src="voidrise/assets/screen_character.webp" alt="VoidRise character and rank screen" loading="lazy"/>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="w-full lg:w-1/2 space-y-8">
-                <div class="space-y-4">
-                    <span class="inline-flex items-center gap-2 text-green-400 text-xs font-bold uppercase tracking-widest">
-                        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                        Live on the Shopify App Store
-                    </span>
-                    <h2 class="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none">Net Terms Tracker — B2B Payments, Finally Solved for Shopify</h2>
-                    <p class="text-on-surface/60 text-lg leading-relaxed max-w-lg">If you sell wholesale on Shopify and offer Net 30 payment terms, this is the app you've been waiting for. Automate credit checks, generate invoices, and give your buyers a self-service finance portal — all without leaving Shopify. Free plan available, 30-day trial on paid plans.</p>
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6 text-sm font-medium text-on-surface/80">
-                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Automated credit checks at checkout</li>
-                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> PDF invoicing engine</li>
-                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Self-service buyer finance portal</li>
-                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Built natively for Shopify</li>
-                    </ul>
+        </div>
+    </section>
+
+    <!-- SECONDARY FEATURE: Net Terms Tracker -->
+    <section class="py-20 px-8 max-w-[1440px] mx-auto">
+        <div class="flex flex-col lg:flex-row gap-16 items-center">
+            <div class="reveal w-full lg:w-1/2 relative">
+                <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+                <div class="bg-surface-container-high p-3 rounded-2xl shadow-2xl overflow-hidden border border-outline-variant/10">
+                    <video class="w-full h-auto rounded-xl" autoplay muted loop playsinline poster="assets/images/net-terms.png">
+                        <source src="assets/video/ntt-finance-portal.mp4" type="video/mp4"/>
+                    </video>
                 </div>
-                <div class="pt-6 flex flex-wrap gap-6">
+                <div class="absolute -bottom-6 -right-6 bg-surface-container-lowest p-5 rounded-lg border-l-4 border-primary shadow-xl hidden md:block">
+                    <p class="text-[0.7rem] font-bold text-on-surface/40 uppercase tracking-widest">Self-service finance portal</p>
+                    <p class="text-base font-bold">Net Terms Tracker</p>
+                </div>
+            </div>
+            <div class="reveal w-full lg:w-1/2 space-y-7" data-d="1">
+                <div class="space-y-4">
+                    <span class="inline-flex items-center gap-2 text-green-400 text-xs font-bold uppercase tracking-[0.2em]">
+                        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                        Featured · Live on the Shopify App Store
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none">Net Terms Tracker — B2B Payments, Built Into Shopify</h2>
+                    <p class="text-on-surface/60 text-lg leading-relaxed max-w-lg">Shopify added native B2B. Net Terms Tracker takes it further. Enforce per-customer credit limits at checkout, give buyers a self-service finance portal, send branded PDF invoices, and guide payment with a wire, check, or custom wizard. Works alongside native B2B or on its own.</p>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 text-sm font-medium text-on-surface/80">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Per-customer credit limits at checkout</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Self-service buyer finance portal</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Branded PDF invoices + payment wizard</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Automated reminders + overdue control</li>
+                    </ul>
+                    <p class="text-on-surface/50 text-sm font-bold pt-1">Free to start · $29/mo for everything · 30-day free trial</p>
+                </div>
+                <div class="pt-2 flex flex-wrap gap-6 items-center">
                     <a class="forge-gradient text-white px-6 py-3 rounded font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-primary/20 inline-flex items-center gap-3 hover:scale-105 transition-transform" href="https://apps.shopify.com/net-terms-tracker?utm_source=hjbcodeforge.com&amp;utm_medium=website&amp;utm_campaign=home" target="_blank" rel="noopener">
                         Install on Shopify
                         <span class="material-symbols-outlined">launch</span>
                     </a>
-                    <a class="inline-flex items-center gap-4 text-primary font-black uppercase tracking-[0.2em] text-sm group" href="portfolio.html">
-                        View Product Details
-                        <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                    <a class="inline-flex items-center gap-2 text-primary font-black uppercase tracking-[0.2em] text-sm group" href="https://nettermstracker.com" target="_blank" rel="noopener">
+                        Visit Website
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </a>
+                    <a class="inline-flex items-center gap-2 text-on-surface/55 font-black uppercase tracking-[0.2em] text-sm group hover:text-on-surface" href="blog/net-terms-tracker-case-study.html">
+                        Read the Story
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More from the forge -->
+    <section class="py-16 px-8 max-w-[1440px] mx-auto">
+        <div class="flex items-center gap-4 mb-10">
+            <div class="h-px w-12 bg-primary"></div>
+            <span class="font-bold eyebrow uppercase text-[0.75rem] text-primary">More From The Forge</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- QuartzBot -->
+            <div class="reveal card-lift bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/10 group">
+                <div class="h-48 overflow-hidden relative bg-surface-container-lowest">
+                    <img src="assets/images/botforge.png" alt="QuartzBot AI chatbot platform" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
+                    <span class="absolute top-4 left-4 text-[0.6rem] font-bold uppercase tracking-widest px-2.5 py-1 bg-green-900/70 text-green-400 rounded border border-green-700/40">Live · Paid plans</span>
+                </div>
+                <div class="p-7">
+                    <h3 class="text-2xl font-black tracking-tight mb-2">QuartzBot</h3>
+                    <p class="text-on-surface/55 text-sm leading-relaxed mb-5">The AI support agent trained on your business, not the internet. Upload your docs, point it at your site, and embed it anywhere with one line of code. Free, Pro at $29/mo, Ultra at $119/mo.</p>
+                    <a href="https://quartzbot.hjbcodeforge.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-[#00C2FF] font-black uppercase tracking-widest text-xs hover:gap-3 transition-all">Try QuartzBot Free <span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                </div>
+            </div>
+            <!-- Vrellix -->
+            <div class="reveal card-lift bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/10 group" data-d="1">
+                <div class="h-48 overflow-hidden relative flex items-center justify-center" style="background:linear-gradient(140deg,#0A1D3A 0%,#123a6e 55%,#22D3D8 140%);">
+                    <img src="assets/images/vrellix-logo.png" alt="Vrellix logo" loading="lazy" class="h-12 w-auto object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-105"/>
+                    <span class="absolute top-4 left-4 text-[0.6rem] font-bold uppercase tracking-widest px-2.5 py-1 bg-green-900/70 text-green-400 rounded border border-green-700/40">Live</span>
+                </div>
+                <div class="p-7">
+                    <h3 class="text-2xl font-black tracking-tight mb-2">Vrellix</h3>
+                    <p class="text-on-surface/55 text-sm leading-relaxed mb-5">All-in-one CRM, marketing automation, and support for solo founders. Manage contacts, run outreach, and handle tickets from one branded workspace. Solo, Pro, and Scale plans.</p>
+                    <a href="https://vrellix.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-[#22D3D8] font-black uppercase tracking-widest text-xs hover:gap-3 transition-all">Visit Vrellix <span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                </div>
+            </div>
+            <!-- Track & Thrive -->
+            <div class="reveal card-lift bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/10 group" data-d="2">
+                <div class="h-48 overflow-hidden relative bg-surface-container-lowest">
+                    <img src="assets/images/track-and-thrive.png" alt="Track and Thrive dashboard" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
+                    <span class="absolute top-4 left-4 text-[0.6rem] font-bold uppercase tracking-widest px-2.5 py-1 bg-green-900/70 text-green-400 rounded border border-green-700/40">Live · Free</span>
+                </div>
+                <div class="p-7">
+                    <h3 class="text-2xl font-black tracking-tight mb-2">Track &amp; Thrive</h3>
+                    <p class="text-on-surface/55 text-sm leading-relaxed mb-5">Your personal finance and wellness companion. Track spending against budgets and log daily calories, all in your browser. No account, no server. Data stays on your device.</p>
+                    <a href="https://trackandthrive.infinityfreeapp.com/?i=1" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs hover:gap-3 transition-all">Use It Free <span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                </div>
+            </div>
+            <!-- World-Hive: Leukosia -->
+            <div id="world-hive" class="reveal card-lift bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/10 group" data-d="3">
+                <div class="h-48 overflow-hidden relative bg-surface-container-lowest">
+                    <img src="assets/images/world-hive-leukosia.png" alt="World-Hive: Leukosia concept art" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-surface-container-low/80 to-transparent"></div>
+                    <span class="absolute top-4 left-4 text-[0.6rem] font-bold uppercase tracking-widest px-2.5 py-1 bg-secondary/20 text-secondary rounded border border-secondary/30">In Development</span>
+                </div>
+                <div class="p-7">
+                    <h3 class="text-2xl font-black tracking-tight mb-2">World-Hive: Leukosia</h3>
+                    <p class="text-on-surface/55 text-sm leading-relaxed mb-5">An original three-faction real-time strategy game, built from scratch in Godot 4. Steampunk pioneers and ancient luminous aliens clash on a living planet that fights back. A passion project, brewing in the forge.</p>
+                    <span class="inline-flex items-center gap-2 text-secondary font-black uppercase tracking-widest text-xs">Devlog coming soon <span class="material-symbols-outlined text-sm">schedule</span></span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Newsletter Signup Section -->
-    <section class="py-24 px-8 bg-surface-container border-y border-outline-variant/10">
+    <section class="py-24 px-8 bg-surface-container/60 backdrop-blur-sm border-y border-outline-variant/10">
         <div class="max-w-[1440px] mx-auto">
             <div class="max-w-2xl mx-auto text-center mb-12">
                 <div class="flex items-center justify-center gap-2 text-primary font-bold tracking-widest text-[0.75rem] uppercase mb-4">
@@ -292,8 +517,8 @@
                     Stay in the Loop
                     <span class="w-8 h-[2px] bg-primary"></span>
                 </div>
-                <h2 class="text-3xl md:text-4xl font-black tracking-tighter uppercase text-on-surface">Product updates, straight to your inbox.</h2>
-                <p class="text-on-surface/50 mt-4 text-base leading-relaxed">Be first to know about QuartzBot updates, Net Terms Tracker news, and everything we ship.</p>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tighter uppercase text-on-surface">Product drops, straight to your inbox.</h2>
+                <p class="text-on-surface/50 mt-4 text-base leading-relaxed">Be first to hear about VoidRise early access, Net Terms Tracker updates, and everything we ship next.</p>
             </div>
 
             <!-- Sender.net Embedded Form -->
@@ -308,7 +533,7 @@
                 <span class="material-symbols-outlined text-[30rem]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
             </div>
             <div class="relative z-10 max-w-2xl text-white text-center md:text-left">
-                <h2 class="text-[2.5rem] md:text-[3.5rem] font-black leading-none uppercase tracking-tighter">Three products. Start using them today.</h2>
+                <h2 class="text-[2.5rem] md:text-[3.5rem] font-black leading-none uppercase tracking-tighter">Six products. Pick one and start today.</h2>
                 <p class="text-white/70 mt-4 text-lg font-medium">No lock-in. No agency retainers. Just tools that work.</p>
             </div>
             <div class="relative z-10">
@@ -335,8 +560,10 @@
         <div>
             <h4 class="text-[#E8620A] font-bold uppercase tracking-widest text-sm mb-6">Our Products</h4>
             <ul class="space-y-4 text-[1.0rem]">
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="voidrise/">VoidRise</a></li>
                 <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://apps.shopify.com/net-terms-tracker?utm_source=hjbcodeforge.com&amp;utm_medium=website&amp;utm_campaign=home" target="_blank" rel="noopener">Net Terms Tracker</a></li>
                 <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://quartzbot.hjbcodeforge.com" target="_blank" rel="noopener">QuartzBot</a></li>
+                <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://vrellix.com" target="_blank" rel="noopener">Vrellix</a></li>
                 <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="https://trackandthrive.infinityfreeapp.com/?i=1" target="_blank" rel="noopener">Track &amp; Thrive</a></li>
                 <li><a class="text-[#F5F5F5]/60 hover:text-[#F5F5F5] transition-colors" href="services.html">Custom Work</a></li>
             </ul>
@@ -361,4 +588,25 @@
     </div>
     <div class="max-w-[1440px] mx-auto px-8 mt-24 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-outline-variant/5 pt-8">
         <p class="text-[0.85rem] text-[#F5F5F5]/40 uppercase tracking-widest">© 2026 HJB CodeForge. Powerful software, precisely built.</p>
-        <div class="flex gap-8 text-[0.85rem] text-[#F5F5F5]/40 uppercase tracking-wide
+        <div class="flex gap-8 text-[0.85rem] text-[#F5F5F5]/40 uppercase tracking-wide">
+            <a class="hover:text-[#F5F5F5] transition-colors" href="about.html">About</a>
+            <a class="hover:text-[#F5F5F5] transition-colors" href="portfolio.html">Products</a>
+            <a class="hover:text-[#F5F5F5] transition-colors" href="contact.html">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function(e){ io.observe(e); });
+  })();
+  // Nav shadow handled by static styles; sticky banner dismiss inline.
+</script>
+</body>
+</html>
