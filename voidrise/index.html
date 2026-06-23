@@ -668,7 +668,7 @@
   function mailto(email,device){
     var s='VoidRise Closed Test — Tester Access Request';
     var b='Hi HJB CodeForge,\r\n\r\nI’d like to join the VoidRise Android closed test. Please add me to the tester list.\r\n\r\nGoogle Play email (the Gmail on my phone): '+(email||'')+'\r\nDevice / Android version (optional): '+(device||'')+'\r\n\r\nThanks!';
-    return 'mailto:voidrise@support.vrellix.com?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b);
+    return 'mailto:voidrise@hjbcodeforge.com?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b);
   }
   var links=document.querySelectorAll('[data-request-access]');
   /* Old browsers without <dialog>: degrade to a plain pre-filled mailto so the CTA still works. */
