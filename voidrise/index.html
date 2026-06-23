@@ -195,7 +195,7 @@
       <a href="#faq" class="navlink">FAQ</a>
     </div>
     <div class="flex items-center gap-3">
-      <a href="mailto:support@hjbcodeforge.com?subject=VoidRise%20Closed%20Test%20%E2%80%94%20Tester%20Access%20Request&amp;body=Hi%20HJB%20CodeForge%2C%0D%0A%0D%0AI'd%20like%20to%20join%20the%20VoidRise%20Android%20closed%20test.%20Please%20add%20me%20to%20the%20tester%20list.%0D%0A%0D%0AGoogle%20Play%20email%20(the%20Gmail%20on%20my%20phone)%3A%20%0D%0ADevice%20%2F%20Android%20version%20(optional)%3A%20%0D%0A%0D%0AThanks!" class="btn btn-primary !py-2.5 !px-4 text-[.8rem]">Request Access</a>
+      <a href="#request" data-request-access class="btn btn-primary !py-2.5 !px-4 text-[.8rem]">Request Access</a>
       <button id="burger" class="lg:hidden w-10 h-10 grid place-items-center border border-[var(--line)] rounded-lg" aria-label="Open menu" aria-expanded="false" aria-controls="mobilemenu">
         <div class="space-y-1.5"><span class="block w-5 h-0.5 bg-ink"></span><span class="block w-5 h-0.5 bg-ink"></span><span class="block w-5 h-0.5 bg-ink"></span></div>
       </button>
@@ -236,7 +236,7 @@
         Every set you log is a <span class="text-cyan font-600">strike.</span> Every workout levels your hunter. Get stronger in real life and watch yourself ascend from <span class="data text-[.95em]">E-Rank</span> to <span class="text-gold font-600">Monarch.</span>
       </p>
       <div class="reveal in flex flex-wrap gap-4 mb-8" data-d="3">
-        <a href="mailto:support@hjbcodeforge.com?subject=VoidRise%20Closed%20Test%20%E2%80%94%20Tester%20Access%20Request&amp;body=Hi%20HJB%20CodeForge%2C%0D%0A%0D%0AI'd%20like%20to%20join%20the%20VoidRise%20Android%20closed%20test.%20Please%20add%20me%20to%20the%20tester%20list.%0D%0A%0D%0AGoogle%20Play%20email%20(the%20Gmail%20on%20my%20phone)%3A%20%0D%0ADevice%20%2F%20Android%20version%20(optional)%3A%20%0D%0A%0D%0AThanks!" class="btn btn-primary">
+        <a href="#request" data-request-access class="btn btn-primary">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 1.9 13.3 12 3.6 22.1c-.3-.2-.5-.6-.5-1V2.9c0-.4.2-.8.5-1Zm11 11.5 2.9 3-9.8 5.5 6.9-8.5Zm0-2.8L7.7 2.1l9.8 5.5-2.9 3.1Zm1.5 1.4 3.7-2.1c.8-.5.8-1.6 0-2.1l-.1-.1-3.6 4.4Z"/></svg>
           Become a Founding Hunter
         </a>
@@ -584,7 +584,7 @@
     <p class="lede text-xl leading-relaxed mb-3 max-w-xl mx-auto">VoidRise is in its <b class="text-ink">Android closed test</b> right now. Get in early, shape the launch — and lock in a <b class="text-gold">free year of premium</b> when it goes live.</p>
     <p class="data text-[.62rem] text-muted mb-9">Android · the closed test is nearly full · request a spot and we'll send your opt-in link</p>
     <div class="flex flex-wrap gap-4 justify-center">
-      <a href="mailto:support@hjbcodeforge.com?subject=VoidRise%20Closed%20Test%20%E2%80%94%20Tester%20Access%20Request&amp;body=Hi%20HJB%20CodeForge%2C%0D%0A%0D%0AI'd%20like%20to%20join%20the%20VoidRise%20Android%20closed%20test.%20Please%20add%20me%20to%20the%20tester%20list.%0D%0A%0D%0AGoogle%20Play%20email%20(the%20Gmail%20on%20my%20phone)%3A%20%0D%0ADevice%20%2F%20Android%20version%20(optional)%3A%20%0D%0A%0D%0AThanks!" class="btn btn-gold">Request to Join</a>
+      <a href="#request" data-request-access class="btn btn-gold">Request to Join</a>
       <a href="https://www.youtube.com/@voidriseapp" target="_blank" rel="noopener" class="btn btn-ghost">Watch more</a>
     </div>
   </div>
@@ -638,6 +638,57 @@
     <p class="data text-[.58rem] text-faint text-center">© 2026 HJB CodeForge · Ottawa, Canada · VoidRise™ · Rise from the void.</p>
   </div>
 </footer>
+
+<!-- ===== Closed-test access request (captures the Play Store Gmail before opening email) ===== -->
+<style>
+  #testerModal::backdrop{ background:rgba(3,6,11,.74); backdrop-filter:blur(3px); }
+  #testerModal[open]{ animation:tmIn .18s ease-out; }
+  @keyframes tmIn{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:none;} }
+  #testerModal input:focus{ outline:none; border-color:rgba(47,230,255,.6); box-shadow:0 0 0 3px rgba(47,230,255,.16); }
+</style>
+<dialog id="testerModal" style="border:none;background:transparent;padding:0;max-width:30rem;width:92vw">
+  <form id="testerForm" style="background:#0b1018;border:1px solid rgba(47,230,255,.25);border-radius:18px;padding:1.75rem;box-shadow:0 40px 90px -30px #000,0 0 70px -30px rgba(47,230,255,.4)">
+    <p class="eyebrow" style="margin-bottom:.55rem">// Request closed-test access</p>
+    <h3 style="font-weight:800;font-size:1.35rem;line-height:1.15;margin:0 0 .5rem">Become a Founding Hunter</h3>
+    <p style="font-size:.85rem;color:var(--muted);line-height:1.55;margin:0 0 1.15rem">The test is locked to one Google account, so we need the <b style="color:#fff">exact Gmail signed in on your Android phone</b> — that's the address we add to the tester list.</p>
+    <label for="tEmail" style="display:block;font-size:.78rem;letter-spacing:.02em;margin-bottom:.35rem">Google Play email <span style="color:#ff6b6b">*</span></label>
+    <input id="tEmail" type="email" required inputmode="email" autocomplete="email" placeholder="the Gmail on your phone" style="width:100%;background:#06090f;border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;color:#fff;font-size:.95rem;margin-bottom:1rem"/>
+    <label for="tDevice" style="display:block;font-size:.78rem;letter-spacing:.02em;margin-bottom:.35rem">Device / Android version <span style="color:var(--muted)">(optional)</span></label>
+    <input id="tDevice" type="text" autocomplete="off" placeholder="e.g. Pixel 7 · Android 14" style="width:100%;background:#06090f;border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;color:#fff;font-size:.95rem;margin-bottom:1.4rem"/>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end">
+      <button type="button" id="tCancel" class="btn btn-ghost">Cancel</button>
+      <button type="submit" class="btn btn-primary">Open email to send →</button>
+    </div>
+    <p style="font-size:.7rem;color:var(--muted);margin:.9rem 0 0;text-align:center">Opens your email app with everything pre-filled — just press send.</p>
+  </form>
+</dialog>
+<script>
+(function(){
+  var modal=document.getElementById('testerModal');
+  function mailto(email,device){
+    var s='VoidRise Closed Test — Tester Access Request';
+    var b='Hi HJB CodeForge,\r\n\r\nI’d like to join the VoidRise Android closed test. Please add me to the tester list.\r\n\r\nGoogle Play email (the Gmail on my phone): '+(email||'')+'\r\nDevice / Android version (optional): '+(device||'')+'\r\n\r\nThanks!';
+    return 'mailto:voidrise@support.vrellix.com?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b);
+  }
+  var links=document.querySelectorAll('[data-request-access]');
+  /* Old browsers without <dialog>: degrade to a plain pre-filled mailto so the CTA still works. */
+  if(!modal||typeof modal.showModal!=='function'){
+    links.forEach(function(b){ b.setAttribute('href', mailto('','')); });
+    return;
+  }
+  links.forEach(function(b){ b.addEventListener('click', function(e){ e.preventDefault(); modal.showModal(); var f=document.getElementById('tEmail'); if(f){ setTimeout(function(){ f.focus(); },40); } }); });
+  var c=document.getElementById('tCancel'); if(c){ c.addEventListener('click', function(){ modal.close(); }); }
+  modal.addEventListener('click', function(e){ if(e.target===modal){ modal.close(); } });
+  document.getElementById('testerForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email=(document.getElementById('tEmail').value||'').trim();
+    if(!email){ return; }
+    var device=(document.getElementById('tDevice').value||'').trim();
+    window.location.href=mailto(email,device);
+    setTimeout(function(){ try{ modal.close(); }catch(_){ } },60);
+  });
+})();
+</script>
 
 <script>
 (function(){
