@@ -70,21 +70,25 @@
 <main class="max-w-[820px] mx-auto px-5 pt-36 pb-20">
   <p class="eyebrow mb-3">// System · Data Protocol</p>
   <h1 class="text-[clamp(2.2rem,6vw,3.4rem)] font-black tracking-tight text-white mb-3">Privacy Policy</h1>
-  <p class="data text-[.62rem] text-[#9fb2c8] mb-9"><span class="text-cyan">Effective</span> · June 12, 2026</p>
+  <p class="data text-[.62rem] text-[#9fb2c8] mb-9"><span class="text-cyan">Effective</span> · June 24, 2026</p>
 
   <div class="panel p-6 sm:p-9 prose">
     <span class="corner tl"></span><span class="corner br"></span>
     <p>VoidRise ("the app") is built and operated by <strong>HJB CodeForge</strong> (Henning Botha, sole proprietorship, Ottawa, Ontario, Canada). This policy explains what data VoidRise handles and what we do — and don't do — with it.</p>
 
-    <div class="callout"><p><strong>The short version:</strong> your workout data lives on your device. The current version of VoidRise does not transmit any of your data off your phone. We don't sell data, we don't show ads, and we don't track you across other apps.</p></div>
+    <div class="callout"><p><strong>The short version:</strong> your workout and nutrition data lives on your device. A few features send data to trusted services so they can work — food lookups (a search term or barcode), optional cloud sync, and the optional meal-photo scan (the photo). We don't sell data, we don't show ads, and we don't track you across other apps.</p></div>
 
     <h2 data-n="01">Data the app stores</h2>
-    <p><strong>On your device (always):</strong> your hunter profile (display name, sex selection, age, height, weight, fitness level, equipment, injury flags, training schedule) and your game/workout progress (sessions, sets, loads, reps, ranks, streaks, cosmetics, in-game currency). This data stays in the app's private storage on your phone. Deleting the app deletes it.</p>
-    <p><strong>Cloud sync (future, optional):</strong> the current release stores everything locally and has no cloud sync. If a future version adds optional sync, the same profile and progress data would be stored with our backend provider <strong>Supabase</strong> so your progress can be restored or moved to a new device — keyed to your account, encrypted in transit (HTTPS/TLS), and used for nothing except providing sync. We will update this policy when that feature ships.</p>
+    <p><strong>On your device (always):</strong> your hunter profile (display name, sex selection, age, height, weight, fitness level, equipment, injury flags, training schedule) and your game/workout progress (sessions, sets, loads, reps, ranks, streaks, cosmetics, in-game currency) plus your <strong>Provisions food diary</strong> (the foods you log, portions, and the resulting calories/macros). This data stays in the app's private storage on your phone. Deleting the app deletes it.</p>
+    <p><strong>Cloud sync (optional):</strong> if sync is enabled, the same profile and progress data (including your food diary) is stored with our backend provider <strong>Supabase</strong> so your progress can be restored or moved to a new device — keyed to your account, encrypted in transit (HTTPS/TLS), and used for nothing except providing sync. If sync is off, everything stays on your device.</p>
 
     <h2 data-n="02">Health and fitness data</h2>
     <p>The workout data you log (exercises, sets, reps, loads, body weight, injury flags) is fitness data you enter yourself. It is used solely to generate your workouts and drive game progression, and it stays on your device.</p>
     <p><strong>Health Connect (future, when available):</strong> if a future version offers Health Connect integration and you choose to connect, VoidRise will request the minimum scopes it needs — reading steps/activity (so rest-day movement counts toward your streak) and writing your completed workouts. Health Connect data would be processed on your device, never used for advertising, never sold, and never shared with third parties. You could revoke access at any time in Health Connect settings, and disconnecting stops all reads/writes immediately. Our handling will comply with Google Play's Health Connect permissions policy.</p>
+
+    <p><strong>Nutrition logging (Provisions):</strong> the foods, portions and calorie/macro totals you log are fitness data you enter yourself, stored exactly like the rest of your progress (on device, and in optional cloud sync).</p>
+    <p><strong>Food databases:</strong> when you search for a food or scan a product barcode, the search term or barcode number is sent to two free public nutrition databases — <strong>USDA FoodData Central</strong> and <strong>Open Food Facts</strong> — to look up nutrition facts. These are food/product queries only; no personal or account information is sent.</p>
+    <p><strong>Meal photo scan (optional):</strong> if you use the optional "scan a meal" feature, the photo you take is sent to <strong>Google's Gemini API</strong> to identify the foods and estimate portions. The image is transmitted over HTTPS, used only to return that analysis, and is not stored by us; Google processes it under its API terms. If you'd prefer not to send a photo off your device, use food search, barcode scan, or manual entry instead — they log the same data without a photo.</p>
 
     <h2 data-n="03">Subscriptions and payments</h2>
     <p>The current release contains no purchases. If premium subscriptions ship in a future version, they will be processed by <strong>Google Play Billing</strong> — we never see or store your payment card details. We would use <strong>RevenueCat</strong> to validate subscription status; it receives purchase tokens and anonymous app-user IDs, not your identity or workout data.</p>
@@ -98,7 +102,7 @@
     </ul>
 
     <h2 data-n="05">Service providers</h2>
-    <p>The current release shares data with no one. The only third parties involved in running the app are <strong>Google Play</strong> (app distribution) and <strong>Google Fonts</strong> (typeface delivery, bundled at build time). If future features add providers (Supabase for optional sync, Google Play Billing and RevenueCat for subscriptions), each will receive only what its function requires, and this policy will be updated.</p>
+    <p>Data is shared only with the processors needed to run the app: <strong>Google Play</strong> (app distribution), <strong>Google Fonts</strong> (typeface delivery, bundled at build time), <strong>Supabase</strong> (optional cloud sync), <strong>USDA FoodData Central</strong> and <strong>Open Food Facts</strong> (food + barcode nutrition lookups — they receive only the food name you search or a barcode number), and <strong>Google's Gemini API</strong> (only when you use the optional meal-photo scan — it receives the photo you take in order to identify the foods). Each receives only what its function requires. If premium subscriptions ship in a future version, <strong>Google Play Billing</strong> and <strong>RevenueCat</strong> will be added here.</p>
 
     <h2 data-n="06">Data retention and deletion</h2>
     <p>On-device data is deleted when you delete the app (or use the in-app reset). If you have any data questions or requests, email <strong>support@hjbcodeforge.com</strong> — we respond within 30 days.</p>
